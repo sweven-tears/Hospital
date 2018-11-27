@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Hospital</string>
+    <string name="dummy_content">医院管理系统</string>
 </resources>
