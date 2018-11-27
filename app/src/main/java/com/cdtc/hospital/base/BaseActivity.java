@@ -128,7 +128,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         hiddenRightButton();
 
         // 初始化左右按键
-        setCustomerActionBar(KeyActionBarButtonKind.ACTIONBAR_LEFT, BTN_TYPE_IMG, R.drawable.ic_back_left_white_48dp);
+        setCustomerActionBar(KeyActionBarButtonKind.ACTIONBAR_LEFT, BTN_TYPE_IMG, R.drawable.ic_keyboard_arrow_left_black_24dp);
         setCustomerActionBar(KeyActionBarButtonKind.ACTIONBAR_RIGHT, BTN_TYPE_TEXT, "完成");
 
         initDialog();
