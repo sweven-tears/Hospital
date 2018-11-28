@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -22,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cdtc.hospital.MainActivity;
 import com.cdtc.hospital.R;
 import com.cdtc.hospital.util.LogUtil;
 import com.cdtc.hospital.util.ToastUtil;
@@ -84,6 +86,11 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         activity = this;
         init();
+    }
+
+    protected void startActivity(Class<?> cls){
+        Intent intent=new Intent(activity,cls);
+        startActivity(intent);
     }
 
     /**
