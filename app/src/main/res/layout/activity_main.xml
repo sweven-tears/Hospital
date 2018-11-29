@@ -90,7 +90,8 @@
             android:textSize="20dp"
             android:textColor="@color/blue"
             tools:layout_editor_absoluteX="208dp"
-            tools:layout_editor_absoluteY="40dp" />
+            tools:layout_editor_absoluteY="40dp"
+            tools:ignore="MissingConstraints" />
 
         <Button
             android:id="@+id/clear"
@@ -101,7 +102,8 @@
             android:textSize="20dp"
             android:textColor="@color/blue"
             tools:layout_editor_absoluteX="296dp"
-            tools:layout_editor_absoluteY="40dp" />
+            tools:layout_editor_absoluteY="40dp"
+            tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/id"
@@ -170,7 +172,8 @@
         android:background="@color/green"
         android:textSize="20dp"
         tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="125dp" />
+        tools:layout_editor_absoluteY="125dp"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/delete"
@@ -181,7 +184,8 @@
         android:textColor="@color/white"
         android:textSize="20dp"
         tools:layout_editor_absoluteX="116dp"
-        tools:layout_editor_absoluteY="125dp" />
+        tools:layout_editor_absoluteY="125dp"
+        tools:ignore="MissingConstraints" />
 
 
 </android.support.constraint.ConstraintLayout>
