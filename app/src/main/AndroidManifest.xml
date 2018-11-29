@@ -17,7 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".view.MainActivity" />
         <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,8 +28,7 @@
             android:name=".view.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity
-            android:name=".view.ScrollingActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".view.HosRegisterActivity" />
     </application>
 
 </manifest>

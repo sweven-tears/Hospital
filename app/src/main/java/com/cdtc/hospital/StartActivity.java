@@ -11,9 +11,16 @@ import android.widget.TextView;
 import com.cdtc.hospital.base.App;
 import com.cdtc.hospital.base.BaseActivity;
 import com.cdtc.hospital.local.SQLite;
+import com.cdtc.hospital.network.dao.HosRegisterDao;
+import com.cdtc.hospital.network.dao.UserDao;
+import com.cdtc.hospital.network.dao.impl.HosRegisterDaoImpl;
+import com.cdtc.hospital.network.dao.impl.UserDaoImpl;
+import com.cdtc.hospital.network.entity.HosRegister;
+import com.cdtc.hospital.network.entity.User;
 import com.cdtc.hospital.view.LoginActivity;
-import com.cdtc.hospital.view.ScrollingActivity;
+import com.cdtc.hospital.view.HosRegisterActivity;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -37,7 +44,7 @@ public class StartActivity extends BaseActivity {
             if (App.loginState==App.LOG_OUT){
                 startActivity(LoginActivity.class);
             }else if(App.loginState==App.LOG_IN){
-                startActivity(ScrollingActivity.class);
+                startActivity(HosRegisterActivity.class);
             }
             isDirect=true;
         }

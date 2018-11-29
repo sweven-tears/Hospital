@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 
@@ -152,12 +153,13 @@ public class LoginActivity extends BaseActivity {
             } catch (InterruptedException e) {
                 return -1;
             }
-
+            log.i("连接服务器，查询User");
             UserDao dao = new UserDaoImpl();
             user = dao.selectByLoginName(mLoginName);
 
             if (user != null) {
                 if (user.getU_passWord().equals(mPassword)) {
+                    log.i(user.toString());
                     return 1;
                 }
                 return 0;
@@ -172,7 +174,7 @@ public class LoginActivity extends BaseActivity {
 
             if (result == 1) {
                 finish();
-                startActivity(ScrollingActivity.class);
+                startActivity(HosRegisterActivity.class);
                 App.loginState=App.LOG_IN;
                 SQLite lite=new SQLite(activity,App.DATA_BASE,App.TABLE_USER,SQLite.UPDATE_DATABASE);
                 String[] columns=new String[]{"u_trueName"};

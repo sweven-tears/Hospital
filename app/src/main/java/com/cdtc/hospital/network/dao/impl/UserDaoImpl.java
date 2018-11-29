@@ -4,7 +4,6 @@ import com.cdtc.hospital.network.dao.BaseDao;
 import com.cdtc.hospital.network.dao.UserDao;
 import com.cdtc.hospital.network.entity.User;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDaoImpl extends BaseDao implements UserDao {
@@ -13,7 +12,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	public User selectByLoginName(String u_loginName) {
 		sql="select * from user where u_loginName=?";
 		Object[] objects={u_loginName};
-		ResultSet rs=query(sql, objects);
+		rs=query(sql, objects);
 		try {
 			if (rs.next()){
 				User user=new User();
@@ -27,6 +26,8 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			close();
 		}
 		return null;
 	}

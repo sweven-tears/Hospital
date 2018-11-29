@@ -12,9 +12,8 @@ import java.util.List;
 public class HosRegisterDaoImpl extends BaseDao implements HosRegisterDao {
 
 	@Override
-	public List<Object> selectByPageCondition(Integer hosR_id, String d_name, String d_keshi,
-			Integer currentPageNo, Integer pageSize) {
-		List<Object> hosregisters = new ArrayList<>();
+	public List<HosRegister> selectByCondition(Integer hosR_id, String d_name, String d_keshi) {
+		List<HosRegister> hosRegisters = new ArrayList<>();
 		List<Object> params = new ArrayList<>();
 		StringBuilder sql = new StringBuilder("SELECT * FROM " + "(SELECT hos.hosR_id,"
 				+ "(SELECT d.d_name FROM doctor d WHERE d.d_id=hos.d_id) AS d_name," + "hos.hosR_createTime,"
@@ -32,12 +31,8 @@ public class HosRegisterDaoImpl extends BaseDao implements HosRegisterDao {
 			sql.append(" and d_keshi like ? ");
 			params.add("%" + d_keshi + "%");
 		}
-		// 拼接分页
-		sql.append(" limit ?,?");
-		params.add((currentPageNo - 1) * pageSize);
-		params.add(pageSize);
 
-		ResultSet rs = query(sql.toString(), params.toArray());
+		rs = query(sql.toString(), params.toArray());
 		try {
 			while (rs.next()) {
 				HosRegister hosregister = new HosRegister();
@@ -46,9 +41,9 @@ public class HosRegisterDaoImpl extends BaseDao implements HosRegisterDao {
 				hosregister.setHosR_createTime(rs.getDate("hosR_createTime"));
 				hosregister.setD_keshi(rs.getString("d_keshi"));
 				hosregister.setHosR_state(rs.getInt("hosR_state"));
-				hosregisters.add(hosregister);
+				hosRegisters.add(hosregister);
 			}
-			return hosregisters;
+			return hosRegisters;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -58,7 +53,7 @@ public class HosRegisterDaoImpl extends BaseDao implements HosRegisterDao {
 	}
 
 	@Override
-	public Integer getHosregisterCount(Integer hosR_id, String d_name, String d_keshi) {
+	public Integer getHosRegisterCount(Integer hosR_id, String d_name, String d_keshi) {
 		List<Object> params = new ArrayList<>();
 		StringBuilder sql = new StringBuilder("SELECT count(*) FROM " + "(SELECT hos.hosR_id,"
 				+ "(SELECT d.d_name FROM doctor d WHERE d.d_id=hos.d_id) AS d_name," + "hos.hosR_createTime,"
@@ -77,7 +72,7 @@ public class HosRegisterDaoImpl extends BaseDao implements HosRegisterDao {
 			params.add("%" + d_keshi + "%");
 		}
 
-		ResultSet rs = query(sql.toString(), params.toArray());
+		rs = query(sql.toString(), params.toArray());
 		try {
 			if (rs.next()) {
 				return rs.getInt(1);
@@ -99,7 +94,7 @@ public class HosRegisterDaoImpl extends BaseDao implements HosRegisterDao {
 				+ "FROM hosregister h WHERE hosR_id=?";
 		Object[] objects = { hosR_id };
 		HosRegister hosRegister = null;
-		ResultSet rs = query(sql, objects);
+		rs = query(sql, objects);
 		try {
 			while (rs.next()) {
 				hosRegister = new HosRegister();

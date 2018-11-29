@@ -26,9 +26,9 @@ public class BaseDao {
 
     private Connection conn;
     private PreparedStatement pre;
-    public ResultSet rs;
+    protected ResultSet rs;
 
-    public String sql;
+    protected String sql;
 
     /**
      * make mysql connection
