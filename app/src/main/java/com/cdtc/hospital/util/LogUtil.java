@@ -7,7 +7,7 @@ import android.util.Log;
  * Email:sweventears@Foxmail.com
  */
 public class LogUtil {
-    private String TAG = "Activity";
+    private String TAG;
 
     private boolean show = true;
 

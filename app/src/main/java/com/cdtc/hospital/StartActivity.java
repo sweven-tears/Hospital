@@ -1,14 +1,18 @@
 package com.cdtc.hospital;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.widget.TextView;
 
+import com.cdtc.hospital.base.App;
 import com.cdtc.hospital.base.BaseActivity;
+import com.cdtc.hospital.local.SQLite;
+import com.cdtc.hospital.view.LoginActivity;
+import com.cdtc.hospital.view.ScrollingActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,9 +33,12 @@ public class StartActivity extends BaseActivity {
      */
     private final Runnable launchRun = () -> {
         if (!isDirect) {
-            Intent intent = new Intent(StartActivity.this, MainActivity.class);
-            startActivity(intent);
             finish();
+            if (App.loginState==App.LOG_OUT){
+                startActivity(LoginActivity.class);
+            }else if(App.loginState==App.LOG_IN){
+                startActivity(ScrollingActivity.class);
+            }
             isDirect=true;
         }
     };
@@ -107,6 +114,18 @@ public class StartActivity extends BaseActivity {
                     mHandler.sendEmptyMessage(MSG_WHAT);
                 }
             }, 0, 1000);
+        }
+
+        // 为了显示登录页面
+//        activity.deleteDatabase("hospital");
+
+        // 创建 SQLite 数据，便于管理
+        SQLite lite=new SQLite(activity, App.DATA_BASE, App.TABLE_USER,SQLite.QUERY_DATABASE);
+        String[] columns=new String[]{"u_loginName","u_trueName","u_state"};
+        Cursor cursor =lite.query(columns,"u_state=?",new String[]{String.valueOf(App.LOG_IN)});
+        while (cursor.moveToNext()){
+            App.loginState=App.LOG_IN;
+            App.trueName=cursor.getString(cursor.getColumnIndex(columns[1]));
         }
         mLaunchHandler.postDelayed(launchRun, LAUNCH_APP_TIME);
     }

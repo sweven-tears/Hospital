@@ -23,7 +23,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cdtc.hospital.MainActivity;
 import com.cdtc.hospital.R;
 import com.cdtc.hospital.util.LogUtil;
 import com.cdtc.hospital.util.ToastUtil;
