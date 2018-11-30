@@ -3,9 +3,10 @@ package com.cdtc.hospital.view;
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.cdtc.hospital.R;
 import com.cdtc.hospital.adapter.HosRegisterAdapter;
@@ -24,6 +25,12 @@ public class HosRegisterActivity extends BaseActivity {
     private HosRegisterAdapter hosRegisterAdapter;
     private QueryHosRegisterTask mAuthTask;
 
+    private EditText searchHosR_id;
+    private EditText searchD_name;
+    private EditText searchD_keshi;
+    private Button queryBtn;
+    private Button clearBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +45,14 @@ public class HosRegisterActivity extends BaseActivity {
 
     @Override
     protected void bindViewId() {
+
+        searchHosR_id=findViewById(R.id.search_hos_r_id);
+        searchD_name=findViewById(R.id.search_d_name);
+        searchD_keshi=findViewById(R.id.search_d_keshi);
+
+        queryBtn=findViewById(R.id.query_btn);
+        clearBtn=findViewById(R.id.clear_btn);
+
         hosRegisterRecyclerView = findViewById(R.id.hos_register_list);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         hosRegisterRecyclerView.setLayoutManager(manager);
@@ -61,14 +76,17 @@ public class HosRegisterActivity extends BaseActivity {
         hosRegisterRecyclerView.setAdapter(hosRegisterAdapter);
     }
 
+    /**
+     * 获取 HosRegisterList
+     */
     private void getHosRegisterList() {
         if (mAuthTask != null) {
             return;
         }
 
-        String hosR_idStr = "";
-        String d_name = "";
-        String d_keshi = "";
+        String hosR_idStr = searchHosR_id.getText().toString();
+        String d_name = searchD_name.getText().toString();
+        String d_keshi = searchD_keshi.getText().toString();
 
         boolean isInteger = true;
 
@@ -81,12 +99,14 @@ public class HosRegisterActivity extends BaseActivity {
         }
 
         if (!isInteger) {
-            //TODO 设置光标移动到此处
+            searchHosR_id.requestFocus();
         } else {
             mAuthTask = new QueryHosRegisterTask(hosR_id, d_name, d_keshi);
             mAuthTask.execute();
         }
     }
+
+
 
     private void search() {
 

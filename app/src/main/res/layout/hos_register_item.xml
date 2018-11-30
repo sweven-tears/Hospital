@@ -19,9 +19,7 @@
             android:layout_marginLeft="4dp"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
-            android:text="门诊编号："
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text3" />
+            android:text="门诊编号" />
 
         <TextView
             android:id="@+id/d_name"
@@ -30,9 +28,7 @@
             android:layout_marginLeft="4dp"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
-            android:text="主治医生："
-            app:layout_constraintLeft_toRightOf="@+id/id"
-            app:layout_constraintTop_toBottomOf="@+id/text3" />
+            android:text="主治医生" />
 
         <TextView
             android:id="@+id/hos_r_create_time"
@@ -41,9 +37,7 @@
             android:layout_marginLeft="4dp"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
-            android:text="挂号时间："
-            app:layout_constraintLeft_toRightOf="@+id/doctor1"
-            app:layout_constraintTop_toBottomOf="@+id/text3" />
+            android:text="挂号时间" />
 
         <TextView
             android:id="@+id/d_keshi"
@@ -52,9 +46,7 @@
             android:layout_marginLeft="4dp"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
-            android:text="科室："
-            app:layout_constraintLeft_toRightOf="@+id/time"
-            app:layout_constraintTop_toBottomOf="@+id/text3" />
+            android:text="科室" />
 
         <TextView
             android:id="@+id/hos_r_state"
@@ -63,9 +55,7 @@
             android:layout_marginLeft="4dp"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
-            android:text="状态："
-            app:layout_constraintLeft_toRightOf="@+id/keshi1"
-            app:layout_constraintTop_toBottomOf="@+id/text3" />
+            android:text="状态" />
 
 
     </LinearLayout>
