@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="keshi">
+        <item>骨科</item>
+        <item>脑科</item>
+        <item>心血科</item>
+        <item>神经科</item>
+        <item>儿科</item>
+    </string-array>
+</resources>

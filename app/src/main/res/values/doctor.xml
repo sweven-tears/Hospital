@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="doctor">
+        <item>王五</item>
+        <item>赵六</item>
+        <item>蒋东龙</item>
+        <item>刘继峰</item>
+        <item>李银松</item>
+        <item>李希</item>
+    </string-array>
+</resources>

@@ -46,7 +46,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/text2"
+            android:id="@+id/search_d_keshi"
             android:layout_width="110dp"
             android:layout_height="30dp"
             android:layout_marginLeft="8dp"
@@ -105,58 +105,58 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/id"
+            android:id="@+id/hos_id"
             android:layout_width="70dp"
             android:layout_height="30dp"
             android:layout_marginLeft="4dp"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
-            android:text="门诊编号："
+            android:text="门诊编号"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/search_d_name" />
 
         <TextView
-            android:id="@+id/doctor1"
+            android:id="@+id/d_name"
             android:layout_width="70dp"
             android:layout_height="30dp"
             android:layout_marginLeft="4dp"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
-            android:text="主治医生："
-            app:layout_constraintLeft_toRightOf="@+id/id"
+            android:text="主治医生"
+            app:layout_constraintLeft_toRightOf="@+id/hos_id"
             app:layout_constraintTop_toBottomOf="@+id/search_d_name" />
 
         <TextView
-            android:id="@+id/time"
+            android:id="@+id/hos_time"
             android:layout_width="70dp"
             android:layout_height="30dp"
             android:layout_marginLeft="4dp"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
-            android:text="挂号时间："
-            app:layout_constraintLeft_toRightOf="@+id/doctor1"
+            android:text="挂号时间"
+            app:layout_constraintLeft_toRightOf="@+id/d_name"
             app:layout_constraintTop_toBottomOf="@+id/search_d_name" />
 
         <TextView
-            android:id="@+id/keshi1"
+            android:id="@+id/d_keshi"
             android:layout_width="70dp"
             android:layout_height="30dp"
             android:layout_marginLeft="4dp"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
-            android:text="科室："
-            app:layout_constraintLeft_toRightOf="@+id/time"
+            android:text="科室"
+            app:layout_constraintLeft_toRightOf="@+id/hos_time"
             app:layout_constraintTop_toBottomOf="@+id/search_d_name" />
 
         <TextView
-            android:id="@+id/state"
+            android:id="@+id/hos_state"
             android:layout_width="70dp"
             android:layout_height="30dp"
             android:layout_marginLeft="4dp"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
-            android:text="状态："
-            app:layout_constraintLeft_toRightOf="@+id/keshi1"
+            android:text="状态"
+            app:layout_constraintLeft_toRightOf="@+id/hos_time"
             app:layout_constraintTop_toBottomOf="@+id/search_d_name" />
 
 
