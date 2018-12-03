@@ -22,6 +22,9 @@ import com.cdtc.hospital.R;
 import com.cdtc.hospital.base.App;
 import com.cdtc.hospital.base.BaseActivity;
 import com.cdtc.hospital.local.SQLite;
+import com.cdtc.hospital.local.dao.BaseLocalDao;
+import com.cdtc.hospital.local.dao.UserLocalDao;
+import com.cdtc.hospital.local.dao.impl.UserLocalDaoImpl;
 import com.cdtc.hospital.network.dao.UserDao;
 import com.cdtc.hospital.network.dao.impl.UserDaoImpl;
 import com.cdtc.hospital.network.entity.User;
@@ -64,7 +67,7 @@ public class LoginActivity extends BaseActivity {
 
 
     /**
-     * 验证是否为空
+     * 验证是否为空,然后验证用户名与密码是否匹配
      */
     private void attemptLogin() {
         if (mAuthTask != null) {
@@ -148,14 +151,12 @@ public class LoginActivity extends BaseActivity {
         @Override
         protected Integer doInBackground(Integer... params) {
             try {
-                // Simulate network access.
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
-                return -1;
+                e.getStackTrace();
             }
-            log.i("连接服务器，查询User");
-            UserDao dao = new UserDaoImpl();
-            user = dao.selectByLoginName(mLoginName);
+            UserLocalDao userLocalDao = new UserLocalDaoImpl(activity, BaseLocalDao.QUERY_DATABASE);
+            user = userLocalDao.selectByLoginName(mLoginName);
 
             if (user != null) {
                 if (user.getU_passWord().equals(mPassword)) {
@@ -164,7 +165,7 @@ public class LoginActivity extends BaseActivity {
                 }
                 return 0;
             }
-            return -2;
+            return -1;
         }
 
         @Override
@@ -173,33 +174,16 @@ public class LoginActivity extends BaseActivity {
             showProgress(false);
 
             if (result == 1) {
+                UserLocalDao userLocalDao = new UserLocalDaoImpl(activity, BaseLocalDao.UPDATE_DATABASE);
+                userLocalDao.updateLogSate(App.LOG_IN, mLoginName);
+                App.trueName = userLocalDao.selectByLoginName(mLoginName).getU_trueName();
                 finish();
-                startActivity(HosRegisterActivity.class);
-                App.loginState=App.LOG_IN;
-                SQLite lite=new SQLite(activity,App.DATA_BASE,App.TABLE_USER,SQLite.UPDATE_DATABASE);
-                String[] columns=new String[]{"u_trueName"};
-                Cursor cursor =lite.query(columns,"u_loginName=?",new String[]{mLoginName});
-                if (cursor.moveToNext()){
-                    Map<String,Object> map=new HashMap<>();
-                    map.put("u_state",App.LOG_IN);
-                    lite.update(map,"u_loginName",new String[]{mLoginName});
-                }else{
-                    Map<String,Object> map=new HashMap<>();
-                    map.put("u_loginName",mLoginName);
-                    map.put("u_passWord",mPassword);
-                    map.put("u_trueName",user.getU_trueName());
-                    map.put("u_email",user.getU_email());
-                    map.put("u_state",App.LOG_IN);
-                    lite.insert(map);
-                }
-                App.trueName=user.getU_trueName();
+                startActivity(ListActivity.class);
             } else if (result == 0) {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.setText("");
                 mPasswordView.requestFocus();
             } else if (result == -1) {
-                toast.showError("网络开了点小差~");
-            } else if (result == -2) {
                 mLoginUserView.setError("用户名不存在");
                 mLoginUserView.setText("");
                 mLoginUserView.requestFocus();

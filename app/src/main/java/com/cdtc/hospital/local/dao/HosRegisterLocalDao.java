@@ -1,33 +1,20 @@
-package com.cdtc.hospital.network.dao;
+package com.cdtc.hospital.local.dao;
 
 import com.cdtc.hospital.network.entity.HosRegister;
 
 import java.util.List;
 
-public interface HosRegisterDao {
-
-    /**
-     * 分页+条件查询
-     *
-     * @param hosR_id
-     * @param d_name
-     * @param d_keshi
-     * @return
-     */
-    public List<HosRegister> selectByCondition(Integer hosR_id, String d_name, String d_keshi);
+public interface HosRegisterLocalDao {
 
     public List<HosRegister> queryHosRegisters();
 
     /**
-     * 条件查询出总记录数
+     * 条件查询
      *
      * @param hosR_id
-     * @param d_name
-     * @param d_keshi
      * @return
      */
-    public Integer getHosRegisterCount(Integer hosR_id, String d_name,
-                                       String d_keshi);
+    public List<HosRegister> selectByCondition(Integer hosR_id);
 
     /**
      * 根据id查询出挂号信息

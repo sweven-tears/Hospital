@@ -4,15 +4,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cdtc.hospital.network.dao.AccountDao;
+import com.cdtc.hospital.network.dao.BeHospitalDao;
 import com.cdtc.hospital.network.dao.BaseDao;
-import com.cdtc.hospital.network.entity.Account;
+import com.cdtc.hospital.network.entity.BeHospital;
 
-public class AccountDaoImpl extends BaseDao implements AccountDao {
+public class BeHospitalDaoImpl extends BaseDao implements BeHospitalDao {
 
     @Override
-    public List<Object> selectAccountByPageCondition(Account account) {
-        List<Object> accounts = new ArrayList<>();
+    public List<BeHospital> selectBeHospitalByCondition(BeHospital beHospital) {
+        List<BeHospital> beHospitals = new ArrayList<>();
         StringBuilder sql = new StringBuilder(
                 "SELECT * FROM "
                         + "(SELECT "
@@ -30,40 +30,40 @@ public class AccountDaoImpl extends BaseDao implements AccountDao {
                         + "FROM hosregister hos WHERE hos.hosR_id=be.hosR_id) AS d_keshi,"
                         + "beH_state, "
                         + "(SELECT hos.hosR_state FROM hosregister hos WHERE hos.hosR_id=be.hosR_id) AS hosR_state  "
-                        + " FROM behospital AS be) AS account WHERE 1=1");
+                        + " FROM behospital AS be) AS beHospital WHERE 1=1");
         List<Object> params = new ArrayList<>();
-        if (account != null) {
-            if (account.getBeH_id() != null) {
+        if (beHospital != null) {
+            if (beHospital.getBeH_id() != null) {
                 sql.append(" and beH_id like ? ");
-                params.add("%" + account.getBeH_id() + "%");
+                params.add("%" + beHospital.getBeH_id() + "%");
             }
-            if (account.getD_name() != null && !account.getD_name().equals("")) {
+            if (beHospital.getD_name() != null && !beHospital.getD_name().equals("")) {
                 sql.append(" and d_name like ? ");
-                params.add("%" + account.getD_name() + "%");
+                params.add("%" + beHospital.getD_name() + "%");
             }
-            if (account.getD_keshi() != null && !account.getD_keshi().equals("")) {
+            if (beHospital.getD_keshi() != null && !beHospital.getD_keshi().equals("")) {
                 sql.append(" and d_keshi like ? ");
-                params.add("%" + account.getD_keshi() + "%");
+                params.add("%" + beHospital.getD_keshi() + "%");
             }
         }
 
         rs = query(sql.toString(), params.toArray());
         try {
             while (rs.next()) {
-                account = new Account();
-                account.setBeH_id(rs.getInt("beH_id"));
-                account.setHosR_name(rs.getString("hosR_name"));
-                account.setBeH_patBed(rs.getString("beH_patBed"));
-                account.setHosR_phone(rs.getString("hosR_phone"));
-                account.setBeH_antecedent(rs.getDouble("beH_antecedent"));
-                account.setD_name(rs.getString("d_name"));
-                account.setBeH_createTime(rs.getDate("beH_createTime"));
-                account.setD_keshi(rs.getString("d_keshi"));
-                account.setBeH_state(rs.getInt("beH_state"));
-                account.setHosR_state(rs.getInt("hosR_state"));
-                accounts.add(account);
+                beHospital = new BeHospital();
+                beHospital.setBeH_id(rs.getInt("beH_id"));
+                beHospital.setHosR_name(rs.getString("hosR_name"));
+                beHospital.setBeH_patBed(rs.getString("beH_patBed"));
+                beHospital.setHosR_phone(rs.getString("hosR_phone"));
+                beHospital.setBeH_antecedent(rs.getDouble("beH_antecedent"));
+                beHospital.setD_name(rs.getString("d_name"));
+                beHospital.setBeH_createTime(rs.getDate("beH_createTime"));
+                beHospital.setD_keshi(rs.getString("d_keshi"));
+                beHospital.setBeH_state(rs.getInt("beH_state"));
+                beHospital.setHosR_state(rs.getInt("hosR_state"));
+                beHospitals.add(beHospital);
             }
-            return accounts;
+            return beHospitals;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -73,7 +73,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao {
     }
 
     @Override
-    public Integer queryAccountCount(Account account) {
+    public Integer queryBeHospitalCount(BeHospital beHospital) {
         StringBuilder sql = new StringBuilder(
                 "SELECT count(*) count FROM "
                         + "(SELECT "
@@ -89,20 +89,20 @@ public class AccountDaoImpl extends BaseDao implements AccountDao {
                         + "(SELECT doc.d_keshi FROM doctor AS doc WHERE doc.d_id=hos.d_id)"
                         + "FROM hosregister hos WHERE hos.hosR_id=be.hosR_id) AS d_keshi,"
                         + "beH_state "
-                        + " FROM behospital AS be) AS account WHERE 1=1 ");
+                        + " FROM behospital AS be) AS beHospital WHERE 1=1 ");
         List<Object> params = new ArrayList<>();
-        if (account != null) {
-            if (account.getBeH_id() != null) {
+        if (beHospital != null) {
+            if (beHospital.getBeH_id() != null) {
                 sql.append(" and beH_id like ? ");
-                params.add("%" + account.getBeH_id() + "%");
+                params.add("%" + beHospital.getBeH_id() + "%");
             }
-            if (account.getD_name() != null && !account.getD_name().equals("")) {
+            if (beHospital.getD_name() != null && !beHospital.getD_name().equals("")) {
                 sql.append(" and d_name like ? ");
-                params.add("%" + account.getD_name() + "%");
+                params.add("%" + beHospital.getD_name() + "%");
             }
-            if (account.getD_keshi() != null && !account.getD_keshi().equals("")) {
+            if (beHospital.getD_keshi() != null && !beHospital.getD_keshi().equals("")) {
                 sql.append(" and d_keshi like ? ");
-                params.add("%" + account.getD_keshi() + "%");
+                params.add("%" + beHospital.getD_keshi() + "%");
             }
         }
 
@@ -146,19 +146,19 @@ public class AccountDaoImpl extends BaseDao implements AccountDao {
     }
 
     @Override
-    public Account queryNurseBedById(Integer beH_id) {
+    public BeHospital queryNurseBedById(Integer beH_id) {
 
         sql = "SELECT beH_nursePeople,beH_patBed FROM behospital WHERE beH_id=?";
         Object[] objects = {beH_id};
         rs = query(sql, objects);
         try {
             if (rs.next()) {
-                Account account = new Account();
+                BeHospital beHospital = new BeHospital();
                 String beH_nursePeople = rs.getString("beH_nursePeople");
                 String beH_patBed = rs.getString("beH_patBed");
-                account.setBeH_nursePeople(beH_nursePeople);
-                account.setBeH_patBed(beH_patBed);
-                return account;
+                beHospital.setBeH_nursePeople(beH_nursePeople);
+                beHospital.setBeH_patBed(beH_patBed);
+                return beHospital;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -177,18 +177,18 @@ public class AccountDaoImpl extends BaseDao implements AccountDao {
     }
 
     @Override
-    public Integer addAccount(Account account) {
+    public Integer addBeHospital(BeHospital beHospital) {
         sql = "insert into behospital values(0,?,?,?,?,0,0,?,?)";
-        Object[] objects = {account.getBeH_nursePeople(),
-                account.getBeH_patBed(), account.getBeH_antecedent(),
-                account.getBeH_illness(), account.getHosR_id(), null};
+        Object[] objects = {beHospital.getBeH_nursePeople(),
+                beHospital.getBeH_patBed(), beHospital.getBeH_antecedent(),
+                beHospital.getBeH_illness(), beHospital.getHosR_id(), null};
         int result = update(sql, objects);
         close();
         return result;
     }
 
     @Override
-    public Account queryAccountByIdForAntecedent(Integer beH_id) {
+    public BeHospital queryBeHospitalByIdForAntecedent(Integer beH_id) {
         sql = " SELECT b.beH_id,b.beH_antecedent,"
                 + "(SELECT h.hosR_name FROM hosregister h WHERE h.hosR_id=b.hosR_id ) AS hosR_name,"
                 + " (SELECT h.hosR_idCard FROM hosregister h WHERE h.hosR_id=b.hosR_id ) AS hosR_idCard "
@@ -197,12 +197,12 @@ public class AccountDaoImpl extends BaseDao implements AccountDao {
         rs = query(sql, objects);
         try {
             if (rs.next()) {
-                Account account = new Account();
-                account.setBeH_id(rs.getInt("beH_id"));
-                account.setHosR_name(rs.getString("hosR_name"));
-                account.setHosR_idCard(rs.getString("hosR_idCard"));
-                account.setBeH_antecedent(rs.getDouble("beH_antecedent"));
-                return account;
+                BeHospital beHospital = new BeHospital();
+                beHospital.setBeH_id(rs.getInt("beH_id"));
+                beHospital.setHosR_name(rs.getString("hosR_name"));
+                beHospital.setHosR_idCard(rs.getString("hosR_idCard"));
+                beHospital.setBeH_antecedent(rs.getDouble("beH_antecedent"));
+                return beHospital;
             }
         } catch (SQLException e) {
             e.printStackTrace();

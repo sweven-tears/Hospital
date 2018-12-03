@@ -1,7 +1,7 @@
 package com.cdtc.hospital.adapter;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cdtc.hospital.R;
+import com.cdtc.hospital.local.dao.BaseLocalDao;
+import com.cdtc.hospital.local.dao.DoctorLocalDao;
+import com.cdtc.hospital.local.dao.impl.DoctorLocalDaoImpl;
+import com.cdtc.hospital.network.entity.Doctor;
 import com.cdtc.hospital.network.entity.HosRegister;
 
 import java.text.SimpleDateFormat;
@@ -22,14 +26,14 @@ import java.util.List;
  */
 public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.HosRegisterViewHold> {
 
-    private Context context;
+    private Activity activity;
     private List<HosRegister> hosRegisters;
     private LayoutInflater inflater;
 
-    public HosRegisterAdapter(Context context, List<HosRegister> hosRegisters) {
-        this.context = context;
+    public HosRegisterAdapter(Activity activity, List<HosRegister> hosRegisters) {
+        this.activity = activity;
         this.hosRegisters = hosRegisters;
-        this.inflater = LayoutInflater.from(context);
+        this.inflater = LayoutInflater.from(activity);
     }
 
     @NonNull
@@ -43,13 +47,17 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
     @Override
     public void onBindViewHolder(@NonNull HosRegisterViewHold hosRegisterViewHold, int position) {
         HosRegister hosRegister=hosRegisters.get(position);
+
+        DoctorLocalDao doctorLocalDao=new DoctorLocalDaoImpl(activity,BaseLocalDao.QUERY_DATABASE);
+        Doctor doctor=doctorLocalDao.queryDoctorById(hosRegister.getD_id());
+
         hosRegisterViewHold.hosR_id.setText(String.valueOf(hosRegister.getHosR_id()));
-        hosRegisterViewHold.d_name.setText(hosRegister.getD_name());
+        hosRegisterViewHold.d_name.setText(doctor.getD_name());
 
         Date date=hosRegister.getHosR_createTime();
-        hosRegisterViewHold.hosR_createTime.setText(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date));
+        hosRegisterViewHold.hosR_createTime.setText(new SimpleDateFormat("yyyy-MM-dd").format(date));
 
-        hosRegisterViewHold.d_keshi.setText(hosRegister.getD_keshi());
+        hosRegisterViewHold.d_keshi.setText(doctor.getD_keshi());
 
         Integer hosR_state=hosRegister.getHosR_state();
 //        挂号状态0挂号1住院2出院3退号4退院

@@ -87,6 +87,21 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         init();
     }
 
+    /**
+     * @param cls 需要启动的activity
+     * @param bundle 数据
+     */
+    protected void startActivity(Class<?> cls,Bundle bundle){
+        Intent intent=new Intent(activity,cls);
+        if (bundle!=null) {
+            intent.putExtras(bundle);
+        }
+        startActivity(intent);
+    }
+
+    /**
+     * @param cls 需要启动的activity
+     */
     protected void startActivity(Class<?> cls){
         Intent intent=new Intent(activity,cls);
         startActivity(intent);

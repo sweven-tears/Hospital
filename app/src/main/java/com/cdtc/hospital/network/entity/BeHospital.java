@@ -12,7 +12,7 @@ import java.sql.Date;
  * quote table:
  *
  */
-public class Account {
+public class BeHospital {
 	/*
 	 * 住院编号
 	 */
@@ -211,7 +211,7 @@ public class Account {
 
 	@Override
 	public String toString() {
-		return "Account [beH_id=" + beH_id + ", beH_nursePeople="
+		return "BeHospital [beH_id=" + beH_id + ", beH_nursePeople="
 				+ beH_nursePeople + ", beH_patBed=" + beH_patBed
 				+ ", beH_antecedent=" + beH_antecedent + ", beH_illness="
 				+ beH_illness + ", beH_closePrice=" + beH_closePrice

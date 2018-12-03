@@ -1,26 +1,26 @@
 package com.cdtc.hospital.network.dao;
 
-import com.cdtc.hospital.network.entity.Account;
+import com.cdtc.hospital.network.entity.BeHospital;
 
 import java.util.List;
 
-public interface AccountDao {
+public interface BeHospitalDao {
 
     /**
      * 分页+条件查询
      *
-     * @param account
+     * @param beHospital
      * @return
      */
-    public List<Object> selectAccountByPageCondition(Account account);
+    public List<BeHospital> selectBeHospitalByCondition(BeHospital beHospital);
 
     /**
      * 计算behospital表的数据总数
      *
-     * @param account
+     * @param beHospital
      * @return
      */
-    public Integer queryAccountCount(Account account);
+    public Integer queryBeHospitalCount(BeHospital beHospital);
 
     /**
      * 根据住院编号更新住院状态
@@ -45,7 +45,7 @@ public interface AccountDao {
      * @param beH_id
      * @return
      */
-    public Account queryNurseBedById(Integer beH_id);
+    public BeHospital queryNurseBedById(Integer beH_id);
 
     /**
      * 通过id更新护理人员和床号
@@ -61,10 +61,10 @@ public interface AccountDao {
     /**
      * 添加信息
      *
-     * @param account
+     * @param beHospital
      * @return
      */
-    public Integer addAccount(Account account);
+    public Integer addBeHospital(BeHospital beHospital);
 
     /**
      * 为缴纳押金页面查询信息
@@ -72,7 +72,7 @@ public interface AccountDao {
      * @param beH_id
      * @return
      */
-    public Account queryAccountByIdForAntecedent(Integer beH_id);
+    public BeHospital queryBeHospitalByIdForAntecedent(Integer beH_id);
 
     /**
      * 根据id修改缴纳押金

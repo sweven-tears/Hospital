@@ -1,4 +1,4 @@
-package com.cdtc.hospital.local;
+package com.cdtc.hospital.local.dao;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -6,22 +6,29 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.cdtc.hospital.base.App;
+import com.cdtc.hospital.local.DatabaseHelper;
 import com.cdtc.hospital.util.LogUtil;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Map;
 
+
 /**
- * Created by Sweven on 2018/11/28.
- * Email:sweventears@Foxmail.com
+ * @author sweven
+ * @version 1.0
+ * 连接数据库
  */
-public class SQLite {
+public class BaseLocalDao {
 
     private Activity activity;
     private DatabaseHelper database_helper;
-    public SQLiteDatabase db;
+    private SQLiteDatabase db;
     private String dataBaseName;
-    private String tableName;
 
     public static final int QUERY_DATABASE = 1;
     public static final int UPDATE_DATABASE = 2;
@@ -30,10 +37,9 @@ public class SQLite {
     /**
      * @param activity     上下文
      * @param dataBaseName 库名，默认 hospital.db
-     * @param tableName    需要操作的表名
      * @param type         创建并读取库 or 更新库的数据
      */
-    public SQLite(Activity activity, String dataBaseName, String tableName, int type) {
+    public BaseLocalDao(Activity activity, String dataBaseName, int type) {
         this.activity = activity;
 
         if (dataBaseName == null || dataBaseName.equals("")) {
@@ -41,8 +47,6 @@ public class SQLite {
             dataBaseName = App.DATA_BASE +".db";
         }
         this.dataBaseName = dataBaseName;
-
-        this.tableName = tableName;
 
         if (type == QUERY_DATABASE) {
             // 查询数据库
@@ -60,7 +64,6 @@ public class SQLite {
      */
     private void queryDataBase() {
         database_helper = new DatabaseHelper(activity, dataBaseName);
-        //只有调用getReadableDatabase()或者getWriteableDatabase()函数后才能返回一个SQLiteDatabase对象
         db = database_helper.getReadableDatabase();
     }
 
@@ -74,8 +77,7 @@ public class SQLite {
     }
 
 
-    public long insert(Map<String, Object> map) {
-        // 生成contentValues对象，该对象用来存数据的
+    public long insert(String tableName,Map<String, Object> map) {
         ContentValues values = new ContentValues();
         for (String key : map.keySet()) {
             Object o = map.get(key);
@@ -118,7 +120,7 @@ public class SQLite {
         return db.insert(tableName, null, values);
     }
 
-    public int update(Map<String, Object> map, String whereClause, String[] whereArgs) {
+    public int update(String tableName,Map<String, Object> map, String whereClause, String[] whereArgs) {
         ContentValues values = new ContentValues();
         for (String key : map.keySet()) {
             Object o = map.get(key);
@@ -158,26 +160,15 @@ public class SQLite {
             }
 
         }
-        //参数1为表名，参数2为更新后的值，参数3表示满足条件的列名称 例:id=?，参数4为该列名下的值
         return db.update(tableName, values, whereClause, whereArgs);
     }
 
-    public Cursor query(String[] columns,String selection,String[] selectionArgs) {
-        //查询的语法，参数1为表名；参数2为表中的列名；参数3为要查询的列名；参数4为对应列的值；该函数返回的是一个游标
-//        Cursor cursor = db.query(tableName, new String[]{"id", "name"}, "id=?", new String[]{"1"}, null, null, null);
+    public Cursor query(String tableName,String[] columns, String selection, String[] selectionArgs) {
         Cursor cursor = db.query(tableName, columns, selection, selectionArgs, null, null, null);
-        //遍历每一个记录
-//        while (cursor.moveToNext()) {
-//            String value = cursor.getString(cursor.getColumnIndex(columns[0]));//返回列名为 columns[1] 的值
-//            System.out.println("query---->" + value);
-//        }
         return cursor;
     }
 
-    public int delete(String whereClause,String[] whereArgs) {
-        //直接删除 whereClause(例：name=?) 为 whereArgs[0] 对应的那条记录
+    public int delete(String tableName,String whereClause,String[] whereArgs) {
         return db.delete(tableName, whereClause, whereArgs);
     }
-
-
 }

@@ -1,18 +1,26 @@
 package com.cdtc.hospital.view;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.cdtc.hospital.R;
 import com.cdtc.hospital.adapter.HosRegisterAdapter;
 import com.cdtc.hospital.base.BaseActivity;
+import com.cdtc.hospital.local.dao.BaseLocalDao;
+import com.cdtc.hospital.local.dao.DoctorLocalDao;
+import com.cdtc.hospital.local.dao.HosRegisterLocalDao;
+import com.cdtc.hospital.local.dao.impl.DoctorLocalDaoImpl;
+import com.cdtc.hospital.local.dao.impl.HosRegisterLocalDaoImpl;
 import com.cdtc.hospital.network.dao.HosRegisterDao;
 import com.cdtc.hospital.network.dao.impl.HosRegisterDaoImpl;
+import com.cdtc.hospital.network.entity.Doctor;
 import com.cdtc.hospital.network.entity.HosRegister;
 
 import java.util.ArrayList;
@@ -24,6 +32,8 @@ public class HosRegisterActivity extends BaseActivity {
     private RecyclerView hosRegisterRecyclerView;
     private HosRegisterAdapter hosRegisterAdapter;
     private QueryHosRegisterTask mAuthTask;
+
+    private static List<HosRegister> list;
 
     private EditText searchHosR_id;
     private EditText searchD_name;
@@ -40,6 +50,10 @@ public class HosRegisterActivity extends BaseActivity {
 
         bindViewId();
         initData();
+        setCustomerActionBar(KeyActionBarButtonKind.ACTIONBAR_LEFT,BTN_TYPE_IMG,R.drawable.ic_keyboard_arrow_left_black_24dp);
+        setCustomerActionBar(KeyActionBarButtonKind.ACTIONBAR_RIGHT,BTN_TYPE_TEXT,"门诊挂号");
+        showLeftButton();
+        showRightButton();
 
     }
 
@@ -61,25 +75,18 @@ public class HosRegisterActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        List<HosRegister> hosRegisters = new ArrayList<>();
-        HosRegister hosRegister = new HosRegister();
-        hosRegister.setHosR_id(1001);
-        hosRegister.setD_name("heming");
-        hosRegister.setHosR_createTime(new Date());
-        hosRegister.setD_keshi("shenjingke");
-        hosRegister.setHosR_state(1);
-        for (int i = 0; i < 10; i++) {
-            hosRegisters.add(i,hosRegister);
-        }
-        getHosRegisterList();
-        hosRegisterAdapter = new HosRegisterAdapter(activity, hosRegisters);
-        hosRegisterRecyclerView.setAdapter(hosRegisterAdapter);
+
+        InputMethodManager inputMethodManager= (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(searchHosR_id.getWindowToken(),0);
+
+        searchHosRegisterList();
+
     }
 
     /**
-     * 获取 HosRegisterList
+     * 获取 HosRegisterList （条件查询数据或查询所有数据）
      */
-    private void getHosRegisterList() {
+    private void searchHosRegisterList() {
         if (mAuthTask != null) {
             return;
         }
@@ -104,12 +111,10 @@ public class HosRegisterActivity extends BaseActivity {
             mAuthTask = new QueryHosRegisterTask(hosR_id, d_name, d_keshi);
             mAuthTask.execute();
         }
-    }
-
-
-
-    private void search() {
-
+        HosRegisterLocalDao hosRegisterLocalDao=new HosRegisterLocalDaoImpl(activity,BaseLocalDao.QUERY_DATABASE);
+        List<HosRegister> hosRegisters = hosRegisterLocalDao.queryHosRegisters();
+        hosRegisterAdapter = new HosRegisterAdapter(activity, hosRegisters);
+        hosRegisterRecyclerView.setAdapter(hosRegisterAdapter);
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -134,8 +139,8 @@ public class HosRegisterActivity extends BaseActivity {
         }
 
         @Override
-        protected void onPostExecute(final List<HosRegister> list) {
-
+        protected void onPostExecute(final List<HosRegister> hosRegisters) {
+            list=hosRegisters;
         }
 
         @Override
