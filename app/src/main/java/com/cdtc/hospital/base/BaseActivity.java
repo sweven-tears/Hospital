@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -84,6 +85,26 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         activity = this;
         init();
+    }
+
+    /**
+     * @param cls 需要启动的activity
+     * @param bundle 数据
+     */
+    protected void startActivity(Class<?> cls,Bundle bundle){
+        Intent intent=new Intent(activity,cls);
+        if (bundle!=null) {
+            intent.putExtras(bundle);
+        }
+        startActivity(intent);
+    }
+
+    /**
+     * @param cls 需要启动的activity
+     */
+    protected void startActivity(Class<?> cls){
+        Intent intent=new Intent(activity,cls);
+        startActivity(intent);
     }
 
     /**

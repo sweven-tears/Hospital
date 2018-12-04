@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/total_panel">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="140dp"
+        android:id="@+id/top_panel"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:id="@+id/welcome"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:text="@string/app_name"
+            android:textColor="@color/red"
+            android:textSize="25sp"
+            android:typeface="serif" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/button_panel"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/top_panel">
+
+        <ImageButton
+            android:id="@+id/gua_hao"
+            android:layout_width="180dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/guahao"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
+            android:id="@+id/zhu_yuan"
+            android:layout_width="180dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/zhuyuan"
+            tools:ignore="ContentDescription" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
