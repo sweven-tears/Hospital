@@ -17,6 +17,8 @@ public interface DoctorLocalDao {
 	 * @return
 	 */
 	public List<String> queryKeshiList();
+
+	public List<String> queryNameByKeshi(String d_keshi);
 	
 	/**
 	 * 根据科室查询医生信息列表 

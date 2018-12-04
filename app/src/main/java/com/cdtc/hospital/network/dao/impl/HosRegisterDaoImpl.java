@@ -47,6 +47,75 @@ public class HosRegisterDaoImpl extends BaseDao implements HosRegisterDao {
     }
 
     @Override
+    public Integer addHosRegister(HosRegister hosRegister) {
+        sql = "insert into hosregister values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        Object[] objects = {0,
+                hosRegister.getHosR_name(),
+                hosRegister.getHosR_idCard(),
+                hosRegister.getHosR_medical(),
+                hosRegister.getHosR_regPrice(),
+                hosRegister.getHosR_phone(),
+                hosRegister.getHosR_selfPrice(),
+                hosRegister.getHosR_sex(),
+                hosRegister.getHosR_age(),
+                hosRegister.getHosR_work(),
+                hosRegister.getHosR_lookDoctor(),
+                hosRegister.getD_id(),
+                null,
+                hosRegister.getHosR_remark(),
+                0};
+        return update(sql, objects);
+    }
+
+    @Override
+    public Integer updateHosRegisterById(HosRegister hosRegister) {
+        sql = "UPDATE hosregister SET " +
+                "hosR_name=?," +
+                "hosR_idCard=?," +
+                "hosR_medical=?," +
+                "hosR_regPrice=?," +
+                "hosR_phone=?," +
+                "hosR_selfPrice=?," +
+                "hosR_sex=?," +
+                "hosR_age=?," +
+                "hosR_work=?," +
+                "hosR_lookDoctor=?," +
+                "d_id=?," +
+                "hosR_remark=? " +
+                " WHERE hosR_id=?";
+        Object[] objects = {
+                hosRegister.getHosR_name(),
+                hosRegister.getHosR_idCard(),
+                hosRegister.getHosR_medical(),
+                hosRegister.getHosR_regPrice(),
+                hosRegister.getHosR_phone(),
+                hosRegister.getHosR_selfPrice(),
+                hosRegister.getHosR_sex(),
+                hosRegister.getHosR_age(),
+                hosRegister.getHosR_work(),
+                hosRegister.getHosR_lookDoctor(),
+                hosRegister.getD_id(),
+                hosRegister.getHosR_remark(),
+                hosRegister.getHosR_id()};
+        int result = update(sql, objects);
+        close();
+        return result;
+    }
+
+    @Override
+    public Integer deleteHosRegisterById(Integer hosR_id) {
+        sql = "delete from hosregister where hosR_id=?";
+        Object[] objects = {hosR_id};
+        int result = update(sql, objects);
+        close();
+        return result;
+    }
+
+
+
+    /*---------------------------------------以下为从未使用过的方法--------------------------------------------*/
+
+    @Override
     public List<HosRegister> selectByCondition(Integer hosR_id, String d_name, String d_keshi) {
         List<HosRegister> hosRegisters = new ArrayList<>();
         List<Object> params = new ArrayList<>();
@@ -158,71 +227,6 @@ public class HosRegisterDaoImpl extends BaseDao implements HosRegisterDao {
             close();
         }
         return null;
-    }
-
-    @Override
-    public Integer addHosRegister(HosRegister hosRegister) {
-        sql = "insert into hosregister values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        Object[] objects = {0,
-                hosRegister.getHosR_name(),
-                hosRegister.getHosR_idCard(),
-                hosRegister.getHosR_medical(),
-                hosRegister.getHosR_regPrice(),
-                hosRegister.getHosR_phone(),
-                hosRegister.getHosR_selfPrice(),
-                hosRegister.getHosR_sex(),
-                hosRegister.getHosR_age(),
-                hosRegister.getHosR_work(),
-                hosRegister.getHosR_lookDoctor(),
-                hosRegister.getD_id(),
-                null,
-                hosRegister.getHosR_remark(),
-                0};
-        return update(sql, objects);
-    }
-
-    @Override
-    public Integer updateHosRegisterById(HosRegister hosRegister) {
-        sql = "UPDATE hosregister SET " +
-                "hosR_name=?," +
-                "hosR_idCard=?," +
-                "hosR_medical=?," +
-                "hosR_regPrice=?," +
-                "hosR_phone=?," +
-                "hosR_selfPrice=?," +
-                "hosR_sex=?," +
-                "hosR_age=?," +
-                "hosR_work=?," +
-                "hosR_lookDoctor=?," +
-                "d_id=?," +
-                "hosR_remark=? " +
-                " WHERE hosR_id=?";
-        Object[] objects = {
-                hosRegister.getHosR_name(),
-                hosRegister.getHosR_idCard(),
-                hosRegister.getHosR_medical(),
-                hosRegister.getHosR_regPrice(),
-                hosRegister.getHosR_phone(),
-                hosRegister.getHosR_selfPrice(),
-                hosRegister.getHosR_sex(),
-                hosRegister.getHosR_age(),
-                hosRegister.getHosR_work(),
-                hosRegister.getHosR_lookDoctor(),
-                hosRegister.getD_id(),
-                hosRegister.getHosR_remark(),
-                hosRegister.getHosR_id()};
-        int result = update(sql, objects);
-        close();
-        return result;
-    }
-
-    @Override
-    public Integer deleteHosRegisterById(Integer hosR_id) {
-        sql = "delete from hosregister where hosR_id=?";
-        Object[] objects = {hosR_id};
-        int result = update(sql, objects);
-        close();
-        return result;
     }
 
 }

@@ -14,7 +14,7 @@ public interface HosRegisterLocalDao {
      * @param hosR_id
      * @return
      */
-    public List<HosRegister> selectByCondition(Integer hosR_id);
+    public List<HosRegister> queryByCondition(Integer hosR_id);
 
     /**
      * 根据id查询出挂号信息

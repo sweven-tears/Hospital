@@ -8,4 +8,14 @@
         <item>李银松</item>
         <item>李希</item>
     </string-array>
+
+    <string-array name="骨科">
+        <item>王五</item>
+        <item>赵云</item>
+        <item>崔东</item>
+    </string-array>
+    
+    <string-array name="血液科" >
+        <item>大张伟</item>
+    </string-array>
 </resources>

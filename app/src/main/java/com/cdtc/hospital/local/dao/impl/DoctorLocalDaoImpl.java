@@ -13,8 +13,10 @@ import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Sweven on 2018/12/1.
@@ -80,7 +82,26 @@ public class DoctorLocalDaoImpl extends BaseLocalDao implements DoctorLocalDao {
 
     @Override
     public List<String> queryKeshiList() {
-        return null;
+        Set<String> set=new HashSet<>();
+        String[] columns=new String[]{"d_keshi"};
+        Cursor cursor=query(App.TABLE_DOCTOR,columns,null,null);
+        while (cursor.moveToNext()){
+            set.add(cursor.getString(cursor.getColumnIndex(columns[0])));
+        }
+        return new ArrayList<>(set);
+    }
+
+    @Override
+    public List<String> queryNameByKeshi(String d_keshi) {
+        Set<String> set=new HashSet<>();
+        String[] columns=new String[]{"d_name"};
+        String selection="d_keshi=?";
+        String[] selectionArgs=new String[]{d_keshi};
+        Cursor cursor=query(App.TABLE_DOCTOR,columns,selection,selectionArgs);
+        while (cursor.moveToNext()){
+            set.add(cursor.getString(cursor.getColumnIndex(columns[0])));
+        }
+        return new ArrayList<>(set);
     }
 
     @Override

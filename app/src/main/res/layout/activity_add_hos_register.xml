@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:scrollbars="horizontal"
+        tools:context=".view.AddHosRegisterActivity">
+
+        <LinearLayout
+            android:id="@+id/panel_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_hos_name"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="姓名"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/hos_r_name"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:lines="1"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/panel_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/panel_1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_hos_idcard"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="身份证号"
+                android:textSize="20dp"
+                tools:ignore="TextViewEdits" />
+
+            <EditText
+                android:id="@+id/hos_r_id_card"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:digits="1234567890Xx"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:lines="1"
+                android:maxLength="18"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/panel_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/panel_2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_hos_medical"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="社保号"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/hos_r_medical"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:lines="1"
+                android:maxLength="19"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/panel_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/panel_3"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_hos_reg_price"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="挂号费"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/hos_r_reg_price"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="元"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/panel_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/panel_4"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_hos_phone"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="联系电话"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/hos_r_phone"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
+                android:lines="1"
+                android:maxLength="11"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/panel_6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/panel_5"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_hos_self_price"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="是否自费"
+                android:textSize="20dp" />
+
+            <RadioGroup
+                android:id="@+id/hos_r_self_price"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:text="否"
+                    android:textSize="20dp" />
+
+                <RadioButton
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:text="是"
+                    android:textSize="20dp" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/panel_7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/panel_6"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_hos_sex"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="性别"
+                android:textSize="20dp" />
+
+            <RadioGroup
+                android:id="@+id/hos_r_sex"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:text="男"
+                    android:textSize="20dp" />
+
+                <RadioButton
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:text="女"
+                    android:textSize="20dp" />
+
+            </RadioGroup>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/panel_8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/panel_7"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_hos_age"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="年龄"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/hos_r_age"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:lines="1"
+                android:maxLength="3"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/panel_9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/panel_8"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_hos_work"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="职业"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/hos_r_work"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:lines="1"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/panel_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/panel_9"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_hos_look_doctor"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="初复诊"
+                android:textSize="20dp" />
+
+            <RadioGroup
+                android:id="@+id/hos_r_look_doctor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:text="初诊"
+                    android:textSize="20dp" />
+
+                <RadioButton
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:text="复诊"
+                    android:textSize="20dp" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/panel_11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/panel_10"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_d_keshi"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="所挂科室"
+                android:textSize="20dp" />
+
+            <Spinner
+                android:id="@+id/d_keshi"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:entries="@array/keshi"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/panel_12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/panel_11"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_d_name"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="指定医生"
+                android:textSize="20dp" />
+
+            <Spinner
+                android:id="@+id/d_name"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:entries="@array/doctor"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/panel_13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/panel_12"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_hos_remark"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:gravity="center|start"
+                android:text="备注"
+                android:textSize="20dp" />
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollbarAlwaysDrawHorizontalTrack="true"
+                android:scrollbars="horizontal">
+
+                <EditText
+                    android:id="@+id/hos_r_remark"
+                    android:layout_width="200dp"
+                    android:layout_height="60dp"
+                    android:maxLines="8"
+                    android:background="@drawable/text_area"
+                    android:textSize="20dp" />
+
+            </ScrollView>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</ScrollView>

@@ -30,15 +30,15 @@
 
         <ImageView
             android:id="@+id/image_title_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
             tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/text_title_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:text="back"
             android:textColor="@color/white"
@@ -59,15 +59,15 @@
 
         <ImageView
             android:id="@+id/image_title_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:visibility="gone"
             tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/text_title_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:text="done"
             android:textColor="@color/white"

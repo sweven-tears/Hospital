@@ -79,7 +79,7 @@ public class DatabaseHelper  extends SQLiteOpenHelper {
                 "  hosR_work varchar(255) DEFAULT NULL ," +
                 "  hosR_lookDoctor int(1) NOT NULL DEFAULT '0' ," +
                 "  d_id int(11) references doctor(d_id)," +
-                "  hosR_createTime varcahr(32) NOT NULL DEFAULT CURRENT_TIMESTAMP ," +
+                "  hosR_createTime varcahr(32) DEFAULT CURRENT_TIMESTAMP," +
                 "  hosR_remark varchar(255) DEFAULT NULL  ," +
                 "  hosR_state int(1) NOT NULL DEFAULT '0'" +
                 ")");

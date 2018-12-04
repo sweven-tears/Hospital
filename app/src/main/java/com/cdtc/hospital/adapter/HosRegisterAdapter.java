@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cdtc.hospital.R;
@@ -47,6 +48,15 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
     @Override
     public void onBindViewHolder(@NonNull HosRegisterViewHold hosRegisterViewHold, int position) {
         HosRegister hosRegister=hosRegisters.get(position);
+        if (hosRegister==null){
+            hosRegisterViewHold.hosRegisterInfoView.removeAllViews();
+            TextView view=new TextView(activity);
+            view.setText("无数据");
+            view.setTextSize(38);
+            hosRegisterViewHold.hosRegisterInfoView.addView(view);
+            view.setGravity(View.TEXT_ALIGNMENT_CENTER);
+            return;
+        }
 
         DoctorLocalDao doctorLocalDao=new DoctorLocalDaoImpl(activity,BaseLocalDao.QUERY_DATABASE);
         Doctor doctor=doctorLocalDao.queryDoctorById(hosRegister.getD_id());
@@ -74,6 +84,11 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
         }
     }
 
+    public void insertHosRegister(HosRegister hosRegister){
+        hosRegisters.add(hosRegister);
+        notifyItemInserted(hosRegisters.size()-1);
+    }
+
     @Override
     public int getItemCount() {
         return hosRegisters.size();
@@ -81,6 +96,7 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
 
     class HosRegisterViewHold extends RecyclerView.ViewHolder {
 
+        private LinearLayout hosRegisterInfoView;
         private TextView hosR_id;
         private TextView d_name;
         private TextView hosR_createTime;
@@ -89,6 +105,7 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
 
         HosRegisterViewHold(@NonNull View itemView) {
             super(itemView);
+            hosRegisterInfoView=itemView.findViewById(R.id.hos_register_info_view);
             hosR_id = itemView.findViewById(R.id.hos_r_id);
             d_name = itemView.findViewById(R.id.d_name);
             hosR_createTime = itemView.findViewById(R.id.hos_r_create_time);

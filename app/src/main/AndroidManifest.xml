@@ -26,9 +26,13 @@
         </activity>
         <activity
             android:name=".view.LoginActivity"
-            android:label="@string/title_activity_login" />
-        <activity android:name=".view.HosRegisterActivity" />
-        <activity android:name=".view.ListActivity"/>
+            android:label="@string/title_activity_login"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".view.HosRegisterActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".view.ListActivity" />
+        <activity android:name=".view.AddHosRegisterActivity"/>
     </application>
 
 </manifest>

@@ -12,11 +12,6 @@ import java.util.List;
  */
 public interface UserDao {
 
-	/*
-	 * 根据登录名查询出User对象
-	 */
-	User selectByLoginName(String u_loginName);
-
 	List<User> queryAllUser();
 
 }

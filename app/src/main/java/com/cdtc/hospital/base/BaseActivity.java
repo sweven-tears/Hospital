@@ -245,7 +245,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
      * 左边按键的监听事件
      */
     protected void leftDoWhat() {
-        BaseActivity.this.finish();
+        this.finish();
     }
 
     /**
