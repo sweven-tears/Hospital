@@ -1,322 +1,676 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_gravity="center"
+    android:scrollbars="horizontal"
+    android:layout_marginBottom="20dp"
+    tools:context=".view.AddHosRegisterActivity"
+    tools:ignore="RtlSymmetry">
 
-
-    >
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center_vertical"
+        android:background="#66CCFF"
+        android:visibility="visible" />
 
     <LinearLayout
+        android:id="@+id/panel_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:orientation="horizontal">
 
-
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
-            android:text="姓名"
-            android:textSize="20sp"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/textView18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="康钊"
-            android:textSize="20sp"
-            tools:ignore="MissingConstraints" />
         <View
-            android:layout_width="1dip"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:background="#66CCFF"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
 
         <TextView
-            android:id="@+id/textView6"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/text_hos_name"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:text="姓名"
+            android:textSize="20dp"
+            tools:ignore="HardcodedText,SpUsage" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/hos_r_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:lines="1"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/panel_1"
+        android:layout_gravity="center_vertical"
+        android:background="#66CCFF"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/panel_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/panel_1"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/text_hos_idcard"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
             android:text="身份证号"
-            android:textSize="20sp"
-            tools:ignore="MissingConstraints" />
+            android:textSize="20dp"
+            tools:ignore="HardcodedText,SpUsage,TextViewEdits" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
 
         <TextView
-            android:id="@+id/textView19"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="123456789zxcvasdfg"
-            android:textSize="20sp"
-            tools:ignore="MissingConstraints" />
+            android:id="@+id/hos_r_id_card"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:lines="1"
+            android:maxLength="18"
+            android:textSize="20dp"
+            tools:ignore="SpUsage" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/panel_2"
+        android:layout_gravity="center_vertical"
+        android:background="#66CCFF" />
+
     <LinearLayout
+        android:id="@+id/panel_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_below="@+id/panel_2"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
 
         <TextView
-            android:id="@+id/textView7"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
-            android:text="挂号费"
-            android:textSize="20sp"
-            tools:ignore="MissingConstraints" />
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="78942"
-            android:textSize="20sp"
-            tools:ignore="MissingConstraints" />
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/text_hos_medical"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
             android:text="社保号"
-            android:textSize="20sp"
-            tools:ignore="MissingConstraints" />
+            android:textSize="20dp"
+            tools:ignore="HardcodedText,SpUsage" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
 
         <TextView
-            android:id="@+id/textView21"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="12345678"
-            android:textSize="20sp"
-            tools:ignore="MissingConstraints" />
+            android:id="@+id/hos_r_medical"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:lines="1"
+            android:maxLength="19"
+            android:textSize="20dp"
+            tools:ignore="SpUsage" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/panel_3"
+        android:layout_gravity="center_vertical"
+        android:background="#66CCFF" />
+
     <LinearLayout
+        android:id="@+id/panel_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_below="@+id/panel_3"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
         <TextView
-            android:id="@+id/textView9"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/text_hos_reg_price"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:text="挂号费"
+            android:textSize="20dp"
+            tools:ignore="HardcodedText,SpUsage" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/hos_r_reg_price"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:textSize="20dp"
+            tools:ignore="SpUsage" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/panel_4"
+        android:layout_gravity="center_vertical"
+        android:background="#66CCFF" />
+
+    <LinearLayout
+        android:id="@+id/panel_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/panel_4"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/text_hos_phone"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
             android:text="联系电话"
-            android:textSize="20sp"
-            tools:ignore="MissingConstraints" />
+            android:textSize="20dp"
+            tools:ignore="HardcodedText,SpUsage" />
 
-    <TextView
-        android:id="@+id/textView22"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="12345678910"
-        android:textSize="20sp"
-        tools:ignore="MissingConstraints" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
 
         <TextView
-            android:id="@+id/textView10"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/hos_r_phone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:lines="1"
+            android:maxLength="11"
+            android:textSize="20dp"
+            tools:ignore="SpUsage" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/panel_5"
+        android:layout_gravity="center_vertical"
+        android:background="#66CCFF" />
+
+    <LinearLayout
+        android:id="@+id/panel_6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/panel_5"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/text_hos_self_price"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
             android:text="是否自费"
-            android:textSize="20sp"
-            tools:ignore="MissingConstraints" />
-        <TextView
-            android:id="@+id/textView23"
-            android:layout_width="wrap_content"
+            android:textSize="20dp"
+            tools:ignore="HardcodedText,SpUsage" />
+
+        <View
+            android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:text="是"
-            android:textSize="20sp"
-            tools:ignore="MissingConstraints" />
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/hos_r_self_price"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:lines="1"
+            android:maxLength="11"
+            android:textSize="20dp"
+            tools:ignore="SpUsage" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/panel_6"
+        android:layout_gravity="center_vertical"
+        android:background="#66CCFF" />
+
     <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+        android:id="@+id/panel_7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/panel_6"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
         <TextView
-            android:id="@+id/textView11"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/text_hos_sex"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
             android:text="性别"
-            android:textSize="20sp"
-        tools:ignore="MissingConstraints"/>
+            android:textSize="20dp"
+            tools:ignore="HardcodedText,SpUsage" />
 
-        <TextView
-            android:id="@+id/textView24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="男"
-            android:textSize="20sp"
-            tools:ignore="MissingConstraints"/>
-    </LinearLayout>
-
-    <LinearLayout
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
-
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
-            android:text="年龄"
-            android:textSize="20sp"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/textView25"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="23"
-            android:textSize="20sp"
-            tools:ignore="MissingConstraints" />
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
-
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
-            android:text="职业"
-            android:textSize="20sp"
-            tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/textView26"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="学生"
-        android:textSize="20sp"
-        tools:ignore="MissingConstraints" />
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
-
-       <TextView
-            android:id="@+id/textView14"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
-            android:text="初复诊"
-            android:textSize="20sp"
-        tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/textView27"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="初诊"
-            android:textSize="20sp"
-        tools:ignore="MissingConstraints" />
-
-      </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
-
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="85dp"
-        android:layout_height="wrap_content"
-        android:text="所挂科室"
-        android:textSize="20sp"
-        tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/textView28"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="儿童科"
-            android:textSize="20sp"
-            tools:ignore="MissingConstraints" />
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
-
-        <TextView
-            android:id="@+id/textView16"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
-            android:text="指定医生"
-            android:textSize="20sp"
-        tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/textView29"
-            android:layout_width="wrap_content"
+        <View
+            android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:text="康医生"
-            android:textSize="20sp"
-            tools:ignore="MissingConstraints" />
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/hos_r_sex"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:lines="1"
+            android:maxLength="11"
+            android:textSize="20dp"
+            tools:ignore="SpUsage" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/panel_7"
+        android:layout_gravity="center_vertical"
+        android:background="#66CCFF" />
 
     <LinearLayout
+        android:id="@+id/panel_8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="85dp"
-        android:layout_height="wrap_content"
-        android:text="备注"
-        android:textSize="20sp"
-        tools:ignore="MissingConstraints" />
-    <TextView
-        android:id="@+id/textView30"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="莎萨算是大萨达USD安徽段"
-        android:textSize="20sp"
-        tools:ignore="MissingConstraints" />
+        android:layout_below="@+id/panel_7"
+        android:orientation="horizontal">
 
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/text_hos_age"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:text="年龄"
+            android:textSize="20dp"
+            tools:ignore="HardcodedText,SpUsage" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/hos_r_age"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:lines="1"
+            android:maxLength="3"
+            android:textSize="20dp"
+            tools:ignore="SpUsage" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/panel_8"
 
+        android:layout_gravity="center_vertical"
+        android:background="#66CCFF" />
 
+    <LinearLayout
+        android:id="@+id/panel_9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/panel_8"
+        android:orientation="horizontal">
 
-</LinearLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/text_hos_work"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:text="职业"
+            android:textSize="20dp"
+            tools:ignore="HardcodedText,SpUsage" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/hos_r_work"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:lines="1"
+            android:textSize="20dp"
+            tools:ignore="SpUsage" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/panel_9"
+        android:layout_gravity="center_vertical"
+        android:background="#66CCFF" />
+
+    <LinearLayout
+        android:id="@+id/panel_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/panel_9"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/text_hos_look_doctor"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:text="初复诊"
+            android:textSize="20dp"
+            tools:ignore="HardcodedText,SpUsage" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/hos_r_look_doctor"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:lines="1"
+            android:maxLength="11"
+            android:textSize="20dp"
+            tools:ignore="SpUsage" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/panel_10"
+        android:layout_gravity="center_vertical"
+        android:background="#66CCFF" />
+
+    <LinearLayout
+        android:id="@+id/panel_11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/panel_10"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/text_d_keshi"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:text="所挂科室"
+            android:textSize="20dp"
+            tools:ignore="HardcodedText,SpUsage" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/d_keshi"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:textSize="20dp"
+            tools:ignore="SpUsage" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/panel_11"
+        android:layout_gravity="center_vertical"
+        android:background="#66CCFF" />
+
+    <LinearLayout
+        android:id="@+id/panel_12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/panel_11"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/text_d_name"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:text="指定医生"
+            android:textSize="20dp"
+            tools:ignore="HardcodedText,SpUsage" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/d_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:textSize="20dp"
+            tools:ignore="SpUsage" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/panel_12"
+        android:layout_gravity="center_vertical"
+        android:background="#66CCFF" />
+
+    <LinearLayout
+        android:id="@+id/panel_13"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_below="@+id/panel_12"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/text_hos_remark"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:text="备注"
+            android:textSize="20dp"
+            tools:ignore="HardcodedText,SpUsage" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#66CCFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/hos_r_remark"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center|start"
+            android:textSize="20dp"
+            tools:ignore="SpUsage" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/panel_13"
+        android:layout_gravity="center_vertical"
+        android:background="#66CCFF" />
+</RelativeLayout>

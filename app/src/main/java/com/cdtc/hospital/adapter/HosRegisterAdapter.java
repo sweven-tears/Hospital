@@ -2,6 +2,7 @@ package com.cdtc.hospital.adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.cdtc.hospital.local.dao.DoctorLocalDao;
 import com.cdtc.hospital.local.dao.impl.DoctorLocalDaoImpl;
 import com.cdtc.hospital.network.entity.Doctor;
 import com.cdtc.hospital.network.entity.HosRegister;
+import com.cdtc.hospital.view.HosRegisterDetailsActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -64,9 +66,6 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
         hosRegisterViewHold.hosR_id.setText(String.valueOf(hosRegister.getHosR_id()));
         hosRegisterViewHold.d_name.setText(doctor.getD_name());
 
-        Date date=hosRegister.getHosR_createTime();
-        hosRegisterViewHold.hosR_createTime.setText(new SimpleDateFormat("yyyy-MM-dd").format(date));
-
         hosRegisterViewHold.d_keshi.setText(doctor.getD_keshi());
 
         Integer hosR_state=hosRegister.getHosR_state();
@@ -94,12 +93,11 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
         return hosRegisters.size();
     }
 
-    class HosRegisterViewHold extends RecyclerView.ViewHolder {
+    class HosRegisterViewHold extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         private LinearLayout hosRegisterInfoView;
         private TextView hosR_id;
         private TextView d_name;
-        private TextView hosR_createTime;
         private TextView d_keshi;
         private TextView hosR_state;
 
@@ -108,9 +106,27 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
             hosRegisterInfoView=itemView.findViewById(R.id.hos_register_info_view);
             hosR_id = itemView.findViewById(R.id.hos_r_id);
             d_name = itemView.findViewById(R.id.d_name);
-            hosR_createTime = itemView.findViewById(R.id.hos_r_create_time);
             d_keshi = itemView.findViewById(R.id.d_keshi);
             hosR_state = itemView.findViewById(R.id.hos_r_state);
+
+            hosRegisterInfoView.setOnClickListener(this);
+            hosRegisterInfoView.setOnLongClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int position=getAdapterPosition();
+            if (hosRegisters.get(position)==null){
+                return;
+            }
+            Intent intent=new Intent(activity,HosRegisterDetailsActivity.class);
+            intent.putExtra("hosR_id",hosRegisters.get(position).getHosR_id());
+            activity.startActivity(intent);
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            return false;
         }
     }
 }

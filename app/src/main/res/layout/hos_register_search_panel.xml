@@ -130,14 +130,6 @@
             android:text="主治医生" />
 
         <TextView
-            android:id="@+id/time"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="4dp"
-            android:gravity="center"
-            android:text="挂号时间" />
-
-        <TextView
             android:id="@+id/keshi1"
             android:layout_width="70dp"
             android:layout_height="30dp"

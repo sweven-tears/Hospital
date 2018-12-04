@@ -3,6 +3,7 @@ package com.cdtc.hospital.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -65,6 +66,7 @@ public class HosRegisterActivity extends BaseActivity {
         hosRegisterRecyclerView = findViewById(R.id.hos_register_list);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         hosRegisterRecyclerView.setLayoutManager(manager);
+        hosRegisterRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
 
     }
 
@@ -130,11 +132,6 @@ public class HosRegisterActivity extends BaseActivity {
             assert bundle != null;
             hosRegister.setHosR_id(bundle.getInt("hosR_id"));
             hosRegister.setD_id(bundle.getInt("d_id"));
-            Calendar cal = Calendar.getInstance();
-            int mYear = cal.get(Calendar.YEAR); // 获取当前年份
-            int mMonth = cal.get(Calendar.MONTH) + 1;// 获取当前月份
-            int mDay = cal.get(Calendar.DAY_OF_MONTH);// 获取当日期
-            hosRegister.setHosR_createTime(new java.sql.Date(mYear,mMonth,mDay));
             hosRegister.setHosR_state(0);
             hosRegisterAdapter.insertHosRegister(hosRegister);
         }
