@@ -26,13 +26,12 @@ import com.cdtc.hospital.network.dao.impl.DoctorDaoImpl;
 import com.cdtc.hospital.network.dao.impl.HosRegisterDaoImpl;
 import com.cdtc.hospital.local.dao.impl.UserLocalDaoImpl;
 import com.cdtc.hospital.network.dao.impl.UserDaoImpl;
-import com.cdtc.hospital.network.entity.BeHospital;
-import com.cdtc.hospital.network.entity.Doctor;
-import com.cdtc.hospital.network.entity.HosRegister;
-import com.cdtc.hospital.network.entity.User;
+import com.cdtc.hospital.entity.BeHospital;
+import com.cdtc.hospital.entity.Doctor;
+import com.cdtc.hospital.entity.HosRegister;
+import com.cdtc.hospital.entity.User;
 import com.cdtc.hospital.view.ListActivity;
 import com.cdtc.hospital.view.LoginActivity;
-import com.cdtc.hospital.view.HosRegisterActivity;
 
 import java.util.List;
 import java.util.Timer;
@@ -140,7 +139,7 @@ public class StartActivity extends BaseActivity {
             }, 0, 1000);
         }
 
-        UserLocalDao userLocalDao=new UserLocalDaoImpl(activity,BaseLocalDao.QUERY_DATABASE);
+        UserLocalDao userLocalDao=new UserLocalDaoImpl(activity,BaseLocalDao.QUERY);
         userLocalDao.queryLocalLogSate();
 
         task=new QueryHosRegisterTask();
@@ -185,9 +184,9 @@ public class StartActivity extends BaseActivity {
                 toast.showError("网络开了点小差~");
                 return;
             }
-            UserLocalDao userLocalDao=new UserLocalDaoImpl(activity,BaseLocalDao.UPDATE_DATABASE);
-            DoctorLocalDao doctorLocalDao=new DoctorLocalDaoImpl(activity,BaseLocalDao.UPDATE_DATABASE);
-            HosRegisterLocalDao hosRegisterLocalDao=new HosRegisterLocalDaoImpl(activity,BaseLocalDao.UPDATE_DATABASE);
+            UserLocalDao userLocalDao=new UserLocalDaoImpl(activity,BaseLocalDao.UPDATE);
+            DoctorLocalDao doctorLocalDao=new DoctorLocalDaoImpl(activity,BaseLocalDao.UPDATE);
+            HosRegisterLocalDao hosRegisterLocalDao=new HosRegisterLocalDaoImpl(activity,BaseLocalDao.UPDATE);
             for (User user:users){
                 int result= userLocalDao.insertUser(user);
                 if (result<0){

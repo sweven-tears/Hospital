@@ -1,4 +1,4 @@
-package com.cdtc.hospital.network.entity;
+package com.cdtc.hospital.entity;
 
 public class User {
 	

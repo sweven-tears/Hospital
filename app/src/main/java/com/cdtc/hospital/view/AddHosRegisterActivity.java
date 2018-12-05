@@ -17,8 +17,8 @@ import com.cdtc.hospital.base.BaseActivity;
 import com.cdtc.hospital.local.dao.BaseLocalDao;
 import com.cdtc.hospital.local.dao.DoctorLocalDao;
 import com.cdtc.hospital.local.dao.impl.DoctorLocalDaoImpl;
-import com.cdtc.hospital.network.entity.Doctor;
-import com.cdtc.hospital.network.entity.HosRegister;
+import com.cdtc.hospital.entity.Doctor;
+import com.cdtc.hospital.entity.HosRegister;
 import com.cdtc.hospital.task.HosRegisterTask;
 
 import java.util.ArrayList;
@@ -77,7 +77,7 @@ public class AddHosRegisterActivity extends BaseActivity implements AdapterView.
 
     @Override
     protected void initData() {
-        DoctorLocalDao doctorLocalDao = new DoctorLocalDaoImpl(activity, BaseLocalDao.QUERY_DATABASE);
+        DoctorLocalDao doctorLocalDao = new DoctorLocalDaoImpl(activity, BaseLocalDao.QUERY);
         List<String> keshiList = doctorLocalDao.queryKeshiList();
         ArrayAdapter<String> keShiAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, keshiList);
         keShiAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -256,7 +256,7 @@ public class AddHosRegisterActivity extends BaseActivity implements AdapterView.
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String keshi = d_keshi.getSelectedItem().toString();
-        DoctorLocalDao doctorLocalDao = new DoctorLocalDaoImpl(activity, BaseLocalDao.QUERY_DATABASE);
+        DoctorLocalDao doctorLocalDao = new DoctorLocalDaoImpl(activity, BaseLocalDao.QUERY);
         doctorList = doctorLocalDao.queryDoctorByKeshi(keshi);
         List<String> nameList = new ArrayList<>();
         for (Doctor doctor : doctorList) {
@@ -278,7 +278,7 @@ public class AddHosRegisterActivity extends BaseActivity implements AdapterView.
     private void backList() {
         Intent intent=new Intent(activity,HosRegisterActivity.class);
         Bundle bundle=new Bundle();
-        BaseLocalDao baseLocalDao=new BaseLocalDao(activity,App.DATA_BASE,BaseLocalDao.QUERY_DATABASE);
+        BaseLocalDao baseLocalDao=new BaseLocalDao(activity,App.DATA_BASE,BaseLocalDao.QUERY);
         Cursor cursor=baseLocalDao.query(App.TABLE_HOS_REGISTER,new String[]{"hosR_id"},null,null);
         cursor.moveToLast();
         bundle.putInt("hosR_id",cursor.getInt(cursor.getColumnIndex("hosR_id"))+1);

@@ -2,7 +2,7 @@ package com.cdtc.hospital.network.dao.impl;
 
 import com.cdtc.hospital.network.dao.BaseDao;
 import com.cdtc.hospital.network.dao.UserDao;
-import com.cdtc.hospital.network.entity.User;
+import com.cdtc.hospital.entity.User;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

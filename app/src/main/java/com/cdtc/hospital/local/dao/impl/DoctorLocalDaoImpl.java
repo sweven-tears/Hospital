@@ -6,10 +6,8 @@ import android.database.Cursor;
 import com.cdtc.hospital.base.App;
 import com.cdtc.hospital.local.dao.BaseLocalDao;
 import com.cdtc.hospital.local.dao.DoctorLocalDao;
-import com.cdtc.hospital.network.entity.Doctor;
+import com.cdtc.hospital.entity.Doctor;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -115,8 +113,8 @@ public class DoctorLocalDaoImpl extends BaseLocalDao implements DoctorLocalDao {
                 "d_email", "d_keshi",
                 "d_xueli", "d_descr",
                 "d_inTime", "d_state"};
-        String selection = "d_keshi=?";
-        String[] selectionArgs = new String[]{d_keshi};
+        String selection = "d_keshi like ?";
+        String[] selectionArgs = new String[]{"%"+d_keshi+"%"};
         Cursor cursor = query(App.TABLE_DOCTOR, columns, selection, selectionArgs);
         while (cursor.moveToNext()) {
             Doctor doctor = new Doctor();
@@ -129,6 +127,55 @@ public class DoctorLocalDaoImpl extends BaseLocalDao implements DoctorLocalDao {
             String d_birthdayStr = cursor.getString(cursor.getColumnIndex(columns[6]));
             Integer d_age = cursor.getInt(cursor.getColumnIndex(columns[7]));
             String d_email = cursor.getString(cursor.getColumnIndex(columns[8]));
+            String d_xueli = cursor.getString(cursor.getColumnIndex(columns[10]));
+            String d_descr = cursor.getString(cursor.getColumnIndex(columns[11]));
+            String d_inTimeStr = cursor.getString(cursor.getColumnIndex(columns[12]));
+            Integer d_state = cursor.getInt(cursor.getColumnIndex(columns[13]));
+
+            doctor.setD_id(d_id);
+            doctor.setD_name(d_name);
+            doctor.setD_idCard(d_idCard);
+            doctor.setD_phone(d_phone);
+            doctor.setD_telPhone(d_telPhone);
+            doctor.setD_sex(d_sex);
+            doctor.setD_birthday(Date.valueOf(d_birthdayStr));
+            doctor.setD_age(d_age);
+            doctor.setD_email(d_email);
+            doctor.setD_keshi(d_keshi);
+            doctor.setD_xueli(d_xueli);
+            doctor.setD_descr(d_descr);
+            doctor.setD_inTime(Date.valueOf(d_inTimeStr));
+            doctor.setD_state(d_state);
+            doctors.add(doctor);
+        }
+        return doctors;
+    }
+
+    @Override
+    public List<Doctor> queryDoctorByName(String d_name) {
+        List<Doctor> doctors = new ArrayList<>();
+        String[] columns = new String[]{
+                "d_id", "d_name",
+                "d_idCard", "d_phone",
+                "d_telPhone", "d_sex",
+                "d_birthday", "d_age",
+                "d_email", "d_keshi",
+                "d_xueli", "d_descr",
+                "d_inTime", "d_state"};
+        String selection = "d_name like ?";
+        String[] selectionArgs = new String[]{"%"+d_name+"%"};
+        Cursor cursor = query(App.TABLE_DOCTOR, columns, selection, selectionArgs);
+        while (cursor.moveToNext()) {
+            Doctor doctor = new Doctor();
+            Integer d_id = cursor.getInt(cursor.getColumnIndex(columns[0]));
+            String d_idCard = cursor.getString(cursor.getColumnIndex(columns[2]));
+            String d_phone = cursor.getString(cursor.getColumnIndex(columns[3]));
+            String d_telPhone = cursor.getString(cursor.getColumnIndex(columns[4]));
+            Integer d_sex = cursor.getInt(cursor.getColumnIndex(columns[5]));
+            String d_birthdayStr = cursor.getString(cursor.getColumnIndex(columns[6]));
+            Integer d_age = cursor.getInt(cursor.getColumnIndex(columns[7]));
+            String d_email = cursor.getString(cursor.getColumnIndex(columns[8]));
+            String d_keshi = cursor.getString(cursor.getColumnIndex(columns[9]));
             String d_xueli = cursor.getString(cursor.getColumnIndex(columns[10]));
             String d_descr = cursor.getString(cursor.getColumnIndex(columns[11]));
             String d_inTimeStr = cursor.getString(cursor.getColumnIndex(columns[12]));

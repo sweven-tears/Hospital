@@ -6,13 +6,11 @@ import android.database.Cursor;
 import com.cdtc.hospital.base.App;
 import com.cdtc.hospital.local.dao.BaseLocalDao;
 import com.cdtc.hospital.local.dao.HosRegisterLocalDao;
-import com.cdtc.hospital.network.entity.Doctor;
-import com.cdtc.hospital.network.entity.HosRegister;
-import com.cdtc.hospital.util.LogUtil;
+import com.cdtc.hospital.entity.Doctor;
+import com.cdtc.hospital.entity.HosRegister;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -137,11 +135,11 @@ public class HosRegisterLocalDaoImpl extends BaseLocalDao implements HosRegister
             hosRegister.setHosR_state(hosR_state);
 
             hosRegister.setD_id(d_id);
-            Cursor cursorChild = query(App.TABLE_DOCTOR, new String[]{"d_name", "d_keshi"}, "d_id=?", new String[]{String.valueOf(d_id)});
-            while (cursorChild.moveToNext()) {
-                hosRegister.setD_name(cursor.getString(cursor.getColumnIndex("d_name")));
-                hosRegister.setD_keshi(cursor.getString(cursor.getColumnIndex("d_keshi")));
-            }
+//            Cursor cursorChild = query(App.TABLE_DOCTOR, new String[]{"d_name", "d_keshi"}, "d_id=?", new String[]{String.valueOf(d_id)});
+//            while (cursorChild.moveToNext()) {
+//                hosRegister.setD_name(cursor.getString(cursor.getColumnIndex("d_name")));
+//                hosRegister.setD_keshi(cursor.getString(cursor.getColumnIndex("d_keshi")));
+//            }
             hosRegisters.add(hosRegister);
 
         }

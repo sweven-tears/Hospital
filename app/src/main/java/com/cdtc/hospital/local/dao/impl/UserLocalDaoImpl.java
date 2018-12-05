@@ -6,7 +6,7 @@ import android.database.Cursor;
 import com.cdtc.hospital.base.App;
 import com.cdtc.hospital.local.dao.BaseLocalDao;
 import com.cdtc.hospital.local.dao.UserLocalDao;
-import com.cdtc.hospital.network.entity.User;
+import com.cdtc.hospital.entity.User;
 
 import java.util.HashMap;
 import java.util.Map;

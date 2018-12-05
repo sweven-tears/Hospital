@@ -2,9 +2,8 @@ package com.cdtc.hospital.network.dao.impl;
 
 import com.cdtc.hospital.network.dao.BaseDao;
 import com.cdtc.hospital.network.dao.HosRegisterDao;
-import com.cdtc.hospital.network.entity.HosRegister;
+import com.cdtc.hospital.entity.HosRegister;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

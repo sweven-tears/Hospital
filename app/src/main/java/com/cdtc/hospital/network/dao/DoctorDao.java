@@ -1,6 +1,6 @@
 package com.cdtc.hospital.network.dao;
 
-import com.cdtc.hospital.network.entity.Doctor;
+import com.cdtc.hospital.entity.Doctor;
 
 import java.util.List;
 
