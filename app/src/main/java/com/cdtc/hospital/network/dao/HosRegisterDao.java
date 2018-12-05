@@ -10,7 +10,7 @@ public interface HosRegisterDao {
     /**
      * @return hosRegisterList
      */
-    public List<HosRegister> queryHosRegisters();
+    List<HosRegister> queryHosRegisters();
 
     /**
      * 添加挂号信息
@@ -18,7 +18,7 @@ public interface HosRegisterDao {
      * @param hosRegister 挂号信息
      * @return
      */
-    public Integer addHosRegister(HosRegister hosRegister);
+    Integer addHosRegister(HosRegister hosRegister);
 
     /**
      * 更新挂号信息
@@ -26,7 +26,7 @@ public interface HosRegisterDao {
      * @param hosRegister
      * @return
      */
-    public Integer updateHosRegisterById(HosRegister hosRegister);
+    Integer updateHosRegisterById(HosRegister hosRegister);
 
     /**
      * 根据id删除数据
@@ -34,7 +34,9 @@ public interface HosRegisterDao {
      * @param hosR_id
      * @return
      */
-    public Integer deleteHosRegisterById(Integer hosR_id);
+    Integer deleteHosRegisterById(Integer hosR_id);
+
+    Integer updateStateById(Integer hosR_id,Integer hosR_state);
 
 
     /*---------------------------------------以下为从未使用过的方法--------------------------------------------*/

@@ -68,22 +68,20 @@
 
         <ImageButton
             android:id="@+id/gua_hao"
-            android:layout_width="140dp"
-            android:layout_height="115dp"
+            android:layout_width="130dp"
+            android:layout_height="110dp"
             android:layout_alignStart="@+id/zhu_yuan"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="-4dp"
-            android:layout_marginTop="61dp"
             android:background="@drawable/guahao"
+            android:layout_marginBottom="20dp"
             tools:ignore="ContentDescription" />
 
         <ImageButton
             android:id="@+id/zhu_yuan"
             android:layout_width="130dp"
             android:layout_height="110dp"
-            android:layout_alignParentBottom="true"
+            android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="151dp"
+            android:layout_below="@id/gua_hao"
             android:background="@drawable/zhuyuan"
             tools:ignore="ContentDescription" />
 

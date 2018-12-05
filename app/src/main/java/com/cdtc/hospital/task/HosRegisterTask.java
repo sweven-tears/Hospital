@@ -28,15 +28,26 @@ public class HosRegisterTask extends AsyncTask<Void, Void, Integer> {
     public static final int TASK_UPDATE = 2;
     public static final int TASK_DELETE = 3;
     public static final int TASK_SYNC_DATA = 4;
+    public static final int TASK_UPDATE_STATE=5;
 
     private Activity activity;
     private HosRegister hosRegister;
     private List<HosRegister> list;
 
+
+
     public HosRegisterTask(Activity activity, HosRegister hosRegister, int taskType) {
         this.activity = activity;
         this.hosRegister = hosRegister;
         this.taskType = taskType;
+    }
+
+    public HosRegisterTask(Activity activity,Integer hosR_id,Integer hosR_state,int taskType){
+        this.activity=activity;
+        hosRegister=new HosRegister();
+        hosRegister.setHosR_state(hosR_state);
+        hosRegister.setHosR_id(hosR_id);
+        this.taskType=taskType;
     }
 
     @Override
@@ -58,6 +69,8 @@ public class HosRegisterTask extends AsyncTask<Void, Void, Integer> {
             } else if (taskType == TASK_SYNC_DATA){
                 list=dao.queryHosRegisters();
                 return 1;
+            } else if (taskType == TASK_UPDATE_STATE){
+                return dao.updateStateById(hosRegister.getHosR_id(),hosRegister.getHosR_state());
             }
         } catch (Exception e) {
             return -1;
@@ -86,6 +99,8 @@ public class HosRegisterTask extends AsyncTask<Void, Void, Integer> {
                 for (HosRegister hosRegister:list){
                     hosRegisterLocalDao.addHosRegister(hosRegister);
                 }
+            }else if (taskType==TASK_UPDATE_STATE){
+                hosRegisterLocalDao.updateStateById(hosRegister.getHosR_id(),hosRegister.getHosR_state());
             }
         }
 

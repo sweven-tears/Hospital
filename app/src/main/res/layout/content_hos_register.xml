@@ -16,7 +16,7 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="140dp"
+            android:layout_height="177dp"
             android:id="@+id/top_panel"
             android:layout_alignParentTop="true">
 

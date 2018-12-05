@@ -102,6 +102,15 @@ public class HosRegisterDaoImpl extends BaseDao implements HosRegisterDao {
     }
 
     @Override
+    public Integer updateStateById(Integer hosR_id, Integer hosR_state) {
+        sql = "UPDATE hosregister SET hosR_state=? WHERE hosR_id=?";
+        Object[] objects = {hosR_state, hosR_id};
+        int result = update(sql, objects);
+        close();
+        return result;
+    }
+
+    @Override
     public Integer deleteHosRegisterById(Integer hosR_id) {
         sql = "delete from hosregister where hosR_id=?";
         Object[] objects = {hosR_id};

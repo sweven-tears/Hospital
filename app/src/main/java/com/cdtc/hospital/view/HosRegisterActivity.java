@@ -22,9 +22,7 @@ import com.cdtc.hospital.local.dao.impl.HosRegisterLocalDaoImpl;
 import com.cdtc.hospital.entity.HosRegister;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class HosRegisterActivity extends BaseActivity {
 
@@ -38,6 +36,8 @@ public class HosRegisterActivity extends BaseActivity {
     private EditText searchD_keshi;
     private Button queryBtn;
     private Button clearBtn;
+    private Button selectBtn;
+    private Button deleteBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +65,9 @@ public class HosRegisterActivity extends BaseActivity {
         queryBtn = findViewById(R.id.query_btn);
         clearBtn = findViewById(R.id.clear_btn);
 
+        selectBtn = findViewById(R.id.select_btn);
+        deleteBtn = findViewById(R.id.delete_btn);
+
         hosRegisterRecyclerView = findViewById(R.id.hos_register_list);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         hosRegisterRecyclerView.setLayoutManager(manager);
@@ -78,6 +81,8 @@ public class HosRegisterActivity extends BaseActivity {
         searchHosRegisterList();
         queryBtn.setOnClickListener(this);
         clearBtn.setOnClickListener(this);
+        selectBtn.setOnClickListener(this);
+        deleteBtn.setOnClickListener(this);
 
     }
 
@@ -162,6 +167,20 @@ public class HosRegisterActivity extends BaseActivity {
                 searchD_name.setText("");
                 searchD_keshi.setText("");
                 searchHosRegisterList();
+                break;
+            case R.id.select_btn:
+                String name=selectBtn.getText().toString();
+                if (name.equals("全选")) {
+                    hosRegisterAdapter.selectAll();
+                    selectBtn.setText("取消全选");
+                }
+                else if (name.equals("取消全选")){
+                    hosRegisterAdapter.cancelSelectAll();
+                    selectBtn.setText("全选");
+                }
+                break;
+            case R.id.delete_btn:
+                hosRegisterAdapter.updateState();
                 break;
         }
     }
