@@ -37,6 +37,7 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
     private Activity activity;
     private List<HosRegisterBean> hosRegisterBeans;
     private LayoutInflater inflater;
+    private OnSelectListener mOnSelectListener=null;
 
     public HosRegisterAdapter(Activity activity, List<HosRegister> hosRegisters) {
         this.activity = activity;
@@ -62,6 +63,17 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
     @SuppressLint("SimpleDateFormat")
     @Override
     public void onBindViewHolder(@NonNull HosRegisterViewHold hold, int position) {
+        iniData(hold, position);
+
+    }
+
+    /**
+     * 初始化数据
+     *
+     * @param hold
+     * @param position
+     */
+    private void iniData(@NonNull HosRegisterViewHold hold, int position) {
         HosRegister hosRegister = hosRegisterBeans.get(position).getHosRegister();
         boolean selected = hosRegisterBeans.get(position).isSelected();
 
@@ -100,30 +112,60 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
         CheckBox checkBox = hold.checkBox;
         if (selected) {
             checkBox.setChecked(true);
+            hosRegisterBeans.get(position).setSelected(true);
         } else {
             checkBox.setChecked(false);
+            hosRegisterBeans.get(position).setSelected(false);
         }
     }
 
+    /**
+     * 插入新数据
+     *
+     * @param hosRegister 新数据
+     */
     public void insertHosRegister(HosRegister hosRegister) {
         hosRegisterBeans.add(new HosRegisterBean(false, hosRegister));
         notifyItemInserted(hosRegisterBeans.size() - 1);
     }
 
+    public void updateHosRegister(Integer d_id) {
+        for (int i = 0; i < getItemCount(); i++) {
+            if (!hosRegisterBeans.get(i).isSelected()) {
+                hosRegisterBeans.get(i).getHosRegister().setD_id(d_id);
+                notifyItemChanged(i);
+                return;
+            }
+        }
+    }
+
+    /**
+     * 全选
+     */
     public void selectAll() {
         for (int i = 0; i < getItemCount(); i++) {
-            hosRegisterBeans.get(i).setSelected(true);
-            notifyItemChanged(i);
+            if (!hosRegisterBeans.get(i).isSelected()) {
+                hosRegisterBeans.get(i).setSelected(true);
+                notifyItemChanged(i);
+            }
         }
     }
 
+    /**
+     * 取消全选
+     */
     public void cancelSelectAll() {
         for (int i = 0; i < getItemCount(); i++) {
-            hosRegisterBeans.get(i).setSelected(false);
-            notifyItemChanged(i);
+            if (hosRegisterBeans.get(i).isSelected()) {
+                hosRegisterBeans.get(i).setSelected(false);
+                notifyItemChanged(i);
+            }
         }
     }
 
+    /**
+     * 更新挂号状态：退号
+     */
     public void updateState() {
         for (int i = 0; i < getItemCount(); i++) {
             HosRegisterBean hosRegisterBean = hosRegisterBeans.get(i);
@@ -134,10 +176,36 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
 
                 // 数据库数据更新
                 HosRegister hosRegister = hosRegisterBean.getHosRegister();
-                HosRegisterTask task = new HosRegisterTask(activity, hosRegister.getHosR_id(), hosRegister.getHosR_state(), HosRegisterTask.TASK_UPDATE);
+                HosRegisterTask task = new HosRegisterTask(activity, hosRegister.getHosR_id(), 3, HosRegisterTask.TASK_UPDATE_STATE);
                 task.execute();
             }
         }
+    }
+
+    /**
+     * @return 获取选中项的数量
+     */
+    public int getSelectedCount() {
+        int count = 0;
+        for (int i = 0; i < getItemCount(); i++) {
+            HosRegisterBean hosRegisterBean = hosRegisterBeans.get(i);
+            if (hosRegisterBean.isSelected()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * @return 获取单个选中项的HosR_id
+     */
+    public int getSelectedHosR_id() {
+        for (int i = 0; i < getItemCount(); i++) {
+            if (hosRegisterBeans.get(i).isSelected()) {
+                return hosRegisterBeans.get(i).getHosRegister().getHosR_id();
+            }
+        }
+        return 1001;
     }
 
     @Override
@@ -145,7 +213,7 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
         return hosRegisterBeans.size();
     }
 
-    class HosRegisterViewHold extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener, CompoundButton.OnCheckedChangeListener {
+    class HosRegisterViewHold extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private LinearLayout hosRegisterInfoView;
         private CheckBox checkBox;
@@ -163,9 +231,15 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
             d_keshi = itemView.findViewById(R.id.d_keshi);
             hosR_state = itemView.findViewById(R.id.hos_r_state);
 
-            checkBox.setOnCheckedChangeListener(this);
             hosRegisterInfoView.setOnClickListener(this);
-            hosRegisterInfoView.setOnLongClickListener(this);
+
+            checkBox.setOnCheckedChangeListener(
+                    (compoundButton, b) -> {
+                        if (mOnSelectListener != null) {
+                            hosRegisterBeans.get(getAdapterPosition()).setSelected(b);
+                            mOnSelectListener.onSelect();
+                        }
+                    });
         }
 
         @Override
@@ -179,15 +253,15 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
             activity.startActivity(intent);
         }
 
-        @Override
-        public boolean onLongClick(View view) {
-            return false;
-        }
-
-        @Override
-        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-            int position = getAdapterPosition();
-            hosRegisterBeans.get(position).setSelected(b);
-        }
     }
+
+    public interface OnSelectListener {
+        void onSelect();
+    }
+
+    public void setOnSelectListener(OnSelectListener mOnSelectListener) {
+        this.mOnSelectListener = mOnSelectListener;
+    }
+
+
 }

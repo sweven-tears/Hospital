@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.cdtc.hospital.R;
 import com.cdtc.hospital.adapter.HosRegisterAdapter;
@@ -38,6 +39,7 @@ public class HosRegisterActivity extends BaseActivity {
     private Button clearBtn;
     private Button selectBtn;
     private Button deleteBtn;
+    private Button updateInfoBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +48,12 @@ public class HosRegisterActivity extends BaseActivity {
 
         setActionBarTitle("挂号信息管理");
 
-        bindViewId();
-        initData();
         setCustomerActionBar(KeyActionBarButtonKind.ACTIONBAR_LEFT, BTN_TYPE_IMG, R.drawable.ic_keyboard_arrow_left_black_24dp);
         setCustomerActionBar(KeyActionBarButtonKind.ACTIONBAR_RIGHT, BTN_TYPE_TEXT, "门诊挂号");
         showLeftButton();
         showRightButton();
+        bindViewId();
+        initData();
 
     }
 
@@ -67,6 +69,7 @@ public class HosRegisterActivity extends BaseActivity {
 
         selectBtn = findViewById(R.id.select_btn);
         deleteBtn = findViewById(R.id.delete_btn);
+        updateInfoBtn = findViewById(R.id.update_info_btn);
 
         hosRegisterRecyclerView = findViewById(R.id.hos_register_list);
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -83,7 +86,23 @@ public class HosRegisterActivity extends BaseActivity {
         clearBtn.setOnClickListener(this);
         selectBtn.setOnClickListener(this);
         deleteBtn.setOnClickListener(this);
+        updateInfoBtn.setOnClickListener(this);
 
+        updateInfoBtn.setVisibility(View.INVISIBLE);
+
+        hosRegisterAdapter.setOnSelectListener(() -> {
+            if (hosRegisterAdapter.getSelectedCount() == 1) {
+                updateInfoBtn.setVisibility(View.VISIBLE);
+            } else {
+                updateInfoBtn.setVisibility(View.INVISIBLE);
+            }
+            if (hosRegisterAdapter.getSelectedCount() < hosRegisterAdapter.getItemCount()) {
+                selectBtn.setText("全选");
+            } else {
+                selectBtn.setText("取消全选");
+            }
+            toast.showShort(hosRegisterAdapter.getSelectedCount() + " selected");
+        });
     }
 
     /**
@@ -142,7 +161,8 @@ public class HosRegisterActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == AddHosRegisterActivity.REQUEST && resultCode == AddHosRegisterActivity.RESULT) {
+        if (requestCode == AddHosRegisterActivity.REQUEST &&
+                resultCode == AddHosRegisterActivity.RESULT) {
             HosRegister hosRegister = new HosRegister();
 
             assert data != null;
@@ -153,6 +173,13 @@ public class HosRegisterActivity extends BaseActivity {
             hosRegister.setD_id(bundle.getInt("d_id"));
             hosRegister.setHosR_state(0);
             hosRegisterAdapter.insertHosRegister(hosRegister);
+        }
+        if (requestCode == UpdateHosRegisterActivity.RESULT &&
+                resultCode == UpdateHosRegisterActivity.RESULT) {
+            assert data != null;
+            Bundle bundle = data.getExtras();
+            assert bundle != null;
+            hosRegisterAdapter.updateHosRegister(bundle.getInt("d_id"));
         }
     }
 
@@ -169,18 +196,24 @@ public class HosRegisterActivity extends BaseActivity {
                 searchHosRegisterList();
                 break;
             case R.id.select_btn:
-                String name=selectBtn.getText().toString();
+                String name = selectBtn.getText().toString();
                 if (name.equals("全选")) {
                     hosRegisterAdapter.selectAll();
                     selectBtn.setText("取消全选");
-                }
-                else if (name.equals("取消全选")){
+                } else if (name.equals("取消全选")) {
                     hosRegisterAdapter.cancelSelectAll();
                     selectBtn.setText("全选");
                 }
                 break;
             case R.id.delete_btn:
-                hosRegisterAdapter.updateState();
+                if (hosRegisterAdapter.getSelectedCount() > 0) {
+                    hosRegisterAdapter.updateState();
+                }
+                break;
+            case R.id.update_info_btn:
+                Intent intent = new Intent(activity, UpdateHosRegisterActivity.class);
+                intent.putExtra("hosR_id", hosRegisterAdapter.getSelectedHosR_id());
+                startActivityForResult(intent, UpdateHosRegisterActivity.REQUEST);
                 break;
         }
     }

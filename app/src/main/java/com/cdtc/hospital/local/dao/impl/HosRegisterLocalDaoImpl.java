@@ -239,14 +239,12 @@ public class HosRegisterLocalDaoImpl extends BaseLocalDao implements HosRegister
         map.put("hosR_work", hosRegister.getHosR_work());
         map.put("hosR_lookDoctor", hosRegister.getHosR_lookDoctor());
         map.put("d_id", hosRegister.getD_id());
-        map.put("hosR_createTime", hosRegister.getHosR_createTime());
         map.put("hosR_remark", hosRegister.getHosR_remark());
-        map.put("hosR_state", hosRegister.getHosR_state());
 
         String whereClause="hosR_id=?";
         String[] whereArgs=new String[]{String.valueOf(hosRegister.getHosR_id())};
 
-        return update(App.TABLE_BE_HOSPITAL,map,whereClause,whereArgs);
+        return update(App.TABLE_HOS_REGISTER,map,whereClause,whereArgs);
     }
 
     @Override
@@ -257,7 +255,7 @@ public class HosRegisterLocalDaoImpl extends BaseLocalDao implements HosRegister
         String whereClause="hosR_id=?";
         String[] whereArgs=new String[]{String.valueOf(hosR_id)};
 
-        return update(App.TABLE_BE_HOSPITAL,map,whereClause,whereArgs);
+        return update(App.TABLE_HOS_REGISTER,map,whereClause,whereArgs);
     }
 
     @Override
@@ -265,6 +263,6 @@ public class HosRegisterLocalDaoImpl extends BaseLocalDao implements HosRegister
         String whereClause="hosR_id=?";
         String[] whereArgs=new String[]{String.valueOf(hosR_id)};
 
-        return delete(App.TABLE_BE_HOSPITAL,whereClause,whereArgs);
+        return delete(App.TABLE_HOS_REGISTER,whereClause,whereArgs);
     }
 }

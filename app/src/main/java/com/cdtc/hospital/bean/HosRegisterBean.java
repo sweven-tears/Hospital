@@ -6,7 +6,7 @@ import com.cdtc.hospital.entity.HosRegister;
  * Created by Sweven on 2018/12/4.
  * Email:sweventears@Foxmail.com
  */
-public class HosRegisterBean extends HosRegister {
+public class HosRegisterBean {
     private boolean selected;
     private HosRegister hosRegister;
 

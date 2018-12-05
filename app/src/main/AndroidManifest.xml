@@ -33,7 +33,8 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".view.ListActivity" />
         <activity android:name=".view.AddHosRegisterActivity" />
-        <activity android:name=".view.HosRegisterDetailsActivity"></activity>
+        <activity android:name=".view.HosRegisterDetailsActivity" />
+        <activity android:name=".view.UpdateHosRegisterActivity"></activity>
     </application>
 
 </manifest>
