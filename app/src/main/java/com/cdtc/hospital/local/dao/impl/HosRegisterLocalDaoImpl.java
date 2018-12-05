@@ -250,6 +250,17 @@ public class HosRegisterLocalDaoImpl extends BaseLocalDao implements HosRegister
     }
 
     @Override
+    public Integer updateStateById(Integer hosR_id, Integer hosR_state) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("hosR_state", hosR_state);
+
+        String whereClause="hosR_id=?";
+        String[] whereArgs=new String[]{String.valueOf(hosR_id)};
+
+        return update(App.TABLE_BE_HOSPITAL,map,whereClause,whereArgs);
+    }
+
+    @Override
     public Integer deleteHosRegisterById(Integer hosR_id) {
         String whereClause="hosR_id=?";
         String[] whereArgs=new String[]{String.valueOf(hosR_id)};

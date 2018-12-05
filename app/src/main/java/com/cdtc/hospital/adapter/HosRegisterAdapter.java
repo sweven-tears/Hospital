@@ -17,9 +17,12 @@ import com.cdtc.hospital.R;
 import com.cdtc.hospital.bean.HosRegisterBean;
 import com.cdtc.hospital.local.dao.BaseLocalDao;
 import com.cdtc.hospital.local.dao.DoctorLocalDao;
+import com.cdtc.hospital.local.dao.HosRegisterLocalDao;
 import com.cdtc.hospital.local.dao.impl.DoctorLocalDaoImpl;
 import com.cdtc.hospital.entity.Doctor;
 import com.cdtc.hospital.entity.HosRegister;
+import com.cdtc.hospital.local.dao.impl.HosRegisterLocalDaoImpl;
+import com.cdtc.hospital.task.HosRegisterTask;
 import com.cdtc.hospital.view.HosRegisterDetailsActivity;
 
 import java.util.ArrayList;
@@ -38,9 +41,9 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
     public HosRegisterAdapter(Activity activity, List<HosRegister> hosRegisters) {
         this.activity = activity;
 
-        hosRegisterBeans=new ArrayList<>();
-        for (HosRegister hosRegister:hosRegisters){
-            HosRegisterBean bean=new HosRegisterBean();
+        hosRegisterBeans = new ArrayList<>();
+        for (HosRegister hosRegister : hosRegisters) {
+            HosRegisterBean bean = new HosRegisterBean();
             bean.setSelected(false);
             bean.setHosRegister(hosRegister);
             hosRegisterBeans.add(bean);
@@ -62,7 +65,7 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
         HosRegister hosRegister = hosRegisterBeans.get(position).getHosRegister();
         boolean selected = hosRegisterBeans.get(position).isSelected();
 
-        if (hosRegister == null || hosRegisterBeans==null || hosRegisterBeans.size()==0) {
+        if (hosRegister == null || hosRegisterBeans == null || hosRegisterBeans.size() == 0) {
             hold.hosRegisterInfoView.removeAllViews();
             TextView view = new TextView(activity);
             view.setText("无数据");
@@ -94,17 +97,47 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
             hold.hosR_state.setText("退院");
         }
 
-        CheckBox checkBox=hold.checkBox;
-        if (selected){
+        CheckBox checkBox = hold.checkBox;
+        if (selected) {
             checkBox.setChecked(true);
-        }else{
+        } else {
             checkBox.setChecked(false);
         }
     }
 
     public void insertHosRegister(HosRegister hosRegister) {
-        hosRegisterBeans.add(new HosRegisterBean(false,hosRegister));
+        hosRegisterBeans.add(new HosRegisterBean(false, hosRegister));
         notifyItemInserted(hosRegisterBeans.size() - 1);
+    }
+
+    public void selectAll() {
+        for (int i = 0; i < getItemCount(); i++) {
+            hosRegisterBeans.get(i).setSelected(true);
+            notifyItemChanged(i);
+        }
+    }
+
+    public void cancelSelectAll() {
+        for (int i = 0; i < getItemCount(); i++) {
+            hosRegisterBeans.get(i).setSelected(false);
+            notifyItemChanged(i);
+        }
+    }
+
+    public void updateState() {
+        for (int i = 0; i < getItemCount(); i++) {
+            HosRegisterBean hosRegisterBean = hosRegisterBeans.get(i);
+            if (hosRegisterBean.isSelected()) {
+                // 界面更新
+                hosRegisterBeans.get(i).getHosRegister().setHosR_state(3);
+                notifyItemChanged(i);
+
+                // 数据库数据更新
+                HosRegister hosRegister = hosRegisterBean.getHosRegister();
+                HosRegisterTask task = new HosRegisterTask(activity, hosRegister.getHosR_id(), hosRegister.getHosR_state(), HosRegisterTask.TASK_UPDATE);
+                task.execute();
+            }
+        }
     }
 
     @Override
@@ -138,7 +171,7 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
-            if (hosRegisterBeans.get(position) == null) {
+            if (hosRegisterBeans.get(position).getHosRegister() == null) {
                 return;
             }
             Intent intent = new Intent(activity, HosRegisterDetailsActivity.class);
@@ -153,7 +186,7 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
 
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-            int position=getAdapterPosition();
+            int position = getAdapterPosition();
             hosRegisterBeans.get(position).setSelected(b);
         }
     }

@@ -22,18 +22,18 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textColor="@color/white"
-            android:background="@color/green"
+            android:background="@drawable/button_shape"
             android:textSize="20sp"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
 
 
     <Button
-        android:id="@+id/delete"
+        android:id="@+id/delete_btn"
         android:layout_width="70dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
-        android:background="@color/green"
+        android:background="@drawable/button_shape"
         android:text="退号"
         android:textColor="@color/white"
         android:textSize="20sp" />
