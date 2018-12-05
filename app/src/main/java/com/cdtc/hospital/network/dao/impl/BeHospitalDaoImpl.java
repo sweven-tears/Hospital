@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.cdtc.hospital.network.dao.BeHospitalDao;
 import com.cdtc.hospital.network.dao.BaseDao;
-import com.cdtc.hospital.network.entity.BeHospital;
+import com.cdtc.hospital.entity.BeHospital;
 
 public class BeHospitalDaoImpl extends BaseDao implements BeHospitalDao {
 

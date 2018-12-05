@@ -13,13 +13,15 @@ import android.widget.EditText;
 import com.cdtc.hospital.R;
 import com.cdtc.hospital.adapter.HosRegisterAdapter;
 import com.cdtc.hospital.base.BaseActivity;
+import com.cdtc.hospital.entity.Doctor;
 import com.cdtc.hospital.local.dao.BaseLocalDao;
+import com.cdtc.hospital.local.dao.DoctorLocalDao;
 import com.cdtc.hospital.local.dao.HosRegisterLocalDao;
+import com.cdtc.hospital.local.dao.impl.DoctorLocalDaoImpl;
 import com.cdtc.hospital.local.dao.impl.HosRegisterLocalDaoImpl;
-import com.cdtc.hospital.network.entity.HosRegister;
+import com.cdtc.hospital.entity.HosRegister;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -66,7 +68,7 @@ public class HosRegisterActivity extends BaseActivity {
         hosRegisterRecyclerView = findViewById(R.id.hos_register_list);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         hosRegisterRecyclerView.setLayoutManager(manager);
-        hosRegisterRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+        hosRegisterRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
     }
 
@@ -84,34 +86,46 @@ public class HosRegisterActivity extends BaseActivity {
      */
     private void searchHosRegisterList() {
 
+        list = new ArrayList<>();
+
         String hosR_idStr = searchHosR_id.getText().toString();
         String d_name = searchD_name.getText().toString();
         String d_keshi = searchD_keshi.getText().toString();
 
-        HosRegisterLocalDao hosRegisterLocalDao = new HosRegisterLocalDaoImpl(activity, BaseLocalDao.QUERY_DATABASE);
-        List<HosRegister> hosRegisters = new ArrayList<>();
-        if (!hosR_idStr.equals("")) {
-            Integer hosR_id;
-            try {
-                hosR_id = Integer.parseInt(hosR_idStr);
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-                toast.showError("病历号只能为数字");
-                return;
+        HosRegisterLocalDao hosRegisterLocalDao = new HosRegisterLocalDaoImpl(activity, BaseLocalDao.QUERY);
+        while (true) {
+            if (hosR_idStr.equals("") && d_keshi.equals("") && d_name.equals("")) {
+                list.addAll(hosRegisterLocalDao.queryHosRegisters());
+                break;
             }
+            if (!hosR_idStr.equals("")) {
+                Integer hosR_id;
+                try {
+                    hosR_id = Integer.parseInt(hosR_idStr);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    toast.showError("病历号只能为数字");
+                    return;
+                }
 
-            hosRegisters.add(hosRegisterLocalDao.queryHosRegisterByHosR_id(hosR_id));
-        } else {
-            hosRegisters = hosRegisterLocalDao.queryHosRegisters();
+                list.add(hosRegisterLocalDao.queryHosRegisterByHosR_id(hosR_id));
+            } else if (!d_keshi.equals("")) {
+                DoctorLocalDao doctorLocalDao = new DoctorLocalDaoImpl(activity, BaseLocalDao.QUERY);
+                List<Doctor> doctors = doctorLocalDao.queryDoctorByKeshi(d_keshi);
+                for (Doctor doctor : doctors) {
+                    list.addAll(hosRegisterLocalDao.queryByCondition(doctor.getD_id()));
+                }
+            } else if (!d_name.equals("")) {
+                DoctorLocalDao doctorLocalDao = new DoctorLocalDaoImpl(activity, BaseLocalDao.QUERY);
+                List<Doctor> doctors = doctorLocalDao.queryDoctorByName(d_name);
+                for (Doctor doctor : doctors) {
+                    list.addAll(hosRegisterLocalDao.queryByCondition(doctor.getD_id()));
+                }
+            }
+            break;
         }
-        if (!d_keshi.equals("")){
 
-        }
-
-        Set<HosRegister> set=new HashSet<>();
-
-
-        hosRegisterAdapter = new HosRegisterAdapter(activity, hosRegisters);
+        hosRegisterAdapter = new HosRegisterAdapter(activity, list);
         hosRegisterRecyclerView.setAdapter(hosRegisterAdapter);
     }
 
@@ -124,10 +138,10 @@ public class HosRegisterActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == AddHosRegisterActivity.REQUEST && resultCode == AddHosRegisterActivity.RESULT) {
-            HosRegister hosRegister=new HosRegister();
+            HosRegister hosRegister = new HosRegister();
 
             assert data != null;
-            Bundle bundle=data.getExtras();
+            Bundle bundle = data.getExtras();
 
             assert bundle != null;
             hosRegister.setHosR_id(bundle.getInt("hosR_id"));

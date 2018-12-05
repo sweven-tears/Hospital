@@ -5,8 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 
-import android.content.Intent;
-import android.database.Cursor;
 import android.os.AsyncTask;
 
 import android.os.Build;
@@ -21,16 +19,10 @@ import android.widget.EditText;
 import com.cdtc.hospital.R;
 import com.cdtc.hospital.base.App;
 import com.cdtc.hospital.base.BaseActivity;
-import com.cdtc.hospital.local.SQLite;
 import com.cdtc.hospital.local.dao.BaseLocalDao;
 import com.cdtc.hospital.local.dao.UserLocalDao;
 import com.cdtc.hospital.local.dao.impl.UserLocalDaoImpl;
-import com.cdtc.hospital.network.dao.UserDao;
-import com.cdtc.hospital.network.dao.impl.UserDaoImpl;
-import com.cdtc.hospital.network.entity.User;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.cdtc.hospital.entity.User;
 
 /**
  * A login screen that offers login via email/password.
@@ -155,7 +147,7 @@ public class LoginActivity extends BaseActivity {
             } catch (InterruptedException e) {
                 e.getStackTrace();
             }
-            UserLocalDao userLocalDao = new UserLocalDaoImpl(activity, BaseLocalDao.QUERY_DATABASE);
+            UserLocalDao userLocalDao = new UserLocalDaoImpl(activity, BaseLocalDao.QUERY);
             user = userLocalDao.selectByLoginName(mLoginName);
 
             if (user != null) {
@@ -174,7 +166,7 @@ public class LoginActivity extends BaseActivity {
             showProgress(false);
 
             if (result == 1) {
-                UserLocalDao userLocalDao = new UserLocalDaoImpl(activity, BaseLocalDao.UPDATE_DATABASE);
+                UserLocalDao userLocalDao = new UserLocalDaoImpl(activity, BaseLocalDao.UPDATE);
                 userLocalDao.updateLogSate(App.LOG_IN, mLoginName);
                 App.trueName = userLocalDao.selectByLoginName(mLoginName).getU_trueName();
                 finish();

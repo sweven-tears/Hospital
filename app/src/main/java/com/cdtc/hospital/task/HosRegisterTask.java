@@ -8,7 +8,7 @@ import com.cdtc.hospital.local.dao.HosRegisterLocalDao;
 import com.cdtc.hospital.local.dao.impl.HosRegisterLocalDaoImpl;
 import com.cdtc.hospital.network.dao.HosRegisterDao;
 import com.cdtc.hospital.network.dao.impl.HosRegisterDaoImpl;
-import com.cdtc.hospital.network.entity.HosRegister;
+import com.cdtc.hospital.entity.HosRegister;
 import com.cdtc.hospital.util.LogUtil;
 import com.cdtc.hospital.util.ToastUtil;
 
@@ -74,7 +74,7 @@ public class HosRegisterTask extends AsyncTask<Void, Void, Integer> {
         String tag = taskType == TASK_INSERT ? "添加" : (taskType == TASK_UPDATE ? "更新" : (taskType == TASK_DELETE ? "删除" : taskType==TASK_SYNC_DATA?"同步":"错误操作")) + "数据" + (result > 0 ? "成功" : "失败");
         new LogUtil(activity.getLocalClassName()).i(tag);
         if (result > 0) {
-            HosRegisterLocalDao hosRegisterLocalDao = new HosRegisterLocalDaoImpl(activity, BaseLocalDao.UPDATE_DATABASE);
+            HosRegisterLocalDao hosRegisterLocalDao = new HosRegisterLocalDaoImpl(activity, BaseLocalDao.UPDATE);
             if (taskType == TASK_INSERT) {
                 HosRegisterTask task=new HosRegisterTask(activity,null,TASK_SYNC_DATA);
                 task.execute();

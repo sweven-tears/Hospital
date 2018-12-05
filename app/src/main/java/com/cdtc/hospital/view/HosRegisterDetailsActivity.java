@@ -12,8 +12,8 @@ import com.cdtc.hospital.local.dao.DoctorLocalDao;
 import com.cdtc.hospital.local.dao.HosRegisterLocalDao;
 import com.cdtc.hospital.local.dao.impl.DoctorLocalDaoImpl;
 import com.cdtc.hospital.local.dao.impl.HosRegisterLocalDaoImpl;
-import com.cdtc.hospital.network.entity.Doctor;
-import com.cdtc.hospital.network.entity.HosRegister;
+import com.cdtc.hospital.entity.Doctor;
+import com.cdtc.hospital.entity.HosRegister;
 
 public class HosRegisterDetailsActivity extends BaseActivity {
 
@@ -64,11 +64,11 @@ public class HosRegisterDetailsActivity extends BaseActivity {
     @Override
     protected void initData() {
         Intent intent=getIntent();
-        Integer hosR_id=intent.getIntExtra("hosR_id",1);
+        Integer hosR_id=intent.getIntExtra("hosR_id",1001);
 
-        HosRegisterLocalDao hosRegisterLocalDao=new HosRegisterLocalDaoImpl(activity,BaseLocalDao.QUERY_DATABASE);
+        HosRegisterLocalDao hosRegisterLocalDao=new HosRegisterLocalDaoImpl(activity,BaseLocalDao.QUERY);
         HosRegister hosRegister=hosRegisterLocalDao.queryHosRegisterByHosR_id(hosR_id);
-        DoctorLocalDao doctorLocalDao=new DoctorLocalDaoImpl(activity,BaseLocalDao.QUERY_DATABASE);
+        DoctorLocalDao doctorLocalDao=new DoctorLocalDaoImpl(activity,BaseLocalDao.QUERY);
         Doctor doctor=doctorLocalDao.queryDoctorById(hosRegister.getD_id());
 
 

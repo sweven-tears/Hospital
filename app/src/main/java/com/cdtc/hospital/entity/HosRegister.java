@@ -1,11 +1,9 @@
-package com.cdtc.hospital.network.entity;
+package com.cdtc.hospital.entity;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 
 /**
  * @author sweven

@@ -9,12 +9,7 @@ import com.cdtc.hospital.base.App;
 import com.cdtc.hospital.local.DatabaseHelper;
 import com.cdtc.hospital.util.LogUtil;
 
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Map;
 
 
@@ -30,8 +25,8 @@ public class BaseLocalDao {
     private SQLiteDatabase db;
     private String dataBaseName;
 
-    public static final int QUERY_DATABASE = 1;
-    public static final int UPDATE_DATABASE = 2;
+    public static final int QUERY = 1;
+    public static final int UPDATE = 2;
 
 
     /**
@@ -48,10 +43,10 @@ public class BaseLocalDao {
         }
         this.dataBaseName = dataBaseName;
 
-        if (type == QUERY_DATABASE) {
+        if (type == QUERY) {
             // 查询数据库
             queryDataBase();
-        } else if (type == UPDATE_DATABASE) {
+        } else if (type == UPDATE) {
             // 更新数据库
             updateDataBase();
         } else {
