@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/hos_r_id_text"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="473dp"
+        android:gravity="bottom|start"
+        android:orientation="vertical"
+        android:text="病历号"
+        android:textSize="17sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/search_hos_r_id"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:inputType="number"
+        android:maxLines="1"
+        android:textSize="17sp"
+        app:layout_constraintLeft_toRightOf="@+id/hos_r_id_text"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_d_keshi"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:gravity="bottom|start"
+        android:orientation="vertical"
+        android:text="科 室"
+        android:textSize="17sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hos_r_id_text"
+        />
+
+    <EditText
+        android:id="@+id/search_d_keshi"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="17sp"
+        app:layout_constraintLeft_toRightOf="@+id/text_d_keshi"
+        app:layout_constraintTop_toBottomOf="@+id/hos_r_id_text" />
+
+    <TextView
+        android:id="@+id/text_d_name"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:gravity="bottom|start"
+        android:orientation="vertical"
+        android:text="主治医生"
+        android:textSize="17sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_d_keshi"
+        />
+
+    <EditText
+        android:id="@+id/search_d_name"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="17sp"
+        app:layout_constraintLeft_toRightOf="@+id/text_d_name"
+        app:layout_constraintTop_toBottomOf="@+id/text_d_keshi" />
+
+    <Button
+        android:id="@+id/query_btn"
+        android:layout_width="70dp"
+        android:layout_height="42dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_shape"
+        android:text="查询"
+        android:textColor="@color/blue"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toRightOf="@+id/search_hos_r_id"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/clear_btn"
+        android:layout_width="70dp"
+        android:layout_height="38dp"
+        android:background="@drawable/button_shape"
+        android:text="清空"
+        android:textColor="@color/blue"
+        android:textSize="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/query_btn"
+        app:layout_constraintLeft_toRightOf="@+id/search_d_name"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_d_name">
+
+        <TextView
+            android:id="@+id/id"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:layout_marginStart="4dp"
+            android:text="门诊编号"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/doctor1"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="4dp"
+            android:gravity="center"
+            android:text="主治医生"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/keshi1"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="4dp"
+            android:gravity="center"
+            android:text="科室"
+            android:textSize="16dp"/>
+
+        <TextView
+            android:id="@+id/state"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="4dp"
+            android:gravity="center"
+            android:text="状态"
+            android:textSize="16dp"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
