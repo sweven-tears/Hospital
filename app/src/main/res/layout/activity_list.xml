@@ -8,7 +8,7 @@
 
 
     <RelativeLayout
-        android:id="@+id/top_panel"
+        android:id="@+id/title_panel"
         android:layout_width="wrap_content"
         android:layout_height="140dp"
         android:layout_alignParentStart="true"
@@ -32,33 +32,11 @@
             android:typeface="serif" />
 
     </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="140dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="95dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginBottom="0dp"
-            android:gravity="center"
-            android:text="需要请戳我！"
-            android:textStyle="bold"
-            android:textColor="@color/purple"
-            android:textSize="25sp"
-            android:typeface="serif" />
-
-    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/button_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/top_panel"
+        android:layout_below="@id/title_panel"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="1dp"
@@ -68,25 +46,17 @@
 
         <ImageButton
             android:id="@+id/gua_hao"
-            android:layout_width="140dp"
-            android:layout_height="130dp"
-            android:layout_alignStart="@+id/zhu_yuan"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="-150dp"
-            android:layout_marginTop="116dp"
-            android:layout_marginBottom="224dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
             android:background="@drawable/guahao"
             tools:ignore="ContentDescription" />
 
         <ImageButton
             android:id="@+id/zhu_yuan"
-            android:layout_width="140dp"
-            android:layout_height="130dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="150dp"
-            android:layout_marginTop="116dp"
-            android:layout_marginBottom="220dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/gua_hao"
             android:background="@drawable/zhuyuan"
             tools:ignore="ContentDescription" />
 

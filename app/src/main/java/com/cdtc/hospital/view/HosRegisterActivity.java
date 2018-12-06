@@ -1,7 +1,9 @@
 package com.cdtc.hospital.view;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,7 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.cdtc.hospital.R;
 import com.cdtc.hospital.adapter.HosRegisterAdapter;
@@ -41,6 +43,10 @@ public class HosRegisterActivity extends BaseActivity {
     private Button deleteBtn;
     private Button updateInfoBtn;
 
+    private RelativeLayout totalPanel;
+    private RelativeLayout searchPanel;
+    private LinearLayoutManager manager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,13 +77,18 @@ public class HosRegisterActivity extends BaseActivity {
         deleteBtn = findViewById(R.id.delete_btn);
         updateInfoBtn = findViewById(R.id.update_info_btn);
 
+        totalPanel = findViewById(R.id.total_panel);
+        searchPanel = findViewById(R.id.title_panel);
+
         hosRegisterRecyclerView = findViewById(R.id.hos_register_list);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
+
+        manager = new LinearLayoutManager(this);
         hosRegisterRecyclerView.setLayoutManager(manager);
         hosRegisterRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
     }
 
+    @SuppressLint("NewApi")
     @Override
     protected void initData() {
 
@@ -90,18 +101,17 @@ public class HosRegisterActivity extends BaseActivity {
 
         updateInfoBtn.setVisibility(View.INVISIBLE);
 
-        hosRegisterAdapter.setOnSelectListener(() -> {
-            if (hosRegisterAdapter.getSelectedCount() == 1) {
-                updateInfoBtn.setVisibility(View.VISIBLE);
-            } else {
-                updateInfoBtn.setVisibility(View.INVISIBLE);
+        hosRegisterRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if (manager.findFirstVisibleItemPosition() > 0) {
+                    totalPanel.removeView(searchPanel);
+                } else {
+                    if (totalPanel.getChildAt(0).getId()!=R.id.title_panel) {
+                        totalPanel.addView(searchPanel, 0);
+                    }
+                }
             }
-            if (hosRegisterAdapter.getSelectedCount() < hosRegisterAdapter.getItemCount()) {
-                selectBtn.setText("全选");
-            } else {
-                selectBtn.setText("取消全选");
-            }
-            toast.showShort(hosRegisterAdapter.getSelectedCount() + " selected");
         });
     }
 
@@ -151,6 +161,21 @@ public class HosRegisterActivity extends BaseActivity {
 
         hosRegisterAdapter = new HosRegisterAdapter(activity, list);
         hosRegisterRecyclerView.setAdapter(hosRegisterAdapter);
+
+        // checkBox选中监听
+        hosRegisterAdapter.setOnSelectListener(() -> {
+            if (hosRegisterAdapter.getSelectedCount() == 1) {
+                updateInfoBtn.setVisibility(View.VISIBLE);
+            } else {
+                updateInfoBtn.setVisibility(View.INVISIBLE);
+            }
+            if (hosRegisterAdapter.getSelectedCount() < hosRegisterAdapter.getItemCount()) {
+                selectBtn.setText("全选");
+            } else {
+                selectBtn.setText("取消全选");
+            }
+            toast.showShort(hosRegisterAdapter.getSelectedCount() + " selected");
+        });
     }
 
     @Override
@@ -188,12 +213,14 @@ public class HosRegisterActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.query_btn:
                 searchHosRegisterList();
+                updateInfoBtn.setVisibility(View.INVISIBLE);
                 break;
             case R.id.clear_btn:
                 searchHosR_id.setText("");
                 searchD_name.setText("");
                 searchD_keshi.setText("");
                 searchHosRegisterList();
+                updateInfoBtn.setVisibility(View.INVISIBLE);
                 break;
             case R.id.select_btn:
                 String name = selectBtn.getText().toString();

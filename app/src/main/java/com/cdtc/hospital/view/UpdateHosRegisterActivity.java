@@ -123,9 +123,9 @@ public class UpdateHosRegisterActivity extends BaseActivity implements AdapterVi
         }
 
         if (hosRegister.getHosR_sex() == 0) {
-            hosR_sex_woman.setChecked(true);
-        } else {
             hosR_sex_man.setChecked(true);
+        } else {
+            hosR_sex_woman.setChecked(true);
         }
         hosR_age.setText(String.valueOf(hosRegister.getHosR_age()));
         hosR_work.setText(hosRegister.getHosR_work());

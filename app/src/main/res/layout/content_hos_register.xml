@@ -16,8 +16,9 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="177dp"
-            android:id="@+id/top_panel"
+            android:layout_height="120dp"
+            android:id="@+id/title_panel"
+            android:animateLayoutChanges="true"
             android:layout_alignParentTop="true">
 
             <include layout="@layout/hos_register_search_panel" />
@@ -25,10 +26,20 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/table_header_panel"
+            android:layout_width="match_parent"
+            android:layout_below="@id/title_panel"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/table_header" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/list_panel"
-            android:layout_below="@id/top_panel"
+            android:layout_below="@id/table_header_panel"
             android:layout_above="@id/operate_panel">
 
             <android.support.v7.widget.RecyclerView

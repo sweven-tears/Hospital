@@ -50,6 +50,7 @@ public class ListActivity extends BaseActivity {
                 break;
             }
             case R.id.zhu_yuan: {
+                toast.showLong("新功能待开发，敬请期待~");
                 break;
             }
         }
