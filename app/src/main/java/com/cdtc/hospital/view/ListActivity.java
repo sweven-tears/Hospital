@@ -1,7 +1,5 @@
 package com.cdtc.hospital.view;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,6 +8,9 @@ import android.widget.TextView;
 import com.cdtc.hospital.R;
 import com.cdtc.hospital.base.App;
 import com.cdtc.hospital.base.BaseActivity;
+import com.cdtc.hospital.local.dao.BaseLocalDao;
+import com.cdtc.hospital.local.dao.UserLocalDao;
+import com.cdtc.hospital.local.dao.impl.UserLocalDaoImpl;
 
 public class ListActivity extends BaseActivity {
 
@@ -22,6 +23,8 @@ public class ListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        setCustomerActionBar(KeyActionBarButtonKind.ACTIONBAR_RIGHT,BTN_TYPE_TEXT,"退出");
+        showRightButton();
         bindViewId();
         initData();
     }
@@ -35,7 +38,7 @@ public class ListActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        String welcome = "Welcome " + App.trueName + " to " + getString(R.string.app_name);
+        String welcome = "Welcome " + (App.trueName!=null?App.trueName+" ":"") + "to " + getString(R.string.app_name);
         welcomeTextView.setText(welcome);
 
         guaHaoImageView.setOnClickListener(this);
@@ -54,5 +57,25 @@ public class ListActivity extends BaseActivity {
                 break;
             }
         }
+    }
+
+    @Override
+    protected void rightDoWhat() {
+        UserLocalDao userLocalDao=new UserLocalDaoImpl(activity,BaseLocalDao.UPDATE);
+        try {
+            userLocalDao.updateLogSate(App.LOG_OUT,App.loginName);
+            App.loginState=App.LOG_OUT;
+            App.loginName=null;
+            App.trueName=null;
+        } catch (Exception e) {
+            userLocalDao.queryLocalLogSate();
+            userLocalDao.updateLogSate(App.LOG_OUT,App.loginName);
+            App.loginState=App.LOG_OUT;
+            App.loginName=null;
+            App.trueName=null;
+        }
+        finish();
+        startActivity(LoginActivity.class);
+
     }
 }

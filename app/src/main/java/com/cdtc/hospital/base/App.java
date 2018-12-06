@@ -1,12 +1,5 @@
 package com.cdtc.hospital.base;
 
-import android.database.Cursor;
-
-import com.cdtc.hospital.local.SQLite;
-
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by Sweven on 2018/11/28.
  * Email:sweventears@Foxmail.com
@@ -24,4 +17,5 @@ public class App {
     // 登录状态
     public static int loginState=LOG_OUT;
     public static String trueName;
+    public static String loginName;
 }

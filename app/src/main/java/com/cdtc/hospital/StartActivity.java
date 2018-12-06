@@ -57,6 +57,8 @@ public class StartActivity extends BaseActivity {
             if (App.loginState==App.LOG_OUT){
                 startActivity(LoginActivity.class);
             }else if(App.loginState==App.LOG_IN){
+                UserLocalDao userLocalDao=new UserLocalDaoImpl(activity,BaseLocalDao.QUERY);
+                userLocalDao.queryLocalLogSate();
                 startActivity(ListActivity.class);
             }
             isDirect=true;
@@ -139,9 +141,6 @@ public class StartActivity extends BaseActivity {
             }, 0, 1000);
         }
 
-        UserLocalDao userLocalDao=new UserLocalDaoImpl(activity,BaseLocalDao.QUERY);
-        userLocalDao.queryLocalLogSate();
-
         task=new QueryHosRegisterTask();
         task.execute();
 
@@ -203,7 +202,6 @@ public class StartActivity extends BaseActivity {
                 log.i("add hosRegister "+hosRegister+(result>0?" success":" fail"));
             }
             userLocalDao.queryLocalLogSate();
-            toast.showShort("Hello,"+App.trueName);
         }
 
         @Override

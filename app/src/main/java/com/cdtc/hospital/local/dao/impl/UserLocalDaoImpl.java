@@ -45,6 +45,7 @@ public class UserLocalDaoImpl extends BaseLocalDao implements UserLocalDao {
         Cursor cursor =query(App.TABLE_USER,columns,"u_state=?",new String[]{String.valueOf(App.LOG_IN)});
         while (cursor.moveToNext()){
             App.loginState=App.LOG_IN;
+            App.loginName =cursor.getString(cursor.getColumnIndex(columns[0]));
             App.trueName=cursor.getString(cursor.getColumnIndex(columns[1]));
         }
     }
