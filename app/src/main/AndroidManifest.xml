@@ -12,7 +12,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/simple_app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
@@ -34,7 +34,7 @@
         <activity android:name=".view.ListActivity" />
         <activity android:name=".view.AddHosRegisterActivity" />
         <activity android:name=".view.HosRegisterDetailsActivity" />
-        <activity android:name=".view.UpdateHosRegisterActivity"></activity>
+        <activity android:name=".view.UpdateHosRegisterActivity" />
     </application>
 
 </manifest>

@@ -16,6 +16,11 @@ public class ListActivity extends BaseActivity {
 
     private ImageView guaHaoImageView;
     private ImageView zhuYuanImageView;
+    private ImageView faYaoImageView;
+    private ImageView menZhenImageView;
+    private ImageView shouFeiImageView;
+    private ImageView yaoPinImageView;
+
     private TextView welcomeTextView;
 
     @Override
@@ -33,16 +38,25 @@ public class ListActivity extends BaseActivity {
     protected void bindViewId() {
         guaHaoImageView = findViewById(R.id.gua_hao);
         zhuYuanImageView = findViewById(R.id.zhu_yuan);
+        faYaoImageView = findViewById(R.id.fayao);
+        menZhenImageView = findViewById(R.id.menzhen);
+        shouFeiImageView = findViewById(R.id.shoufei);
+        yaoPinImageView = findViewById(R.id.yaopin);
+
         welcomeTextView = findViewById(R.id.welcome);
     }
 
     @Override
     protected void initData() {
-        String welcome = "Welcome " + (App.trueName!=null?App.trueName+" ":"") + "to " + getString(R.string.app_name);
+        String welcome = "Welcome " + (App.trueName!=null?App.trueName+".":"to " + getString(R.string.app_name));
         welcomeTextView.setText(welcome);
 
         guaHaoImageView.setOnClickListener(this);
         zhuYuanImageView.setOnClickListener(this);
+        faYaoImageView.setOnClickListener(this);
+        menZhenImageView.setOnClickListener(this);
+        shouFeiImageView.setOnClickListener(this);
+        yaoPinImageView.setOnClickListener(this);
     }
 
     @Override
@@ -52,8 +66,8 @@ public class ListActivity extends BaseActivity {
                 startActivity(HosRegisterActivity.class);
                 break;
             }
-            case R.id.zhu_yuan: {
-                toast.showLong("新功能待开发，敬请期待~");
+            default: {
+                toast.showShort("新功能待开发，敬请期待~");
                 break;
             }
         }

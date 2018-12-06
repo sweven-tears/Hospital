@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/total_panel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/total_panel">
+    android:gravity="center"
+    android:orientation="vertical">
 
 
     <RelativeLayout
@@ -24,42 +25,100 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="0dp"
             android:layout_marginTop="24dp"
+            android:ellipsize="start"
             android:gravity="center"
+            android:singleLine="true"
             android:text="@string/app_name"
-            android:textColor="@color/red"
+            android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="italic"
             android:typeface="serif" />
 
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/button_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title_panel"
-        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="0dp"
-        android:gravity="center"
+        android:foregroundGravity="center"
+        android:gravity="center|top"
         android:orientation="vertical">
 
         <ImageButton
             android:id="@+id/gua_hao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/guahao"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="挂号管理"
+            tools:ignore="HardcodedText" />
+
+
+        <ImageButton
+            android:id="@+id/fayao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@id/gua_hao"
+            android:background="@drawable/fayao"
+            android:contentDescription="在院发药"
+            tools:ignore="HardcodedText" />
+
+        <ImageButton
+            android:id="@+id/menzhen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@id/fayao"
+            android:background="@drawable/menzhen"
+            android:contentDescription="门诊管理"
+            tools:ignore="HardcodedText" />
 
         <ImageButton
             android:id="@+id/zhu_yuan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/gua_hao"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/zhuyuan"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="住院办理"
+            tools:ignore="HardcodedText" />
 
+        <ImageButton
+            android:id="@+id/shoufei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fayao"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@id/zhu_yuan"
+            android:background="@drawable/shoufei"
+            android:contentDescription="收费项目"
+            tools:ignore="HardcodedText" />
+
+        <ImageButton
+            android:id="@+id/yaopin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/menzhen"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@id/shoufei"
+            android:background="@drawable/yaopin"
+            android:contentDescription="药品管理"
+            tools:ignore="HardcodedText" />
 
     </RelativeLayout>
 

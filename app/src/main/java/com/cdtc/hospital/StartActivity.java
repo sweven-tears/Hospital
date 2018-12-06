@@ -54,11 +54,11 @@ public class StartActivity extends BaseActivity {
     private final Runnable launchRun = () -> {
         if (!isDirect) {
             finish();
+            UserLocalDao userLocalDao=new UserLocalDaoImpl(activity,BaseLocalDao.QUERY);
+            userLocalDao.queryLocalLogSate();
             if (App.loginState==App.LOG_OUT){
                 startActivity(LoginActivity.class);
             }else if(App.loginState==App.LOG_IN){
-                UserLocalDao userLocalDao=new UserLocalDaoImpl(activity,BaseLocalDao.QUERY);
-                userLocalDao.queryLocalLogSate();
                 startActivity(ListActivity.class);
             }
             isDirect=true;
