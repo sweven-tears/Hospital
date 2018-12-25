@@ -1,57 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="5dp"
         android:background="@color/white"
-        android:gravity="center|start">
+        android:gravity="center|start"
+        tools:ignore="DisableBaselineAlignment">
 
-        <TextView
-            android:id="@+id/select_checkbox"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginStart="20dp"
-            android:text="选择"
-            android:gravity="center" />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/hos_r_id"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            android:text="门诊编号" />
+            <TextView
+                android:id="@+id/select_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="选择"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/d_name"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:text="主治医生" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/d_keshi"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:text="科室" />
+            <TextView
+                android:id="@+id/hos_r_id"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="病历号"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/hos_r_state"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:text="状态" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
 
+            <TextView
+                android:id="@+id/d_name"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:text="主治医生"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/d_keshi"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:text="科室"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/hos_r_state"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:text="状态"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
 
     </LinearLayout>
 

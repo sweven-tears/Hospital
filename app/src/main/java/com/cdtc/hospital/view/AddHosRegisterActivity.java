@@ -1,7 +1,6 @@
 package com.cdtc.hospital.view;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,13 +11,10 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.cdtc.hospital.R;
-import com.cdtc.hospital.base.App;
 import com.cdtc.hospital.base.BaseActivity;
-import com.cdtc.hospital.local.dao.BaseLocalDao;
-import com.cdtc.hospital.local.dao.DoctorLocalDao;
-import com.cdtc.hospital.local.dao.impl.DoctorLocalDaoImpl;
 import com.cdtc.hospital.entity.Doctor;
 import com.cdtc.hospital.entity.HosRegister;
+import com.cdtc.hospital.task.DoctorTask;
 import com.cdtc.hospital.task.HosRegisterTask;
 
 import java.util.ArrayList;
@@ -47,6 +43,8 @@ public class AddHosRegisterActivity extends BaseActivity implements AdapterView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hos_register);
+
+        setActionBarTitle("门诊挂号");
 
         bindViewId();
         initData();
@@ -77,12 +75,15 @@ public class AddHosRegisterActivity extends BaseActivity implements AdapterView.
 
     @Override
     protected void initData() {
-        DoctorLocalDao doctorLocalDao = new DoctorLocalDaoImpl(activity, BaseLocalDao.QUERY);
-        List<String> keshiList = doctorLocalDao.queryKeshiList();
-        ArrayAdapter<String> keShiAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, keshiList);
-        keShiAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        d_keshi.setAdapter(keShiAdapter);
-        d_keshi.setOnItemSelectedListener(this);
+        DoctorTask doctorTask = new DoctorTask(activity, null, DoctorTask.QUERY_KeShi_LIST, DoctorTask.TYPE_PROGRESS);
+        doctorTask.execute();
+        doctorTask.setOnSuccessListener((keShiList, nameList) -> {
+            ArrayAdapter<String> keShiAdapter = new ArrayAdapter<>(AddHosRegisterActivity.this, android.R.layout.simple_spinner_dropdown_item, keShiList);
+            keShiAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            d_keshi.setAdapter(keShiAdapter);
+            d_keshi.setOnItemSelectedListener(this);
+        });
+
     }
 
     @Override
@@ -107,8 +108,8 @@ public class AddHosRegisterActivity extends BaseActivity implements AdapterView.
         String hosR_age = null;
         String hosR_work = null;
         String hosR_lookDoctor = null;
-        String d_keshi = null;
-        String d_name = null;
+        String d_keshi;
+        String d_name;
         String hosR_remark = null;
         try {
             hosR_name = this.hosR_name.getText().toString();
@@ -195,12 +196,10 @@ public class AddHosRegisterActivity extends BaseActivity implements AdapterView.
                 emptyView.requestFocus();
             }
         } else {
-            toast.showShort("信息已经填写完成");
-
             Integer d_id = doctorList.get(this.d_name.getSelectedItemPosition()).getD_id();
             saveHosRegister(hosR_name, hosR_idCard,
                     hosR_medical, Double.parseDouble(hosR_regPrice),
-                    hosR_phone, hosR_selfPrice.equals("是")?0:1,
+                    hosR_phone, hosR_selfPrice.equals("是") ? 0 : 1,
                     hosR_sex.equals("男") ? 0 : 1, Integer.parseInt(hosR_age),
                     hosR_work, hosR_lookDoctor.equals("初诊") ? 0 : 1,
                     hosR_remark, d_id);
@@ -211,18 +210,18 @@ public class AddHosRegisterActivity extends BaseActivity implements AdapterView.
     /**
      * 保存新的挂号信息
      *
-     * @param hosR_name
-     * @param hosR_idCard
-     * @param hosR_medical
-     * @param hosR_regPrice
-     * @param hosR_phone
-     * @param hosR_selfPrice
-     * @param hosR_sex
-     * @param hosR_age
-     * @param hosR_work
-     * @param hosR_lookDoctor
-     * @param hosR_remark
-     * @param d_id
+     * @param hosR_name       病人姓名
+     * @param hosR_idCard     病人身份证
+     * @param hosR_medical    病人社保卡
+     * @param hosR_regPrice   挂号费
+     * @param hosR_phone      电话
+     * @param hosR_selfPrice  是否自费
+     * @param hosR_sex        性别
+     * @param hosR_age        年龄
+     * @param hosR_work       职业
+     * @param hosR_lookDoctor 初诊or复诊
+     * @param hosR_remark     备注
+     * @param d_id            医生id
      */
     private void saveHosRegister(String hosR_name, String hosR_idCard, String hosR_medical, double hosR_regPrice, String hosR_phone, int hosR_selfPrice, int hosR_sex, int hosR_age, String hosR_work, int hosR_lookDoctor, String hosR_remark, Integer d_id) {
         HosRegister hosRegister = new HosRegister();
@@ -243,28 +242,34 @@ public class AddHosRegisterActivity extends BaseActivity implements AdapterView.
         hosRegister.setD_id(d_id);
 
         try {
-            HosRegisterTask hosRegisterTask=new HosRegisterTask(activity,hosRegister,HosRegisterTask.TASK_INSERT);
+            HosRegisterTask hosRegisterTask = new HosRegisterTask(activity, hosRegister, HosRegisterTask.TASK_INSERT);
+            hosRegisterTask.setOnSuccessListener((List<HosRegister> list) -> {
+                Integer hosR_id = list.get(0).getHosR_id();
+                backList(hosR_id);
+            });
             hosRegisterTask.execute();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        backList();
 
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String keshi = d_keshi.getSelectedItem().toString();
-        DoctorLocalDao doctorLocalDao = new DoctorLocalDaoImpl(activity, BaseLocalDao.QUERY);
-        doctorList = doctorLocalDao.queryDoctorByKeshi(keshi);
-        List<String> nameList = new ArrayList<>();
-        for (Doctor doctor : doctorList) {
-            nameList.add(doctor.getD_name());
-        }
-        ArrayAdapter<String> nameAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, nameList);
-        nameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        d_name.setAdapter(nameAdapter);
+        DoctorTask doctorTask = new DoctorTask(activity, keshi, DoctorTask.QUERY_NAME_LIST, DoctorTask.TYPE_NON_PROGRESS);
+        doctorTask.execute();
+        doctorTask.setOnSuccessListener((keShiList, doctorList) -> {
+            AddHosRegisterActivity.this.doctorList = doctorList;
+            List<String> nameList = new ArrayList<>();
+            for (Doctor doctor : doctorList) {
+                nameList.add(doctor.getD_name());
+            }
+            ArrayAdapter<String> nameAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, nameList);
+            nameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            d_name.setAdapter(nameAdapter);
+        });
     }
 
     @Override
@@ -274,20 +279,21 @@ public class AddHosRegisterActivity extends BaseActivity implements AdapterView.
 
     /**
      * 返回上一个activity
+     *
+     * @param hosR_id 挂号id，病历号
      */
-    private void backList() {
-        Intent intent=new Intent(activity,HosRegisterActivity.class);
-        Bundle bundle=new Bundle();
-        BaseLocalDao baseLocalDao=new BaseLocalDao(activity,App.DATA_BASE,BaseLocalDao.QUERY);
-        Cursor cursor=baseLocalDao.query(App.TABLE_HOS_REGISTER,new String[]{"hosR_id"},null,null);
-        cursor.moveToLast();
-        bundle.putInt("hosR_id",cursor.getInt(cursor.getColumnIndex("hosR_id"))+1);
-        bundle.putInt("d_id",doctorList.get(d_name.getSelectedItemPosition()).getD_id());
+    private void backList(Integer hosR_id) {
+
+        Intent intent = new Intent(activity, HosRegisterActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("hosR_id", hosR_id);
+        bundle.putInt("d_id", doctorList.get(d_name.getSelectedItemPosition()).getD_id());
+        bundle.putString("d_name", d_name.getSelectedItem().toString());
+        bundle.putString("d_keshi", d_keshi.getSelectedItem().toString());
         intent.putExtras(bundle);
-        setResult(RESULT,intent);
+        setResult(RESULT, intent);
         finish();
     }
-
 
 
 }

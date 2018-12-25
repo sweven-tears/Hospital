@@ -12,7 +12,7 @@ public interface BeHospitalDao {
      * @param beHospital
      * @return
      */
-    public List<BeHospital> selectBeHospitalByCondition(BeHospital beHospital);
+    List<BeHospital> selectBeHospitalByCondition(BeHospital beHospital);
 
     /**
      * 计算behospital表的数据总数
@@ -20,7 +20,7 @@ public interface BeHospitalDao {
      * @param beHospital
      * @return
      */
-    public Integer queryBeHospitalCount(BeHospital beHospital);
+    Integer queryBeHospitalCount(BeHospital beHospital);
 
     /**
      * 根据住院编号更新住院状态
@@ -29,7 +29,7 @@ public interface BeHospitalDao {
      * @param beH_id
      * @return
      */
-    public Integer updateHosR_StateById(Integer hosR_state, Integer beH_id);
+    Integer updateHosR_StateById(Integer hosR_state, Integer beH_id);
 
     /**
      * 根据id查询出挂号id
@@ -37,7 +37,7 @@ public interface BeHospitalDao {
      * @param beH_id
      * @return
      */
-    public Integer queryHosR_idById(Integer beH_id);
+    Integer queryHosR_idById(Integer beH_id);
 
     /**
      * 根据id查询出护理人员和床号
@@ -45,7 +45,7 @@ public interface BeHospitalDao {
      * @param beH_id
      * @return
      */
-    public BeHospital queryNurseBedById(Integer beH_id);
+    BeHospital queryNurseBedById(Integer beH_id);
 
     /**
      * 通过id更新护理人员和床号
@@ -55,8 +55,8 @@ public interface BeHospitalDao {
      * @param beH_id
      * @return
      */
-    public Integer updateNurseBedById(String beH_nursePeople,
-                                      String beH_patBed, Integer beH_id);
+    Integer updateNurseBedById(String beH_nursePeople,
+                               String beH_patBed, Integer beH_id);
 
     /**
      * 添加信息
@@ -64,7 +64,7 @@ public interface BeHospitalDao {
      * @param beHospital
      * @return
      */
-    public Integer addBeHospital(BeHospital beHospital);
+    Integer addBeHospital(BeHospital beHospital);
 
     /**
      * 为缴纳押金页面查询信息
@@ -72,7 +72,7 @@ public interface BeHospitalDao {
      * @param beH_id
      * @return
      */
-    public BeHospital queryBeHospitalByIdForAntecedent(Integer beH_id);
+    BeHospital queryBeHospitalByIdForAntecedent(Integer beH_id);
 
     /**
      * 根据id修改缴纳押金
@@ -81,5 +81,5 @@ public interface BeHospitalDao {
      * @param beH_id
      * @return
      */
-    public Integer updateAntecedentById(Double beH_antecedent, Integer beH_id);
+    Integer updateAntecedentById(Double beH_antecedent, Integer beH_id);
 }

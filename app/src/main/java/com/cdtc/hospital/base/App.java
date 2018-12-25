@@ -7,9 +7,6 @@ package com.cdtc.hospital.base;
 public class App {
     public static final String DATA_BASE="hospital";
     public static final String TABLE_USER="user";
-    public static final String TABLE_HOS_REGISTER="hosregister";
-    public static final String TABLE_BE_HOSPITAL="behospital";
-    public static final String TABLE_DOCTOR="doctor";
 
     public static final int LOG_IN=1;
     public static final int LOG_OUT=0;

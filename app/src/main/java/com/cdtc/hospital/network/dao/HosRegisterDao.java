@@ -38,18 +38,17 @@ public interface HosRegisterDao {
 
     Integer updateStateById(Integer hosR_id,Integer hosR_state);
 
-
-    /*---------------------------------------以下为从未使用过的方法--------------------------------------------*/
+    Integer getLastHosRId();
 
     /**
-     * 分页+条件查询
+     * 条件查询
      *
-     * @param hosR_id
-     * @param d_name
-     * @param d_keshi
-     * @return
+     * @param hosR_id 主键，病历号
+     * @param d_name 医生名
+     * @param d_keshi 科室
+     * @return 查询数据集合
      */
-    public List<HosRegister> selectByCondition(Integer hosR_id, String d_name, String d_keshi);
+    List<HosRegister> selectByCondition(Integer hosR_id, String d_name, String d_keshi);
 
     /**
      * 条件查询出总记录数
@@ -59,8 +58,8 @@ public interface HosRegisterDao {
      * @param d_keshi
      * @return
      */
-    public Integer getHosRegisterCount(Integer hosR_id, String d_name,
-                                       String d_keshi);
+    Integer getHosRegisterCount(Integer hosR_id, String d_name,
+                                String d_keshi);
 
     /**
      * 根据id查询出挂号信息
@@ -68,6 +67,6 @@ public interface HosRegisterDao {
      * @param hosR_id
      * @return
      */
-    public HosRegister queryHosRegisterByHosR_id(Integer hosR_id);
+    HosRegister queryHosRegisterByHosR_id(Integer hosR_id);
 
 }

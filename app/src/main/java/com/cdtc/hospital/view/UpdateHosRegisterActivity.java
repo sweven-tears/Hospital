@@ -1,7 +1,6 @@
 package com.cdtc.hospital.view;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,15 +11,10 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.cdtc.hospital.R;
-import com.cdtc.hospital.base.App;
 import com.cdtc.hospital.base.BaseActivity;
 import com.cdtc.hospital.entity.Doctor;
 import com.cdtc.hospital.entity.HosRegister;
-import com.cdtc.hospital.local.dao.BaseLocalDao;
-import com.cdtc.hospital.local.dao.DoctorLocalDao;
-import com.cdtc.hospital.local.dao.HosRegisterLocalDao;
-import com.cdtc.hospital.local.dao.impl.DoctorLocalDaoImpl;
-import com.cdtc.hospital.local.dao.impl.HosRegisterLocalDaoImpl;
+import com.cdtc.hospital.task.DoctorTask;
 import com.cdtc.hospital.task.HosRegisterTask;
 
 import java.util.ArrayList;
@@ -52,11 +46,16 @@ public class UpdateHosRegisterActivity extends BaseActivity implements AdapterVi
     private List<Doctor> doctorList;
     private Integer hosR_id;
     private boolean isFirstLaunch = true;
+    private HosRegister hosRegister;
+    private List<String> keShiList;
+    private int success = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_hos_register);
+
+        setActionBarTitle("修改信息");
 
         bindViewId();
         initData();
@@ -97,71 +96,99 @@ public class UpdateHosRegisterActivity extends BaseActivity implements AdapterVi
 
         Intent intent = getIntent();
         hosR_id = intent.getIntExtra("hosR_id", 1001);
+        String d_keshi=intent.getStringExtra("d_keshi");
 
-        HosRegisterLocalDao hosRegisterLocalDao = new HosRegisterLocalDaoImpl(activity, BaseLocalDao.QUERY);
-        DoctorLocalDao doctorLocalDao = new DoctorLocalDaoImpl(activity, BaseLocalDao.QUERY);
 
-        List<String> keshiList = doctorLocalDao.queryKeshiList();
-        HosRegister hosRegister = hosRegisterLocalDao.queryHosRegisterByHosR_id(hosR_id);
-        Doctor doctor = doctorLocalDao.queryDoctorById(hosRegister.getD_id());
+        HosRegisterTask hosRegisterTask = new HosRegisterTask(activity, hosR_id);
+        hosRegisterTask.execute();
+        hosRegisterTask.setOnSuccessListener(list -> {
+            hosRegister = list.get(0);
+            success++;
+            addInfo(success);
+        });
 
-        ArrayAdapter<String> keShiAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, keshiList);
-        keShiAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        d_keshi.setAdapter(keShiAdapter);
-        d_keshi.setOnItemSelectedListener(this);
+        DoctorTask doctorTask = new DoctorTask(activity, null, DoctorTask.QUERY_KeShi_LIST,DoctorTask.TYPE_PROGRESS);
+        doctorTask.execute();
+        doctorTask.setOnSuccessListener((keShiList, nameList) -> {
+            UpdateHosRegisterActivity.this.keShiList = keShiList;
+            success++;
+            addInfo(success);
+        });
 
-        hosR_name.setText(hosRegister.getHosR_name());
-        hosR_idCard.setText(hosRegister.getHosR_idCard());
-        hosR_medical.setText(hosRegister.getHosR_medical());
-        hosR_regPrice.setText(String.valueOf(hosRegister.getHosR_regPrice()));
-        hosR_phone.setText(hosRegister.getHosR_phone());
+        DoctorTask doctorTask2 = new DoctorTask(activity, d_keshi, DoctorTask.QUERY_NAME_LIST,DoctorTask.TYPE_PROGRESS);
+        doctorTask2.execute();
+        doctorTask2.setOnSuccessListener((keShiList, nameList) -> {
+            UpdateHosRegisterActivity.this.doctorList = nameList;
+            success++;
+            addInfo(success);
+        });
 
-        if (hosRegister.getHosR_selfPrice() == 1) {
-            hosR_selfPrice_No.setChecked(true);
-        } else {
-            hosR_selfPrice_Yes.setChecked(true);
-        }
 
-        if (hosRegister.getHosR_sex() == 0) {
-            hosR_sex_man.setChecked(true);
-        } else {
-            hosR_sex_woman.setChecked(true);
-        }
-        hosR_age.setText(String.valueOf(hosRegister.getHosR_age()));
-        hosR_work.setText(hosRegister.getHosR_work());
+    }
 
-        if (hosRegister.getHosR_lookDoctor() == 0) {
-            hosR_lookDoctor_first.setChecked(true);
-        } else {
-            hosR_lookDoctor_double.setChecked(true);
-        }
+    /**
+     * @param success task success num
+     */
+    private void addInfo(int success) {
+        if (success >= 3) {
+            ArrayAdapter<String> keShiAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, keShiList);
+            keShiAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            d_keshi.setAdapter(keShiAdapter);
+            d_keshi.setOnItemSelectedListener(this);
 
-        int position = 0;
-        for (int i = 0; i < keshiList.size(); i++) {
-            if (keshiList.get(i).equals(doctor.getD_keshi())) {
-                position = i;
+
+            hosR_name.setText(hosRegister.getHosR_name());
+            hosR_idCard.setText(hosRegister.getHosR_idCard());
+            hosR_medical.setText(hosRegister.getHosR_medical());
+            hosR_regPrice.setText(String.valueOf(hosRegister.getHosR_regPrice()));
+            hosR_phone.setText(hosRegister.getHosR_phone());
+
+            if (hosRegister.getHosR_selfPrice() == 1) {
+                hosR_selfPrice_No.setChecked(true);
+            } else {
+                hosR_selfPrice_Yes.setChecked(true);
             }
-        }
-        d_keshi.setSelection(position);
 
-        doctorList = doctorLocalDao.queryDoctorByKeshi(doctor.getD_keshi());
-        List<String> nameList = new ArrayList<>();
-        for (Doctor doctor2 : doctorList) {
-            nameList.add(doctor2.getD_name());
-        }
-        ArrayAdapter<String> nameAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, nameList);
-        nameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        d_name.setAdapter(nameAdapter);
-
-        for (int i = 0; i < nameList.size(); i++) {
-            if (nameList.get(i).equals(doctor.getD_name())) {
-                position = i;
-                break;
+            if (hosRegister.getHosR_sex() == 0) {
+                hosR_sex_man.setChecked(true);
+            } else {
+                hosR_sex_woman.setChecked(true);
             }
-        }
-        d_name.setSelection(position);
+            hosR_age.setText(String.valueOf(hosRegister.getHosR_age()));
+            hosR_work.setText(hosRegister.getHosR_work());
 
-        hosR_remark.setText(hosRegister.getHosR_remark());
+            if (hosRegister.getHosR_lookDoctor() == 0) {
+                hosR_lookDoctor_first.setChecked(true);
+            } else {
+                hosR_lookDoctor_double.setChecked(true);
+            }
+
+            int position = 0;
+            for (int i = 0; i < keShiList.size(); i++) {
+                if (keShiList.get(i).equals(hosRegister.getD_keshi())) {
+                    position = i;
+                }
+            }
+            d_keshi.setSelection(position);
+
+            List<String> nameList = new ArrayList<>();
+            for (Doctor doctor2 : doctorList) {
+                nameList.add(doctor2.getD_name());
+            }
+            ArrayAdapter<String> nameAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, nameList);
+            nameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            d_name.setAdapter(nameAdapter);
+
+            for (int i = 0; i < nameList.size(); i++) {
+                if (nameList.get(i).equals(hosRegister.getD_name())) {
+                    position = i;
+                    break;
+                }
+            }
+            d_name.setSelection(position);
+
+            hosR_remark.setText(hosRegister.getHosR_remark());
+        }
     }
 
     @Override
@@ -186,8 +213,8 @@ public class UpdateHosRegisterActivity extends BaseActivity implements AdapterVi
         String hosR_age = null;
         String hosR_work = null;
         String hosR_lookDoctor = null;
-        String d_keshi = null;
-        String d_name = null;
+        String d_keshi;
+        String d_name;
         String hosR_remark = null;
         try {
             hosR_name = this.hosR_name.getText().toString();
@@ -274,8 +301,6 @@ public class UpdateHosRegisterActivity extends BaseActivity implements AdapterVi
                 emptyView.requestFocus();
             }
         } else {
-            toast.showShort("信息已经填写完成");
-
             Integer d_id = doctorList.get(this.d_name.getSelectedItemPosition()).getD_id();
             updateHosRegister(hosR_name, hosR_idCard,
                     hosR_medical, Double.parseDouble(hosR_regPrice),
@@ -290,18 +315,18 @@ public class UpdateHosRegisterActivity extends BaseActivity implements AdapterVi
     /**
      * 保存新的挂号信息
      *
-     * @param hosR_name
-     * @param hosR_idCard
-     * @param hosR_medical
-     * @param hosR_regPrice
-     * @param hosR_phone
-     * @param hosR_selfPrice
-     * @param hosR_sex
-     * @param hosR_age
-     * @param hosR_work
-     * @param hosR_lookDoctor
-     * @param hosR_remark
-     * @param d_id
+     * @param hosR_name       姓名
+     * @param hosR_idCard     身份证号
+     * @param hosR_medical    医保卡号
+     * @param hosR_regPrice   押金
+     * @param hosR_phone      电话
+     * @param hosR_selfPrice  是否自费
+     * @param hosR_sex        性别
+     * @param hosR_age        年龄
+     * @param hosR_work       职业
+     * @param hosR_lookDoctor 初诊or复诊
+     * @param hosR_remark     备注
+     * @param d_id            医生id
      */
     private void updateHosRegister(String hosR_name, String hosR_idCard, String hosR_medical, double hosR_regPrice, String hosR_phone, int hosR_selfPrice, int hosR_sex, int hosR_age, String hosR_work, int hosR_lookDoctor, String hosR_remark, Integer d_id) {
         HosRegister hosRegister = new HosRegister();
@@ -321,6 +346,7 @@ public class UpdateHosRegisterActivity extends BaseActivity implements AdapterVi
 
         try {
             HosRegisterTask hosRegisterTask = new HosRegisterTask(activity, hosRegister, HosRegisterTask.TASK_UPDATE);
+            hosRegisterTask.setOnSuccessListener(list -> finish());
             hosRegisterTask.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -335,17 +361,21 @@ public class UpdateHosRegisterActivity extends BaseActivity implements AdapterVi
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         if (!isFirstLaunch) {
             String keshi = d_keshi.getSelectedItem().toString();
-            DoctorLocalDao doctorLocalDao = new DoctorLocalDaoImpl(activity, BaseLocalDao.QUERY);
-            doctorList = doctorLocalDao.queryDoctorByKeshi(keshi);
-            List<String> nameList = new ArrayList<>();
-            for (Doctor doctor : doctorList) {
-                nameList.add(doctor.getD_name());
-            }
-            ArrayAdapter<String> nameAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, nameList);
-            nameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            d_name.setAdapter(nameAdapter);
-        }else {
-            isFirstLaunch=false;
+            DoctorTask doctorTask = new DoctorTask(activity, keshi, DoctorTask.QUERY_NAME_LIST,DoctorTask.TYPE_NON_PROGRESS);
+            doctorTask.execute();
+            doctorTask.setOnSuccessListener((keShiList, doctorList) -> {
+                UpdateHosRegisterActivity.this.doctorList = doctorList;
+                List<String> nameList = new ArrayList<>();
+                for (Doctor doctor : doctorList) {
+                    nameList.add(doctor.getD_name());
+                }
+                ArrayAdapter<String> nameAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, nameList);
+                nameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                d_name.setAdapter(nameAdapter);
+            });
+
+        } else {
+            isFirstLaunch = false;
         }
     }
 
@@ -360,9 +390,9 @@ public class UpdateHosRegisterActivity extends BaseActivity implements AdapterVi
     private void backList() {
         Intent intent = new Intent(activity, HosRegisterActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putInt("d_id", doctorList.get(d_name.getSelectedItemPosition()).getD_id());
+        bundle.putString("d_name", (String) d_name.getSelectedItem());
+        bundle.putString("d_keshi",(String)d_keshi.getSelectedItem());
         intent.putExtras(bundle);
         setResult(RESULT, intent);
-        finish();
     }
 }

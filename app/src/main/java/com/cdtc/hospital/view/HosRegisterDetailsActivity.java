@@ -7,13 +7,10 @@ import android.widget.TextView;
 
 import com.cdtc.hospital.R;
 import com.cdtc.hospital.base.BaseActivity;
-import com.cdtc.hospital.local.dao.BaseLocalDao;
-import com.cdtc.hospital.local.dao.DoctorLocalDao;
-import com.cdtc.hospital.local.dao.HosRegisterLocalDao;
-import com.cdtc.hospital.local.dao.impl.DoctorLocalDaoImpl;
-import com.cdtc.hospital.local.dao.impl.HosRegisterLocalDaoImpl;
-import com.cdtc.hospital.entity.Doctor;
 import com.cdtc.hospital.entity.HosRegister;
+import com.cdtc.hospital.task.HosRegisterTask;
+
+import java.util.List;
 
 public class HosRegisterDetailsActivity extends BaseActivity {
 
@@ -60,30 +57,33 @@ public class HosRegisterDetailsActivity extends BaseActivity {
         hosR_remark = findViewById(R.id.hos_r_remark);
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void initData() {
-        Intent intent=getIntent();
-        Integer hosR_id=intent.getIntExtra("hosR_id",1001);
+        Intent intent = getIntent();
+        Integer hosR_id = intent.getIntExtra("hosR_id", 1001);
 
-        HosRegisterLocalDao hosRegisterLocalDao=new HosRegisterLocalDaoImpl(activity,BaseLocalDao.QUERY);
-        HosRegister hosRegister=hosRegisterLocalDao.queryHosRegisterByHosR_id(hosR_id);
-        DoctorLocalDao doctorLocalDao=new DoctorLocalDaoImpl(activity,BaseLocalDao.QUERY);
-        Doctor doctor=doctorLocalDao.queryDoctorById(hosRegister.getD_id());
+        HosRegisterTask hosRegisterTask = new HosRegisterTask(activity, hosR_id);
+        hosRegisterTask.execute();
+        hosRegisterTask.setOnSuccessListener(this::onSuccess);
 
 
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void onSuccess(List<HosRegister> list) {
+        HosRegister hosRegister = list.get(0);
         hosR_name.setText(hosRegister.getHosR_name());
         hosR_idCard.setText(hosRegister.getHosR_idCard());
         hosR_medical.setText(hosRegister.getHosR_medical());
-        hosR_regPrice.setText(String.valueOf(hosRegister.getHosR_regPrice())+"元");
+        hosR_regPrice.setText(String.valueOf(hosRegister.getHosR_regPrice()) + "元");
         hosR_phone.setText(hosRegister.getHosR_phone());
-        hosR_selfPrice.setText(hosRegister.getHosR_selfPrice()==0?"自费":"免费");
-        hosR_sex.setText(hosRegister.getHosR_sex()==0?"男":"女");
+        hosR_selfPrice.setText(hosRegister.getHosR_selfPrice() == 0 ? "自费" : "免费");
+        hosR_sex.setText(hosRegister.getHosR_sex() == 0 ? "男" : "女");
         hosR_age.setText(String.valueOf(hosRegister.getHosR_age()));
         hosR_work.setText(hosRegister.getHosR_work());
-        hosR_lookDoctor.setText(hosRegister.getHosR_lookDoctor()==0?"初诊":"复诊");
-        d_keshi.setText(doctor.getD_keshi());
-        d_name.setText(doctor.getD_name());
+        hosR_lookDoctor.setText(hosRegister.getHosR_lookDoctor() == 0 ? "初诊" : "复诊");
+        d_keshi.setText(hosRegister.getD_keshi());
+        d_name.setText(hosRegister.getD_name());
         hosR_remark.setText(hosRegister.getHosR_remark());
     }
 }

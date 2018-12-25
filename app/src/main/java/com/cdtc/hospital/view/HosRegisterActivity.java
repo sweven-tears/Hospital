@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,23 +17,15 @@ import android.widget.RelativeLayout;
 import com.cdtc.hospital.R;
 import com.cdtc.hospital.adapter.HosRegisterAdapter;
 import com.cdtc.hospital.base.BaseActivity;
-import com.cdtc.hospital.entity.Doctor;
-import com.cdtc.hospital.local.dao.BaseLocalDao;
-import com.cdtc.hospital.local.dao.DoctorLocalDao;
-import com.cdtc.hospital.local.dao.HosRegisterLocalDao;
-import com.cdtc.hospital.local.dao.impl.DoctorLocalDaoImpl;
-import com.cdtc.hospital.local.dao.impl.HosRegisterLocalDaoImpl;
 import com.cdtc.hospital.entity.HosRegister;
+import com.cdtc.hospital.task.HosRegisterTask;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HosRegisterActivity extends BaseActivity {
 
     private RecyclerView hosRegisterRecyclerView;
     private HosRegisterAdapter hosRegisterAdapter;
-
-    private static List<HosRegister> list;
 
     private EditText searchHosR_id;
     private EditText searchD_name;
@@ -107,63 +100,23 @@ public class HosRegisterActivity extends BaseActivity {
                 if (manager.findFirstVisibleItemPosition() > 0) {
                     totalPanel.removeView(searchPanel);
                 } else {
-                    if (totalPanel.getChildAt(0).getId()!=R.id.title_panel) {
+                    if (totalPanel.getChildAt(0).getId() != R.id.title_panel) {
                         totalPanel.addView(searchPanel, 0);
                     }
                 }
             }
         });
-    }
 
-    /**
-     * 获取 HosRegisterList （条件查询数据或查询所有数据）
-     */
-    private void searchHosRegisterList() {
-
-        list = new ArrayList<>();
-
-        String hosR_idStr = searchHosR_id.getText().toString();
-        String d_name = searchD_name.getText().toString();
-        String d_keshi = searchD_keshi.getText().toString();
-
-        HosRegisterLocalDao hosRegisterLocalDao = new HosRegisterLocalDaoImpl(activity, BaseLocalDao.QUERY);
-        while (true) {
-            if (hosR_idStr.equals("") && d_keshi.equals("") && d_name.equals("")) {
-                list.addAll(hosRegisterLocalDao.queryHosRegisters());
-                break;
-            }
-            if (!hosR_idStr.equals("")) {
-                Integer hosR_id;
-                try {
-                    hosR_id = Integer.parseInt(hosR_idStr);
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    toast.showError("病历号只能为数字");
-                    return;
-                }
-
-                list.add(hosRegisterLocalDao.queryHosRegisterByHosR_id(hosR_id));
-            } else if (!d_keshi.equals("")) {
-                DoctorLocalDao doctorLocalDao = new DoctorLocalDaoImpl(activity, BaseLocalDao.QUERY);
-                List<Doctor> doctors = doctorLocalDao.queryDoctorByKeshi(d_keshi);
-                for (Doctor doctor : doctors) {
-                    list.addAll(hosRegisterLocalDao.queryByCondition(doctor.getD_id()));
-                }
-            } else if (!d_name.equals("")) {
-                DoctorLocalDao doctorLocalDao = new DoctorLocalDaoImpl(activity, BaseLocalDao.QUERY);
-                List<Doctor> doctors = doctorLocalDao.queryDoctorByName(d_name);
-                for (Doctor doctor : doctors) {
-                    list.addAll(hosRegisterLocalDao.queryByCondition(doctor.getD_id()));
-                }
-            }
-            break;
-        }
-
-        hosRegisterAdapter = new HosRegisterAdapter(activity, list);
+        hosRegisterAdapter = new HosRegisterAdapter(activity, new ArrayList<>());
         hosRegisterRecyclerView.setAdapter(hosRegisterAdapter);
 
         // checkBox选中监听
         hosRegisterAdapter.setOnSelectListener(() -> {
+            if (hosRegisterAdapter.getSelectedCount() > 0) {
+                deleteBtn.setText("退号");
+            } else {
+                deleteBtn.setText("刷新");
+            }
             if (hosRegisterAdapter.getSelectedCount() == 1) {
                 updateInfoBtn.setVisibility(View.VISIBLE);
             } else {
@@ -174,8 +127,34 @@ public class HosRegisterActivity extends BaseActivity {
             } else {
                 selectBtn.setText("取消全选");
             }
-            toast.showShort(hosRegisterAdapter.getSelectedCount() + " selected");
         });
+    }
+
+    /**
+     * 获取 HosRegisterList （条件查询数据或查询所有数据）
+     */
+    private void searchHosRegisterList() {
+
+        String hosR_idStr = searchHosR_id.getText().toString();
+        String d_name = searchD_name.getText().toString();
+        String d_keshi = searchD_keshi.getText().toString();
+
+        Integer hosR_id = null;
+        if (!hosR_idStr.equals("")) {
+            try {
+                hosR_id = Integer.parseInt(hosR_idStr);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                toast.showError("病历号只能为数字");
+                return;
+            }
+        }
+
+        HosRegisterTask hosRegisterTask = new HosRegisterTask(activity, hosR_id, d_name, d_keshi);
+        hosRegisterTask.execute();
+
+        hosRegisterTask.setOnSuccessListener(list -> hosRegisterAdapter.insertAllHosRegisters(list));
+
     }
 
     @Override
@@ -196,15 +175,17 @@ public class HosRegisterActivity extends BaseActivity {
             assert bundle != null;
             hosRegister.setHosR_id(bundle.getInt("hosR_id"));
             hosRegister.setD_id(bundle.getInt("d_id"));
+            hosRegister.setD_name(bundle.getString("d_name"));
+            hosRegister.setD_keshi(bundle.getString("d_keshi"));
             hosRegister.setHosR_state(0);
             hosRegisterAdapter.insertHosRegister(hosRegister);
         }
-        if (requestCode == UpdateHosRegisterActivity.RESULT &&
+        if (requestCode == UpdateHosRegisterActivity.REQUEST &&
                 resultCode == UpdateHosRegisterActivity.RESULT) {
             assert data != null;
             Bundle bundle = data.getExtras();
             assert bundle != null;
-            hosRegisterAdapter.updateHosRegister(bundle.getInt("d_id"));
+            hosRegisterAdapter.updateHosRegister(bundle.getString("d_name"), bundle.getString("d_keshi"));
         }
     }
 
@@ -233,15 +214,49 @@ public class HosRegisterActivity extends BaseActivity {
                 }
                 break;
             case R.id.delete_btn:
-                if (hosRegisterAdapter.getSelectedCount() > 0) {
+                if (hosRegisterAdapter.getSelectedCount() > 0 && deleteBtn.getText().toString().equals("退号")) {
                     hosRegisterAdapter.updateState();
+                } else if (deleteBtn.getText().toString().equals("刷新")) {
+                    String hosR_idStr = searchHosR_id.getText().toString();
+                    String d_name = searchD_name.getText().toString();
+                    String d_keshi = searchD_keshi.getText().toString();
+
+                    Integer hosR_id = null;
+                    if (!hosR_idStr.equals("")) {
+                        try {
+                            hosR_id = Integer.parseInt(hosR_idStr);
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                            toast.showError("病历号只能为数字");
+                            return;
+                        }
+                    }
+                    HosRegisterTask task = new HosRegisterTask(activity, hosR_id, d_name, d_keshi);
+                    task.setOnSuccessListener(list -> hosRegisterAdapter.updateAllData(list));
+                    task.execute();
+
                 }
                 break;
             case R.id.update_info_btn:
                 Intent intent = new Intent(activity, UpdateHosRegisterActivity.class);
                 intent.putExtra("hosR_id", hosRegisterAdapter.getSelectedHosR_id());
+                intent.putExtra("d_keshi", hosRegisterAdapter.getD_KeShi());
                 startActivityForResult(intent, UpdateHosRegisterActivity.REQUEST);
                 break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (hosRegisterAdapter.getSelectedCount() > 0) {
+                hosRegisterAdapter.cancelSelectAll();
+                deleteBtn.setText("刷新");
+                updateInfoBtn.setVisibility(View.INVISIBLE);
+            } else {
+                finish();
+            }
+        }
+        return false;
     }
 }

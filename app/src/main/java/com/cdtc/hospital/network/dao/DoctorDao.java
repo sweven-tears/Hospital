@@ -10,7 +10,7 @@ public interface DoctorDao {
 	 * 查询所有的医生的信息
 	 * @return
 	 */
-	public List<Doctor> queryDoctors();
+	List<Doctor> queryDoctors();
 
 
 	/*---------------------------------------以下为从未使用过的方法--------------------------------------------*/
@@ -19,7 +19,7 @@ public interface DoctorDao {
 	 * 查询出科室列表
 	 * @return
 	 */
-	public List<String> queryKeshiList();
+	List<String> queryKeshiList();
 
 	/**
 	 * 根据科室查询医生信息列表
@@ -28,12 +28,12 @@ public interface DoctorDao {
 	 * @param d_keshi
 	 * @return
 	 */
-	public List<Doctor> queryDoctorByKeshi(String d_keshi);
+	List<Doctor> queryDoctorByKeshi(String d_keshi);
 
 	/**
 	 * 根据ID查询出名字
 	 * @param d_id
 	 * @return
 	 */
-	public String queryNameById(Integer d_id);
+	String queryNameById(Integer d_id);
 }

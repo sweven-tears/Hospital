@@ -3,6 +3,7 @@
 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardPreventCornerOverlap="true">
@@ -11,49 +12,85 @@
         android:id="@+id/hos_register_info_view"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="center|start">
+        android:gravity="center|start"
+        tools:ignore="DisableBaselineAlignment">
 
-        <CheckBox
-            android:id="@+id/select_checkbox"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginStart="20dp"
-            android:gravity="center" />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/hos_r_id"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            android:text="门诊编号" />
+            <CheckBox
+                android:id="@+id/select_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/d_name"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:text="主治医生" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/d_keshi"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:text="科室" />
+            <TextView
+                android:id="@+id/hos_r_id"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="病历号"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/hos_r_state"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:text="状态" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
 
+            <TextView
+                android:id="@+id/d_name"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:text="主治医生"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/d_keshi"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:text="科室"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/hos_r_state"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:text="状态"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
 
     </LinearLayout>
 

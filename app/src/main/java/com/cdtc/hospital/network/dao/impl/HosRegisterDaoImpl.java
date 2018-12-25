@@ -119,9 +119,18 @@ public class HosRegisterDaoImpl extends BaseDao implements HosRegisterDao {
         return result;
     }
 
-
-
-    /*---------------------------------------以下为从未使用过的方法--------------------------------------------*/
+    @Override
+    public Integer getLastHosRId() {
+        sql="SELECT hosR_id as id from hosregister order by hosR_id desc limit 1";
+        rs=query(sql,null);
+        try {
+            rs.first();
+            return rs.getInt("id");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     @Override
     public List<HosRegister> selectByCondition(Integer hosR_id, String d_name, String d_keshi) {

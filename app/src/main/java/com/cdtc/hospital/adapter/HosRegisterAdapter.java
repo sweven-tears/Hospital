@@ -9,19 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cdtc.hospital.R;
 import com.cdtc.hospital.bean.HosRegisterBean;
-import com.cdtc.hospital.local.dao.BaseLocalDao;
-import com.cdtc.hospital.local.dao.DoctorLocalDao;
-import com.cdtc.hospital.local.dao.HosRegisterLocalDao;
-import com.cdtc.hospital.local.dao.impl.DoctorLocalDaoImpl;
-import com.cdtc.hospital.entity.Doctor;
 import com.cdtc.hospital.entity.HosRegister;
-import com.cdtc.hospital.local.dao.impl.HosRegisterLocalDaoImpl;
 import com.cdtc.hospital.task.HosRegisterTask;
 import com.cdtc.hospital.view.HosRegisterDetailsActivity;
 
@@ -37,7 +30,7 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
     private Activity activity;
     private List<HosRegisterBean> hosRegisterBeans;
     private LayoutInflater inflater;
-    private OnSelectListener mOnSelectListener=null;
+    private OnSelectListener mOnSelectListener = null;
 
     public HosRegisterAdapter(Activity activity, List<HosRegister> hosRegisters) {
         this.activity = activity;
@@ -63,21 +56,21 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
     @SuppressLint("SimpleDateFormat")
     @Override
     public void onBindViewHolder(@NonNull HosRegisterViewHold hold, int position) {
-        iniData(hold, position);
+        initData(hold, position);
 
     }
 
     /**
      * 初始化数据
      *
-     * @param hold
-     * @param position
+     * @param hold ViewHold
+     * @param position 当前位置
      */
-    private void iniData(@NonNull HosRegisterViewHold hold, int position) {
+    private void initData(@NonNull HosRegisterViewHold hold, int position) {
         HosRegister hosRegister = hosRegisterBeans.get(position).getHosRegister();
         boolean selected = hosRegisterBeans.get(position).isSelected();
 
-        if (hosRegister == null || hosRegisterBeans == null || hosRegisterBeans.size() == 0) {
+        if (hosRegister == null || hosRegister.getHosR_id() == null || hosRegisterBeans == null || hosRegisterBeans.size() == 0) {
             hold.hosRegisterInfoView.removeAllViews();
             TextView view = new TextView(activity);
             view.setText("无数据");
@@ -87,13 +80,10 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
             return;
         }
 
-        DoctorLocalDao doctorLocalDao = new DoctorLocalDaoImpl(activity, BaseLocalDao.QUERY);
-        Doctor doctor = doctorLocalDao.queryDoctorById(hosRegister.getD_id());
-
         hold.hosR_id.setText(String.valueOf(hosRegister.getHosR_id()));
-        hold.d_name.setText(doctor.getD_name());
+        hold.d_name.setText(hosRegister.getD_name());
 
-        hold.d_keshi.setText(doctor.getD_keshi());
+        hold.d_keshi.setText(hosRegister.getD_keshi());
 
         Integer hosR_state = hosRegister.getHosR_state();
 //        挂号状态0挂号1住院2出院3退号4退院
@@ -120,7 +110,7 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
     }
 
     /**
-     * 插入新数据
+     * 插入一条新数据
      *
      * @param hosRegister 新数据
      */
@@ -129,10 +119,48 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
         notifyItemInserted(hosRegisterBeans.size() - 1);
     }
 
-    public void updateHosRegister(Integer d_id) {
+    /**
+     * 插入数据集合
+     *
+     * @param hosRegisters 数据集合
+     */
+    public void insertAllHosRegisters(List<HosRegister> hosRegisters) {
+        if (getItemCount() > 0) {
+            for (int i = getItemCount() - 1; i >= 0; i--) {
+                hosRegisterBeans.remove(i);
+                notifyItemRemoved(i);
+                notifyItemRangeChanged(i, hosRegisterBeans.size());
+                notifyDataSetChanged();
+            }
+        }
+        for (HosRegister hosRegister : hosRegisters) {
+            hosRegisterBeans.add(new HosRegisterBean(false, hosRegister));
+            notifyItemInserted(hosRegisterBeans.size() - 1);
+        }
+    }
+
+    /**
+     * 刷新所有数据
+     *
+     * @param hosRegisters 数据集合
+     */
+    public void updateAllData(List<HosRegister> hosRegisters) {
+        if (getSelectedCount() != hosRegisters.size()) {
+            insertAllHosRegisters(hosRegisters);
+            return;
+        }
+        for (int i = 0; i < hosRegisters.size(); i++) {
+            hosRegisterBeans.remove(i);
+            hosRegisterBeans.add(i, new HosRegisterBean(false, hosRegisters.get(i)));
+            notifyItemChanged(i);
+        }
+    }
+
+    public void updateHosRegister(String d_name, String d_keshi) {
         for (int i = 0; i < getItemCount(); i++) {
-            if (!hosRegisterBeans.get(i).isSelected()) {
-                hosRegisterBeans.get(i).getHosRegister().setD_id(d_id);
+            if (hosRegisterBeans.get(i).isSelected()) {
+                hosRegisterBeans.get(i).getHosRegister().setD_name(d_name);
+                hosRegisterBeans.get(i).getHosRegister().setD_keshi(d_keshi);
                 notifyItemChanged(i);
                 return;
             }
@@ -178,6 +206,9 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
                 HosRegister hosRegister = hosRegisterBean.getHosRegister();
                 HosRegisterTask task = new HosRegisterTask(activity, hosRegister.getHosR_id(), 3, HosRegisterTask.TASK_UPDATE_STATE);
                 task.execute();
+                task.setOnSuccessListener(list -> {
+
+                });
             }
         }
     }
@@ -206,6 +237,18 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
             }
         }
         return 1001;
+    }
+
+    /**
+     * @return get selected's d_keshi
+     */
+    public String getD_KeShi() {
+        for (int i = 0; i < getItemCount(); i++) {
+            if (hosRegisterBeans.get(i).isSelected()) {
+                return hosRegisterBeans.get(i).getHosRegister().getD_keshi();
+            }
+        }
+        return "骨科";
     }
 
     @Override

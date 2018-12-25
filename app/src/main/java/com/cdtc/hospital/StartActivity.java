@@ -12,23 +12,10 @@ import com.cdtc.hospital.base.App;
 import com.cdtc.hospital.base.BaseActivity;
 import com.cdtc.hospital.local.DatabaseHelper;
 import com.cdtc.hospital.local.dao.BaseLocalDao;
-import com.cdtc.hospital.local.dao.DoctorLocalDao;
-import com.cdtc.hospital.local.dao.HosRegisterLocalDao;
 import com.cdtc.hospital.local.dao.UserLocalDao;
-import com.cdtc.hospital.local.dao.impl.DoctorLocalDaoImpl;
-import com.cdtc.hospital.local.dao.impl.HosRegisterLocalDaoImpl;
-import com.cdtc.hospital.network.dao.BeHospitalDao;
-import com.cdtc.hospital.network.dao.DoctorDao;
-import com.cdtc.hospital.network.dao.HosRegisterDao;
 import com.cdtc.hospital.network.dao.UserDao;
-import com.cdtc.hospital.network.dao.impl.BeHospitalDaoImpl;
-import com.cdtc.hospital.network.dao.impl.DoctorDaoImpl;
-import com.cdtc.hospital.network.dao.impl.HosRegisterDaoImpl;
 import com.cdtc.hospital.local.dao.impl.UserLocalDaoImpl;
 import com.cdtc.hospital.network.dao.impl.UserDaoImpl;
-import com.cdtc.hospital.entity.BeHospital;
-import com.cdtc.hospital.entity.Doctor;
-import com.cdtc.hospital.entity.HosRegister;
 import com.cdtc.hospital.entity.User;
 import com.cdtc.hospital.view.ListActivity;
 import com.cdtc.hospital.view.LoginActivity;
@@ -152,10 +139,7 @@ public class StartActivity extends BaseActivity {
     @SuppressLint("StaticFieldLeak")
     public class QueryHosRegisterTask extends AsyncTask<Void, Void, Integer> {
 
-        private List<HosRegister> hosRegisters;
         private List<User> users;
-        private List<Doctor> doctors;
-        private List<BeHospital> beHospitals;
 
         QueryHosRegisterTask() {
         }
@@ -163,14 +147,8 @@ public class StartActivity extends BaseActivity {
         @Override
         protected Integer doInBackground(Void... params) {
             try {
-                HosRegisterDao dao = new HosRegisterDaoImpl();
-                hosRegisters = dao.queryHosRegisters();
                 UserDao userDao=new UserDaoImpl();
                 users=userDao.queryAllUser();
-                DoctorDao doctorDao=new DoctorDaoImpl();
-                doctors=doctorDao.queryDoctors();
-                BeHospitalDao beHospitalDao=new BeHospitalDaoImpl();
-                beHospitals=beHospitalDao.selectBeHospitalByCondition(null);
             } catch (Exception e) {
                 return -1;
             }
@@ -184,22 +162,12 @@ public class StartActivity extends BaseActivity {
                 return;
             }
             UserLocalDao userLocalDao=new UserLocalDaoImpl(activity,BaseLocalDao.UPDATE);
-            DoctorLocalDao doctorLocalDao=new DoctorLocalDaoImpl(activity,BaseLocalDao.UPDATE);
-            HosRegisterLocalDao hosRegisterLocalDao=new HosRegisterLocalDaoImpl(activity,BaseLocalDao.UPDATE);
             for (User user:users){
                 int result= userLocalDao.insertUser(user);
                 if (result<0){
                     userLocalDao.updateUser(user);
                 }
                 log.i("add user "+user+(result>0?" success":" fail"));
-            }
-            for (Doctor doctor:doctors){
-                long result=doctorLocalDao.insertDoctor(doctor);
-                log.i("add doctor "+doctor+(result>0?" success":" fail"));
-            }
-            for (HosRegister hosRegister:hosRegisters){
-                int result=hosRegisterLocalDao.addHosRegister(hosRegister);
-                log.i("add hosRegister "+hosRegister+(result>0?" success":" fail"));
             }
             userLocalDao.queryLocalLogSate();
         }
