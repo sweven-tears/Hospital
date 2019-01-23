@@ -36,7 +36,7 @@ public interface HosRegisterDao {
      */
     Integer deleteHosRegisterById(Integer hosR_id);
 
-    Integer updateStateById(Integer hosR_id,Integer hosR_state);
+    Integer updateStateById(Integer hosR_id, Integer hosR_state);
 
     Integer getLastHosRId();
 
@@ -44,7 +44,7 @@ public interface HosRegisterDao {
      * 条件查询
      *
      * @param hosR_id 主键，病历号
-     * @param d_name 医生名
+     * @param d_name  医生名
      * @param d_keshi 科室
      * @return 查询数据集合
      */

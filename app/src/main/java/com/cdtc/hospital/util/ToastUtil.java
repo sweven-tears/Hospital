@@ -37,22 +37,6 @@ public class ToastUtil {
     }
 
     /**
-     * 显示一个较短时间的提示
-     * 适用于activity类
-     *
-     * @param message 显示的文字
-     */
-    @SuppressLint("ShowToast")
-    public void showShort(String message) {
-        if (toast == null) {
-            toast = Toast.makeText(activity, message, Toast.LENGTH_SHORT);
-        } else {
-            toast.setText(message);
-        }
-        toast.show();
-    }
-
-    /**
      * 显示一个较长时间的提示
      * 适用于所有类
      *
@@ -63,22 +47,6 @@ public class ToastUtil {
     public static void showLong(Context context, String message) {
         if (toast == null) {
             toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
-        } else {
-            toast.setText(message);
-        }
-        toast.show();
-    }
-
-    /**
-     * 显示一个较长时间的提示
-     * 适用于activity类
-     *
-     * @param message 显示的文字
-     */
-    @SuppressLint("ShowToast")
-    public void showLong(String message) {
-        if (toast == null) {
-            toast = Toast.makeText(activity, message, Toast.LENGTH_LONG);
         } else {
             toast.setText(message);
         }
@@ -105,6 +73,38 @@ public class ToastUtil {
     public static void showError(Context context, String message) {
         if (toast == null) {
             toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+        } else {
+            toast.setText(message);
+        }
+        toast.show();
+    }
+
+    /**
+     * 显示一个较短时间的提示
+     * 适用于activity类
+     *
+     * @param message 显示的文字
+     */
+    @SuppressLint("ShowToast")
+    public void showShort(String message) {
+        if (toast == null) {
+            toast = Toast.makeText(activity, message, Toast.LENGTH_SHORT);
+        } else {
+            toast.setText(message);
+        }
+        toast.show();
+    }
+
+    /**
+     * 显示一个较长时间的提示
+     * 适用于activity类
+     *
+     * @param message 显示的文字
+     */
+    @SuppressLint("ShowToast")
+    public void showLong(String message) {
+        if (toast == null) {
+            toast = Toast.makeText(activity, message, Toast.LENGTH_LONG);
         } else {
             toast.setText(message);
         }

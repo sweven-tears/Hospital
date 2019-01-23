@@ -12,7 +12,7 @@
         android:paddingStart="16dp"
         android:paddingTop="8dp"
         android:scrollbars="horizontal"
-        tools:context=".view.AddHosRegisterActivity">
+        tools:context=".view.hosregister.AddHosRegisterActivity">
 
         <LinearLayout
             android:id="@+id/panel_1"
@@ -353,8 +353,8 @@
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_below="@+id/panel_12"
-            android:gravity="center"
             android:layout_marginBottom="20dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
@@ -375,8 +375,8 @@
                     android:id="@+id/hos_r_remark"
                     android:layout_width="200dp"
                     android:layout_height="60dp"
-                    android:maxLines="3"
                     android:background="@drawable/text_area"
+                    android:maxLines="3"
                     android:textSize="20dp" />
 
             </ScrollView>

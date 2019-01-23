@@ -1,4 +1,4 @@
-package com.cdtc.hospital.view;
+package com.cdtc.hospital.view.hosregister;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,8 +14,8 @@ import com.cdtc.hospital.R;
 import com.cdtc.hospital.base.BaseActivity;
 import com.cdtc.hospital.entity.Doctor;
 import com.cdtc.hospital.entity.HosRegister;
-import com.cdtc.hospital.task.DoctorTask;
-import com.cdtc.hospital.task.HosRegisterTask;
+import com.cdtc.hospital.service.DoctorTask;
+import com.cdtc.hospital.service.HosRegisterTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +96,7 @@ public class UpdateHosRegisterActivity extends BaseActivity implements AdapterVi
 
         Intent intent = getIntent();
         hosR_id = intent.getIntExtra("hosR_id", 1001);
-        String d_keshi=intent.getStringExtra("d_keshi");
+        String d_keshi = intent.getStringExtra("d_keshi");
 
 
         HosRegisterTask hosRegisterTask = new HosRegisterTask(activity, hosR_id);
@@ -107,7 +107,7 @@ public class UpdateHosRegisterActivity extends BaseActivity implements AdapterVi
             addInfo(success);
         });
 
-        DoctorTask doctorTask = new DoctorTask(activity, null, DoctorTask.QUERY_KeShi_LIST,DoctorTask.TYPE_PROGRESS);
+        DoctorTask doctorTask = new DoctorTask(activity, null, DoctorTask.QUERY_KeShi_LIST, DoctorTask.TYPE_PROGRESS);
         doctorTask.execute();
         doctorTask.setOnSuccessListener((keShiList, nameList) -> {
             UpdateHosRegisterActivity.this.keShiList = keShiList;
@@ -115,7 +115,7 @@ public class UpdateHosRegisterActivity extends BaseActivity implements AdapterVi
             addInfo(success);
         });
 
-        DoctorTask doctorTask2 = new DoctorTask(activity, d_keshi, DoctorTask.QUERY_NAME_LIST,DoctorTask.TYPE_PROGRESS);
+        DoctorTask doctorTask2 = new DoctorTask(activity, d_keshi, DoctorTask.QUERY_NAME_LIST, DoctorTask.TYPE_PROGRESS);
         doctorTask2.execute();
         doctorTask2.setOnSuccessListener((keShiList, nameList) -> {
             UpdateHosRegisterActivity.this.doctorList = nameList;
@@ -361,7 +361,7 @@ public class UpdateHosRegisterActivity extends BaseActivity implements AdapterVi
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         if (!isFirstLaunch) {
             String keshi = d_keshi.getSelectedItem().toString();
-            DoctorTask doctorTask = new DoctorTask(activity, keshi, DoctorTask.QUERY_NAME_LIST,DoctorTask.TYPE_NON_PROGRESS);
+            DoctorTask doctorTask = new DoctorTask(activity, keshi, DoctorTask.QUERY_NAME_LIST, DoctorTask.TYPE_NON_PROGRESS);
             doctorTask.execute();
             doctorTask.setOnSuccessListener((keShiList, doctorList) -> {
                 UpdateHosRegisterActivity.this.doctorList = doctorList;
@@ -391,7 +391,7 @@ public class UpdateHosRegisterActivity extends BaseActivity implements AdapterVi
         Intent intent = new Intent(activity, HosRegisterActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("d_name", (String) d_name.getSelectedItem());
-        bundle.putString("d_keshi",(String)d_keshi.getSelectedItem());
+        bundle.putString("d_keshi", (String) d_keshi.getSelectedItem());
         intent.putExtras(bundle);
         setResult(RESULT, intent);
     }

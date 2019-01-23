@@ -1,4 +1,4 @@
-package com.cdtc.hospital.view;
+package com.cdtc.hospital.view.hosregister;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -10,15 +10,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.cdtc.hospital.R;
 import com.cdtc.hospital.adapter.HosRegisterAdapter;
 import com.cdtc.hospital.base.BaseActivity;
 import com.cdtc.hospital.entity.HosRegister;
-import com.cdtc.hospital.task.HosRegisterTask;
+import com.cdtc.hospital.service.HosRegisterTask;
 
 import java.util.ArrayList;
 
@@ -128,6 +130,16 @@ public class HosRegisterActivity extends BaseActivity {
                 selectBtn.setText("取消全选");
             }
         });
+
+        searchHosR_id.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId==EditorInfo.IME_NULL){
+                    searchHosRegisterList();
+                }
+                return false;
+            }
+        });
     }
 
     /**
@@ -145,6 +157,11 @@ public class HosRegisterActivity extends BaseActivity {
                 hosR_id = Integer.parseInt(hosR_idStr);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
+                long hosR_idLong=Long.parseLong(hosR_idStr);
+                HosRegisterTask hosRegisterTask = new HosRegisterTask(activity, (int) hosR_idLong, d_name, d_keshi);
+                hosRegisterTask.execute();
+
+                hosRegisterTask.setOnSuccessListener(list -> hosRegisterAdapter.insertAllHosRegisters(list));
                 toast.showError("病历号只能为数字");
                 return;
             }

@@ -22,13 +22,10 @@ public class BaseDao {
     private static final String user = "sweven";
     private static final String password = "luoluna";
     private static final String url = "jdbc:mysql://" + uri + ":" + port + "/" + dataBase + "?" + extra + "&" + encoding;
-
-
+    protected ResultSet rs;
+    protected String sql;
     private Connection conn;
     private PreparedStatement pre;
-    protected ResultSet rs;
-
-    protected String sql;
 
     /**
      * make mysql connection

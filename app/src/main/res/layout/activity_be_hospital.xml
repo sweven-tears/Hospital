@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:activity=".view.HosRegisterActivity"
-    tools:showIn="@layout/activity_hos_register">
+    tools:activity=".view.behospital.BeHospitalActivity" >
 
     <RelativeLayout
         android:id="@+id/total_panel"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
 
         <RelativeLayout
             android:id="@+id/title_panel"

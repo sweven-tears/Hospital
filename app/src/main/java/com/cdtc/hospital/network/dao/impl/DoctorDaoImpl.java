@@ -1,8 +1,8 @@
 package com.cdtc.hospital.network.dao.impl;
 
+import com.cdtc.hospital.entity.Doctor;
 import com.cdtc.hospital.network.dao.BaseDao;
 import com.cdtc.hospital.network.dao.DoctorDao;
-import com.cdtc.hospital.entity.Doctor;
 
 import java.sql.Date;
 import java.sql.ResultSet;
