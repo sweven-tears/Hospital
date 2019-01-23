@@ -17,6 +17,7 @@ public class LogUtil {
 
     /**
      * 打印意义最小的日志信息
+     *
      * @param msg 需要记录的信息
      */
     public void v(String msg) {
@@ -29,6 +30,7 @@ public class LogUtil {
 
     /**
      * 打印调试信息
+     *
      * @param msg 需要记录的信息
      */
     public void d(String msg) {
@@ -41,6 +43,7 @@ public class LogUtil {
 
     /**
      * 打印重要数据
+     *
      * @param msg 需要记录的信息
      */
     public void i(String msg) {
@@ -53,6 +56,7 @@ public class LogUtil {
 
     /**
      * 打印警告信息，程序可能存在潜在风险
+     *
      * @param msg 需要记录的信息
      */
     public void w(String msg) {
@@ -65,6 +69,7 @@ public class LogUtil {
 
     /**
      * 打印错误信息
+     *
      * @param msg 需要记录的信息
      */
     public void e(String msg) {
@@ -77,6 +82,7 @@ public class LogUtil {
 
     /**
      * 打印最严重的信息
+     *
      * @param msg 需要记录的信息
      */
     public void a(String msg) {

@@ -14,8 +14,8 @@
         <item>赵云</item>
         <item>崔东</item>
     </string-array>
-    
-    <string-array name="血液科" >
+
+    <string-array name="血液科">
         <item>大张伟</item>
     </string-array>
 </resources>

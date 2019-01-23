@@ -55,6 +55,7 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/guahao"
             android:contentDescription="挂号管理"
+            android:onClick="onClick"
             tools:ignore="HardcodedText" />
 
 
@@ -68,6 +69,7 @@
             android:layout_toEndOf="@id/gua_hao"
             android:background="@drawable/fayao"
             android:contentDescription="在院发药"
+            android:onClick="onClick"
             tools:ignore="HardcodedText" />
 
         <ImageButton
@@ -80,6 +82,7 @@
             android:layout_toEndOf="@id/fayao"
             android:background="@drawable/menzhen"
             android:contentDescription="门诊管理"
+            android:onClick="onClick"
             tools:ignore="HardcodedText" />
 
         <ImageButton
@@ -92,6 +95,7 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/zhuyuan"
             android:contentDescription="住院办理"
+            android:onClick="onClick"
             tools:ignore="HardcodedText" />
 
         <ImageButton
@@ -105,6 +109,7 @@
             android:layout_toEndOf="@id/zhu_yuan"
             android:background="@drawable/shoufei"
             android:contentDescription="收费项目"
+            android:onClick="onClick"
             tools:ignore="HardcodedText" />
 
         <ImageButton
@@ -118,6 +123,7 @@
             android:layout_toEndOf="@id/shoufei"
             android:background="@drawable/yaopin"
             android:contentDescription="药品管理"
+            android:onClick="onClick"
             tools:ignore="HardcodedText" />
 
     </RelativeLayout>

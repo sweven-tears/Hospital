@@ -17,14 +17,13 @@ import java.util.Map;
  */
 public class SQLite {
 
-    private Activity activity;
-    private DatabaseHelper database_helper;
-    public SQLiteDatabase db;
-    private String dataBaseName;
-    private String tableName;
-
     public static final int QUERY_DATABASE = 1;
     public static final int UPDATE_DATABASE = 2;
+    public SQLiteDatabase db;
+    private Activity activity;
+    private DatabaseHelper database_helper;
+    private String dataBaseName;
+    private String tableName;
 
 
     /**
@@ -38,7 +37,7 @@ public class SQLite {
 
         if (dataBaseName == null || dataBaseName.equals("")) {
             //库的名字为 hospital.db
-            dataBaseName = App.DATA_BASE +".db";
+            dataBaseName = App.DATA_BASE + ".db";
         }
         this.dataBaseName = dataBaseName;
 
@@ -81,37 +80,27 @@ public class SQLite {
             Object o = map.get(key);
             if (o == null) {
                 values.putNull(key);//注意值的类型要匹配
-            }
-            else if (o instanceof Byte) {
+            } else if (o instanceof Byte) {
                 values.put(key, (Byte) map.get(key));
-            }
-            else if (o instanceof Long) {
+            } else if (o instanceof Long) {
                 values.put(key, (Long) map.get(key));
-            }
-            else if (o instanceof Float) {
+            } else if (o instanceof Float) {
                 values.put(key, (Float) map.get(key));
-            }
-            else if (o instanceof Short) {
+            } else if (o instanceof Short) {
                 values.put(key, (Short) map.get(key));
-            }
-            else if (o instanceof byte[]) {
+            } else if (o instanceof byte[]) {
                 values.put(key, (byte[]) map.get(key));
-            }
-            else if (o instanceof Double) {
+            } else if (o instanceof Double) {
                 values.put(key, (Double) map.get(key));
-            }
-            else if (o instanceof String) {
+            } else if (o instanceof String) {
                 values.put(key, (String) map.get(key));
-            }
-            else if (o instanceof Boolean) {
+            } else if (o instanceof Boolean) {
                 values.put(key, (Boolean) map.get(key));
-            }
-            else if (o instanceof Integer) {
+            } else if (o instanceof Integer) {
                 values.put(key, (Integer) map.get(key));
-            }
-            else if (o instanceof Date){
-                String date=map.get(key).toString();
-                values.put(key,date);
+            } else if (o instanceof Date) {
+                String date = map.get(key).toString();
+                values.put(key, date);
             }
 
         }
@@ -124,37 +113,27 @@ public class SQLite {
             Object o = map.get(key);
             if (o == null) {
                 values.putNull(key);//注意值的类型要匹配
-            }
-            else if (o instanceof Byte) {
+            } else if (o instanceof Byte) {
                 values.put(key, (Byte) map.get(key));
-            }
-            else if (o instanceof Long) {
+            } else if (o instanceof Long) {
                 values.put(key, (Long) map.get(key));
-            }
-            else if (o instanceof Float) {
+            } else if (o instanceof Float) {
                 values.put(key, (Float) map.get(key));
-            }
-            else if (o instanceof Short) {
+            } else if (o instanceof Short) {
                 values.put(key, (Short) map.get(key));
-            }
-            else if (o instanceof byte[]) {
+            } else if (o instanceof byte[]) {
                 values.put(key, (byte[]) map.get(key));
-            }
-            else if (o instanceof Double) {
+            } else if (o instanceof Double) {
                 values.put(key, (Double) map.get(key));
-            }
-            else if (o instanceof String) {
+            } else if (o instanceof String) {
                 values.put(key, (String) map.get(key));
-            }
-            else if (o instanceof Boolean) {
+            } else if (o instanceof Boolean) {
                 values.put(key, (Boolean) map.get(key));
-            }
-            else if (o instanceof Integer) {
+            } else if (o instanceof Integer) {
                 values.put(key, (Integer) map.get(key));
-            }
-            else if (o instanceof Date){
-                String date=map.get(key).toString();
-                values.put(key,date);
+            } else if (o instanceof Date) {
+                String date = map.get(key).toString();
+                values.put(key, date);
             }
 
         }
@@ -162,7 +141,7 @@ public class SQLite {
         return db.update(tableName, values, whereClause, whereArgs);
     }
 
-    public Cursor query(String[] columns,String selection,String[] selectionArgs) {
+    public Cursor query(String[] columns, String selection, String[] selectionArgs) {
         //查询的语法，参数1为表名；参数2为表中的列名；参数3为要查询的列名；参数4为对应列的值；该函数返回的是一个游标
 //        Cursor cursor = db.query(tableName, new String[]{"id", "name"}, "id=?", new String[]{"1"}, null, null, null);
         Cursor cursor = db.query(tableName, columns, selection, selectionArgs, null, null, null);
@@ -174,9 +153,25 @@ public class SQLite {
         return cursor;
     }
 
-    public int delete(String whereClause,String[] whereArgs) {
+    public int delete(String whereClause, String[] whereArgs) {
         //直接删除 whereClause(例：name=?) 为 whereArgs[0] 对应的那条记录
         return db.delete(tableName, whereClause, whereArgs);
+    }
+
+    /**
+     * @param sql SQL语句
+     * @param o   '?,?,?...'参数
+     * @return 结果集
+     */
+    public Cursor rawQuery(String sql, Object o[]) {
+        if (o != null) {
+            String[] selectionArgs = new String[o.length];
+            for (int i = 0; i < o.length; i++) {
+                selectionArgs[i] = String.valueOf(o[i]);
+            }
+            return db.rawQuery(sql, selectionArgs);
+        }
+        return db.rawQuery(sql, null);
     }
 
 

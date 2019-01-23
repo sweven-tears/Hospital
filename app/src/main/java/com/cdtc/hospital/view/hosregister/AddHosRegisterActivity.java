@@ -1,4 +1,4 @@
-package com.cdtc.hospital.view;
+package com.cdtc.hospital.view.hosregister;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,8 +14,8 @@ import com.cdtc.hospital.R;
 import com.cdtc.hospital.base.BaseActivity;
 import com.cdtc.hospital.entity.Doctor;
 import com.cdtc.hospital.entity.HosRegister;
-import com.cdtc.hospital.task.DoctorTask;
-import com.cdtc.hospital.task.HosRegisterTask;
+import com.cdtc.hospital.service.DoctorTask;
+import com.cdtc.hospital.service.HosRegisterTask;
 
 import java.util.ArrayList;
 import java.util.List;

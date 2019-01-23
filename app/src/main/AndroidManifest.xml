@@ -29,12 +29,13 @@
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".view.HosRegisterActivity"
+            android:name=".view.hosregister.HosRegisterActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".view.ListActivity" />
-        <activity android:name=".view.AddHosRegisterActivity" />
-        <activity android:name=".view.HosRegisterDetailsActivity" />
-        <activity android:name=".view.UpdateHosRegisterActivity" />
+        <activity android:name=".view.hosregister.AddHosRegisterActivity" />
+        <activity android:name=".view.hosregister.HosRegisterDetailsActivity" />
+        <activity android:name=".view.hosregister.UpdateHosRegisterActivity" />
+        <activity android:name=".view.behospital.BeHospitalActivity" />
     </application>
 
 </manifest>
