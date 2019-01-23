@@ -1,4 +1,4 @@
-package com.cdtc.hospital.view.hosregister;
+package com.cdtc.hospital.view;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.cdtc.hospital.R;
 import com.cdtc.hospital.base.BaseActivity;
 import com.cdtc.hospital.entity.HosRegister;
-import com.cdtc.hospital.service.HosRegisterTask;
+import com.cdtc.hospital.task.HosRegisterTask;
 
 import java.util.List;
 

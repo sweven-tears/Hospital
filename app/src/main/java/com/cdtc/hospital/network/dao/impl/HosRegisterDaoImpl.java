@@ -1,8 +1,8 @@
 package com.cdtc.hospital.network.dao.impl;
 
-import com.cdtc.hospital.entity.HosRegister;
 import com.cdtc.hospital.network.dao.BaseDao;
 import com.cdtc.hospital.network.dao.HosRegisterDao;
+import com.cdtc.hospital.entity.HosRegister;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -112,7 +112,7 @@ public class HosRegisterDaoImpl extends BaseDao implements HosRegisterDao {
 
     @Override
     public Integer deleteHosRegisterById(Integer hosR_id) {
-        sql = "delete from hosregister whereArg hosR_id=?";
+        sql = "delete from hosregister where hosR_id=?";
         Object[] objects = {hosR_id};
         int result = update(sql, objects);
         close();
@@ -121,8 +121,8 @@ public class HosRegisterDaoImpl extends BaseDao implements HosRegisterDao {
 
     @Override
     public Integer getLastHosRId() {
-        sql = "SELECT hosR_id as id from hosregister order by hosR_id desc limit 1";
-        rs = query(sql, null);
+        sql="SELECT hosR_id as id from hosregister order by hosR_id desc limit 1";
+        rs=query(sql,null);
         try {
             rs.first();
             return rs.getInt("id");

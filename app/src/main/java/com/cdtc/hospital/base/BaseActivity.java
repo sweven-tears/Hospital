@@ -42,14 +42,10 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
      * 标记标题左右两边的类型:图片
      */
     protected final int BTN_TYPE_IMG = 1;
-    protected final String TAG = this.getClass().getSimpleName();
+
+
     public Activity activity;
-    /**
-     * Alert提示框
-     */
-    protected AlertDialog.Builder mAlert;
-    protected LogUtil log;
-    protected ToastUtil toast;
+
     /**
      * 左边按键的父组件
      */
@@ -58,6 +54,9 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
      * 右边按键的父组件
      */
     private RelativeLayout layoutRight;
+
+    protected final String TAG = this.getClass().getSimpleName();
+
     /**
      * Dialog提示框
      */
@@ -74,6 +73,12 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
      * Dialog进度条
      */
     private ProgressBar dialogLoadProgress;
+    /**
+     * Alert提示框
+     */
+    protected AlertDialog.Builder mAlert;
+    protected LogUtil log;
+    protected ToastUtil toast;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,12 +88,12 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * @param cls    需要启动的activity
+     * @param cls 需要启动的activity
      * @param bundle 数据
      */
-    protected void startActivity(Class<?> cls, Bundle bundle) {
-        Intent intent = new Intent(activity, cls);
-        if (bundle != null) {
+    protected void startActivity(Class<?> cls,Bundle bundle){
+        Intent intent=new Intent(activity,cls);
+        if (bundle!=null) {
             intent.putExtras(bundle);
         }
         startActivity(intent);
@@ -97,8 +102,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * @param cls 需要启动的activity
      */
-    protected void startActivity(Class<?> cls) {
-        Intent intent = new Intent(activity, cls);
+    protected void startActivity(Class<?> cls){
+        Intent intent=new Intent(activity,cls);
         startActivity(intent);
     }
 
@@ -119,8 +124,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void init() {
 
-        log = new LogUtil(TAG);
-        toast = new ToastUtil(activity);
+        log=new LogUtil(TAG);
+        toast=new ToastUtil(activity);
 
         // 设置字体大小不随系统字体大小的改变而改变
         Resources res = super.getResources();
@@ -357,7 +362,6 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     //---------------------------------------枚举----------------------------------------//
-
     /**
      * 枚举：左右按钮
      */

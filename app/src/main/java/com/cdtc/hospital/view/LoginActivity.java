@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+
 import android.os.AsyncTask;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,10 +19,10 @@ import android.widget.EditText;
 import com.cdtc.hospital.R;
 import com.cdtc.hospital.base.App;
 import com.cdtc.hospital.base.BaseActivity;
-import com.cdtc.hospital.entity.User;
 import com.cdtc.hospital.local.dao.BaseLocalDao;
 import com.cdtc.hospital.local.dao.UserLocalDao;
 import com.cdtc.hospital.local.dao.impl.UserLocalDaoImpl;
+import com.cdtc.hospital.entity.User;
 
 /**
  * A login screen that offers login via email/password.
@@ -145,12 +147,11 @@ public class LoginActivity extends BaseActivity {
         protected Integer doInBackground(Integer... params) {
             try {
                 Thread.sleep(2000);
-
             } catch (InterruptedException e) {
                 e.getStackTrace();
             }
             UserLocalDao userLocalDao = new UserLocalDaoImpl(activity, BaseLocalDao.QUERY);
-            user = userLocalDao.queryByLoginName(mLoginName);
+            user = userLocalDao.selectByLoginName(mLoginName);
 
             if (user != null) {
                 if (user.getU_passWord().equals(mPassword)) {
@@ -170,8 +171,7 @@ public class LoginActivity extends BaseActivity {
             if (result == 1) {
                 UserLocalDao userLocalDao = new UserLocalDaoImpl(activity, BaseLocalDao.UPDATE);
                 userLocalDao.updateLogSate(App.LOG_IN, mLoginName);
-                App.trueName = userLocalDao.queryByLoginName(mLoginName).getU_trueName();
-
+                App.trueName = userLocalDao.selectByLoginName(mLoginName).getU_trueName();
                 finish();
                 startActivity(ListActivity.class);
             } else if (result == 0) {

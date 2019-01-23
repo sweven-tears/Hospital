@@ -93,18 +93,6 @@ public class HosRegister {
 
     private String hosR_remark;
 
-    public static String toJSonString(HosRegister hosRegister) {
-        return JSONArray.fromObject(hosRegister).toString();
-    }
-
-    public static HosRegister toHosRegister(String jsonString) {
-
-        JSONArray array = JSONArray.fromObject(jsonString);
-        JSONObject object = JSONObject.fromObject(array);
-        Object hosRegister = JSONObject.toBean(object, HosRegister.class);
-        return (HosRegister) hosRegister;
-    }
-
     public Integer getHosR_id() {
         return hosR_id;
     }
@@ -254,6 +242,18 @@ public class HosRegister {
                 + ", hosR_work=" + hosR_work + ", hosR_lookDoctor="
                 + hosR_lookDoctor + ", d_id=" + d_id + ", hosR_remark="
                 + hosR_remark + "]";
+    }
+
+    public static String toJSonString(HosRegister hosRegister) {
+        return JSONArray.fromObject(hosRegister).toString();
+    }
+
+    public static HosRegister toHosRegister(String jsonString) {
+
+        JSONArray array = JSONArray.fromObject(jsonString);
+        JSONObject object = JSONObject.fromObject(array);
+        Object hosRegister = JSONObject.toBean(object, HosRegister.class);
+        return (HosRegister) hosRegister;
     }
 
 }

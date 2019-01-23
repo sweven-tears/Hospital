@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -85,11 +86,11 @@
             android:layout_height="39dp"
             android:background="@color/aqua"
             android:text="查询"
-            android:textColor="@color/blue"
             android:textSize="20dp"
-            tools:ignore="MissingConstraints"
+            android:textColor="@color/blue"
             tools:layout_editor_absoluteX="208dp"
-            tools:layout_editor_absoluteY="40dp" />
+            tools:layout_editor_absoluteY="40dp"
+            tools:ignore="MissingConstraints" />
 
         <Button
             android:id="@+id/clear_btn"
@@ -97,11 +98,11 @@
             android:layout_height="39dp"
             android:background="@color/aqua"
             android:text="清空"
-            android:textColor="@color/blue"
             android:textSize="20dp"
-            tools:ignore="MissingConstraints"
+            android:textColor="@color/blue"
             tools:layout_editor_absoluteX="296dp"
-            tools:layout_editor_absoluteY="40dp" />
+            tools:layout_editor_absoluteY="40dp"
+            tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/hos_id"
@@ -165,13 +166,13 @@
         android:id="@+id/add"
         android:layout_width="100dp"
         android:layout_height="39dp"
-        android:background="@color/green"
         android:text="门诊挂号"
         android:textColor="@color/white"
+        android:background="@color/green"
         android:textSize="20dp"
-        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="125dp" />
+        tools:layout_editor_absoluteY="125dp"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/delete_btn"
@@ -181,9 +182,9 @@
         android:text="退号"
         android:textColor="@color/white"
         android:textSize="20dp"
-        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="116dp"
-        tools:layout_editor_absoluteY="125dp" />
+        tools:layout_editor_absoluteY="125dp"
+        tools:ignore="MissingConstraints" />
 
 
 </android.support.constraint.ConstraintLayout>

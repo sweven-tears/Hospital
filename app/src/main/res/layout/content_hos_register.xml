@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,16 +10,16 @@
     tools:showIn="@layout/activity_hos_register">
 
     <RelativeLayout
-        android:id="@+id/total_panel"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/total_panel">
 
         <RelativeLayout
-            android:id="@+id/title_panel"
             android:layout_width="wrap_content"
             android:layout_height="120dp"
-            android:layout_alignParentTop="true"
-            android:animateLayoutChanges="true">
+            android:id="@+id/title_panel"
+            android:animateLayoutChanges="true"
+            android:layout_alignParentTop="true">
 
             <include layout="@layout/hos_register_search_panel" />
 
@@ -27,24 +28,24 @@
         <RelativeLayout
             android:id="@+id/table_header_panel"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/title_panel">
+            android:layout_below="@id/title_panel"
+            android:layout_height="wrap_content">
 
             <include layout="@layout/table_header" />
         </RelativeLayout>
 
 
         <RelativeLayout
-            android:id="@+id/list_panel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/operate_panel"
-            android:layout_below="@id/table_header_panel">
+            android:id="@+id/list_panel"
+            android:layout_below="@id/table_header_panel"
+            android:layout_above="@id/operate_panel">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/hos_register_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:id="@+id/hos_register_list">
 
             </android.support.v7.widget.RecyclerView>
         </RelativeLayout>

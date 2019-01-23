@@ -1,15 +1,13 @@
-package com.cdtc.hospital.service;
+package com.cdtc.hospital.task;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import com.cdtc.hospital.entity.HosRegister;
 import com.cdtc.hospital.network.dao.HosRegisterDao;
 import com.cdtc.hospital.network.dao.impl.HosRegisterDaoImpl;
+import com.cdtc.hospital.entity.HosRegister;
 import com.cdtc.hospital.util.LogUtil;
 import com.cdtc.hospital.util.ToastUtil;
 
@@ -23,12 +21,13 @@ import java.util.List;
  */
 public class HosRegisterTask extends AsyncTask<Void, Void, Integer> {
 
+    private int taskType;
+    private static final int TASK_QUERY_BY_CONDITION = 0;
     public static final int TASK_INSERT = 1;
     public static final int TASK_UPDATE = 2;
-    public static final int TASK_UPDATE_STATE = 4;
-    private static final int TASK_QUERY_BY_CONDITION = 0;
     private static final int TASK_SELECT_BY_ID = 3;
-    private int taskType;
+    public static final int TASK_UPDATE_STATE = 4;
+
     @SuppressLint("StaticFieldLeak")
     private Activity activity;
     private HosRegister hosRegister;
@@ -38,8 +37,6 @@ public class HosRegisterTask extends AsyncTask<Void, Void, Integer> {
     private Integer hosR_id;
     private String d_name;
     private String d_keshi;
-    //创建接口，成功时候回调
-    private OnSuccessListener onSuccessListener;
 
     /**
      * 病历号+医生姓名+科室 查询
@@ -73,9 +70,8 @@ public class HosRegisterTask extends AsyncTask<Void, Void, Integer> {
 
     /**
      * 用于查询详情
-     *
      * @param activity 上下文
-     * @param hosR_id  主键，病历号
+     * @param hosR_id 主键，病历号
      */
     public HosRegisterTask(Activity activity, Integer hosR_id) {
         this.activity = activity;
@@ -97,9 +93,9 @@ public class HosRegisterTask extends AsyncTask<Void, Void, Integer> {
                 return 1;
             } else if (taskType == TASK_INSERT) {
                 int result = dao.addHosRegister(hosRegister);
-                if (result > 0) {
-                    int hosR_id = dao.getLastHosRId();
-                    hosRegister = new HosRegister();
+                if (result>0) {
+                    int hosR_id=dao.getLastHosRId();
+                    hosRegister=new HosRegister();
                     hosRegister.setHosR_id(hosR_id);
                 }
                 return result;
@@ -133,13 +129,13 @@ public class HosRegisterTask extends AsyncTask<Void, Void, Integer> {
             if (taskType == TASK_QUERY_BY_CONDITION) {
                 this.onSuccessListener.onSuccess(list);
             } else if (taskType == TASK_SELECT_BY_ID) {
-                list = new ArrayList<>();
+                list=new ArrayList<>();
                 list.add(hosRegister);
                 this.onSuccessListener.onSuccess(list);
-            } else if (taskType == TASK_UPDATE) {
+            } else if (taskType == TASK_UPDATE){
                 this.onSuccessListener.onSuccess(null);
-            } else if (taskType == TASK_INSERT) {
-                list = new ArrayList<>();
+            } else if (taskType==TASK_INSERT){
+                list=new ArrayList<>();
                 list.add(hosRegister);
                 this.onSuccessListener.onSuccess(list);
             }
@@ -151,11 +147,14 @@ public class HosRegisterTask extends AsyncTask<Void, Void, Integer> {
     protected void onCancelled() {
     }
 
-    public void setOnSuccessListener(OnSuccessListener onSuccessListener) {
-        this.onSuccessListener = onSuccessListener;
-    }
+    //创建接口，成功时候回调
+    private OnSuccessListener onSuccessListener;
 
     public interface OnSuccessListener {
         void onSuccess(List<HosRegister> list);
+    }
+
+    public void setOnSuccessListener(OnSuccessListener onSuccessListener) {
+        this.onSuccessListener = onSuccessListener;
     }
 }
