@@ -1,4 +1,4 @@
-package com.cdtc.hospital.task;
+package com.cdtc.hospital.service;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -19,39 +19,37 @@ import java.util.List;
  */
 public class DoctorTask extends AsyncTask<Void, Void, Integer> {
 
-    @SuppressLint("StaticFieldLeak")
-    private Activity activity;
-
-    private int query;
     public final static int QUERY_KeShi_LIST = 1;
     public final static int QUERY_NAME_LIST = 2;
-
+    public final static int TYPE_PROGRESS = 3;
+    public final static int TYPE_NON_PROGRESS = 4;
+    @SuppressLint("StaticFieldLeak")
+    private Activity activity;
+    private int taskType;
     private int progress;
-    public final static int TYPE_PROGRESS=3;
-    public final static int TYPE_NON_PROGRESS=4;
-
     private String d_keshi;
     private List<String> keShiList;
     private List<Doctor> nameList;
     private ProgressDialog mProgressDialog;
+    //创建接口，成功时候回调
+    private OnSuccessListener onSuccessListener;
 
-    public DoctorTask(Activity activity, String d_keshi, int query,int progress) {
+    public DoctorTask(Activity activity, String d_keshi, int query, int progress) {
         this.activity = activity;
         this.d_keshi = d_keshi;
-        this.query = query;
-        this.progress =progress;
+        this.taskType = query;
+        this.progress = progress;
     }
 
     @Override
     protected void onPreExecute() {
-        mProgressDialog= new ProgressDialog(activity);
+        mProgressDialog = new ProgressDialog(activity);
         mProgressDialog.setTitle(null);
         mProgressDialog.setMessage("加载中......");
-        if (progress==TYPE_PROGRESS) {
+        if (progress == TYPE_PROGRESS) {
             mProgressDialog.show();
-        }
-        else if (progress==TYPE_NON_PROGRESS){
-            mProgressDialog=null;
+        } else if (progress == TYPE_NON_PROGRESS) {
+            mProgressDialog = null;
         }
     }
 
@@ -59,10 +57,10 @@ public class DoctorTask extends AsyncTask<Void, Void, Integer> {
     protected Integer doInBackground(Void... voids) {
         try {
             DoctorDao dao = new DoctorDaoImpl();
-            if (query == QUERY_KeShi_LIST) {
+            if (taskType == QUERY_KeShi_LIST) {
                 keShiList = dao.queryKeshiList();
                 return 1;
-            } else if (query == QUERY_NAME_LIST) {
+            } else if (taskType == QUERY_NAME_LIST) {
                 nameList = dao.queryDoctorByKeshi(d_keshi);
                 return 1;
             }
@@ -75,7 +73,7 @@ public class DoctorTask extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected void onPostExecute(Integer result) {
-        String tag = (query == QUERY_KeShi_LIST ? "科室" : "姓名") + "列表" + (result > 0 ? "成功" : "失败");
+        String tag = (taskType == QUERY_KeShi_LIST ? "科室" : "姓名") + "列表" + (result > 0 ? "成功" : "失败");
         new LogUtil(activity.getLocalClassName()).i(tag);
 
         if (result == -1) {
@@ -83,19 +81,16 @@ public class DoctorTask extends AsyncTask<Void, Void, Integer> {
         } else if (result > 0) {
             onSuccessListener.onSuccess(keShiList, nameList);
         }
-        if (mProgressDialog!=null && mProgressDialog.isShowing()) {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
         }
     }
 
-    //创建接口，成功时候回调
-    private OnSuccessListener onSuccessListener;
+    public void setOnSuccessListener(OnSuccessListener onSuccessListener) {
+        this.onSuccessListener = onSuccessListener;
+    }
 
     public interface OnSuccessListener {
         void onSuccess(List<String> keShiList, List<Doctor> nameList);
-    }
-
-    public void setOnSuccessListener(OnSuccessListener onSuccessListener) {
-        this.onSuccessListener = onSuccessListener;
     }
 }

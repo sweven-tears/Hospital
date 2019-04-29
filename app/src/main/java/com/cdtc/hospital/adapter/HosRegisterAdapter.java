@@ -15,8 +15,8 @@ import android.widget.TextView;
 import com.cdtc.hospital.R;
 import com.cdtc.hospital.bean.HosRegisterBean;
 import com.cdtc.hospital.entity.HosRegister;
-import com.cdtc.hospital.task.HosRegisterTask;
-import com.cdtc.hospital.view.HosRegisterDetailsActivity;
+import com.cdtc.hospital.service.HosRegisterTask;
+import com.cdtc.hospital.view.hosregister.HosRegisterDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +63,7 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
     /**
      * 初始化数据
      *
-     * @param hold ViewHold
+     * @param hold     ViewHold
      * @param position 当前位置
      */
     private void initData(@NonNull HosRegisterViewHold hold, int position) {
@@ -256,6 +256,14 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
         return hosRegisterBeans.size();
     }
 
+    public void setOnSelectListener(OnSelectListener mOnSelectListener) {
+        this.mOnSelectListener = mOnSelectListener;
+    }
+
+    public interface OnSelectListener {
+        void onSelect();
+    }
+
     class HosRegisterViewHold extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private LinearLayout hosRegisterInfoView;
@@ -296,14 +304,6 @@ public class HosRegisterAdapter extends RecyclerView.Adapter<HosRegisterAdapter.
             activity.startActivity(intent);
         }
 
-    }
-
-    public interface OnSelectListener {
-        void onSelect();
-    }
-
-    public void setOnSelectListener(OnSelectListener mOnSelectListener) {
-        this.mOnSelectListener = mOnSelectListener;
     }
 
 
